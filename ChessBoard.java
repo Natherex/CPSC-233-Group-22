@@ -2,8 +2,8 @@ import pieces.*;
 
 public class ChessBoard extends Board {
     private boolean isFlipped = false;
-    private static char[] validColumns = new char[]{'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'};
-    private static int[] validRows = new int[]{1, 2, 3, 4, 5, 6, 7, 8};
+    private static final char[] validColumns = new char[]{'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'};
+    private static final int[] validRows = new int[]{1, 2, 3, 4, 5, 6, 7, 8};
 
     public ChessBoard() {
         super(8, 8);
