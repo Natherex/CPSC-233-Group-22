@@ -69,7 +69,7 @@ public class ChessBoard extends Board {
      * @param location Takes an input of a chess board location
      * @return the coordinate index on the 2D array that the location is at in the form (row, column), returns null if invalid location
      */
-    private int[] parseLocation(String location) {
+    protected int[] parseLocation(String location) {
         if (!isValidLocation(location)) {
             return null;
         }
