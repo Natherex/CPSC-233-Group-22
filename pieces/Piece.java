@@ -11,6 +11,10 @@ public class Piece {
         this.color = color;
     }
 
+    public Piece(Piece p) {
+        this.color = p.getColor();
+    }
+
     public String getColor() {
         return color;
     }

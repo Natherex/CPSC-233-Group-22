@@ -35,7 +35,6 @@ public class ChessBoard extends Board {
         System.out.println("Completed Initialization.");
     }
 
-
     /**
      * Flips all the coordinate system of the board.
      * Reassigns pieces accordingly.
@@ -121,6 +120,11 @@ public class ChessBoard extends Board {
         }
 
         return checks == 2;
+    }
+
+    protected Piece getPiece(String location) {
+        int[] coordinate = parseLocation(location);
+        return new Piece(grid[coordinate[0]][coordinate[1]]);
     }
 
     public String toString() {
