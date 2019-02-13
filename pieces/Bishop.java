@@ -10,6 +10,6 @@ public class Bishop extends Piece {
     }
 
     public String toString() {
-        return "(Type: Bishop, Color: " + getColor() + ")";
+        return "Bishop(" + getColor() + ")";
     }
 }

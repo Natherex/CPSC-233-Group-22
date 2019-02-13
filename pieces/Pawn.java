@@ -10,7 +10,7 @@ public class Pawn extends Piece {
     }
 
     public String toString() {
-        return "(Type: Pawn, Color: " + getColor() + ")";
+        return "Pawn(" + getColor() + ")";
     }
 
 }

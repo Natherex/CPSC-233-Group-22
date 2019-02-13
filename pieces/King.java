@@ -10,6 +10,6 @@ public class King extends Piece {
     }
 
     public String toString() {
-        return "(Type: King, Color: " + getColor() + ")";
+        return "King(" + getColor() + ")";
     }
 }

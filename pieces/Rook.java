@@ -10,6 +10,6 @@ public class Rook extends Piece {
     }
 
     public String toString() {
-        return "(Type: Rook, Color: " + getColor() + ")";
+        return "Rook(" + getColor() + ")";
     }
 }
