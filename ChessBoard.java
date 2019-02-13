@@ -105,7 +105,7 @@ public class ChessBoard extends Board {
     }
 
 
-    private static boolean isValidLocation(String location) {
+    protected static boolean isValidLocation(String location) {
         if (location.length() != 2)
             return false;
 
@@ -127,6 +127,7 @@ public class ChessBoard extends Board {
         StringBuilder builder = new StringBuilder();
 
         for (int y = 7; y >= 0; y--) {
+
             for (int x = 0; x < 7; x++) {
                 if (grid[y][x] != null)
                     builder.append(grid[y][x].toString());
@@ -134,12 +135,12 @@ public class ChessBoard extends Board {
                     builder.append("0");
                 builder.append("|");
             }
+
             if (grid[y][7] != null)
                 builder.append(grid[y][7].toString());
             else
                 builder.append("0");
             builder.append("\n---------------------------------\n");
-
         }
 
         return builder.toString();
