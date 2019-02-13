@@ -150,7 +150,8 @@ public class ChessBoard extends Board {
         ChessBoard board = new ChessBoard();
         board.initialize();
         System.out.println(board);
-        board.movePiece("A2", "A3");
+        board.flipBoard();
+        board.movePiece("A1", "A5");
         System.out.println(board);
     }
 }
