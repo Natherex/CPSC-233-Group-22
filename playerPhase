@@ -23,7 +23,7 @@ public class playerPhase{
   
   }
   
-  public void currentPieces(){
+  public int currentPieces(){
   
     return piecesleft;
   
@@ -37,7 +37,7 @@ public class playerPhase{
     return currentPosition.toLowerCase();
   
   }
-  
+  //use isValidLocation(string)
   public String movePiece(){
   
     System.out.print("Select space to move piece to: ")
