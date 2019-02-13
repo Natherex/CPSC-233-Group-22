@@ -56,7 +56,7 @@ public class GameState
 	{
 		return false;
 	}
-	public boolean canQueenMove(ChessBoard c)
+	public boolean canKingMove(ChessBoard c)
 	{
 		return false;
 		
