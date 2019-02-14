@@ -51,6 +51,10 @@ public class ChessBoard extends Board {
         isFlipped = !isFlipped;
     }
 
+    public int[] distance(String start, String end) {
+        return new int[0];
+    }
+
     protected void movePiece(String start, String end) {
         int[] startLocation = parseLocation(start);
         int[] endLocation = parseLocation(end);
