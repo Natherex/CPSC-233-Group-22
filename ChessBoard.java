@@ -32,7 +32,7 @@ public class ChessBoard extends Board {
         for (int i = 0; i < 8; i++)
             grid[6][i] = new Pawn("b");
 
-        System.out.println("Completed Initialization.");
+        // System.out.println("Completed Initialization.");
     }
 
     /**
@@ -51,7 +51,20 @@ public class ChessBoard extends Board {
         isFlipped = !isFlipped;
     }
 
-    public void movePiece(String start, String end) {
+    public int[] distance(String start, String end) {
+        if (!isValidLocation(start) || !isValidLocation(end))
+            return null;
+
+        int[] endLocation = parseLocation(end);
+        int[] startLocation = parseLocation(start);
+
+        int rowDistance = endLocation[0] - startLocation[0];
+        int columnDistance = endLocation[1] - startLocation[1];
+
+        return new int[]{rowDistance, columnDistance};
+    }
+
+    protected void movePiece(String start, String end) {
         int[] startLocation = parseLocation(start);
         int[] endLocation = parseLocation(end);
 
@@ -61,7 +74,6 @@ public class ChessBoard extends Board {
             grid[endLocation[0]][endLocation[1]] = temp;
         }
     }
-
 
     /**
      * Converts chess board location to the grid location's indices.
@@ -103,7 +115,11 @@ public class ChessBoard extends Board {
         return coordinates;
     }
 
-
+    /**
+     * Boolean on whether the chess board location is valid or not.
+     * @param location Take a chess board location as a String argument.
+     * @return Returns true or false depending on whether or not the chess board location is a valid location or not.
+     */
     protected static boolean isValidLocation(String location) {
         if (location.length() != 2)
             return false;
@@ -155,8 +171,10 @@ public class ChessBoard extends Board {
         ChessBoard board = new ChessBoard();
         board.initialize();
         System.out.println(board);
+
         board.flipBoard();
-        board.movePiece("A1", "A5");
-        System.out.println(board);
+        int[] test = board.distance("A1", "B2");
+        System.out.print(test[0]);
+        System.out.print(test[1]);
     }
 }

@@ -2,6 +2,7 @@ package pieces;
 
 public class Piece {
     private String color;
+    private int timesMoved = 0;
 
     public Piece() {
         this.color = "white";
