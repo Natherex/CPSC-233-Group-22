@@ -1,3 +1,5 @@
+import board.ChessBoard;
+
 public class GameState
 {
 	private boolean castleLeft;

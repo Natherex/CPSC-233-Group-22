@@ -1,3 +1,5 @@
+package board;
+
 import pieces.*;
 
 public class Board {

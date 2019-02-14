@@ -1,3 +1,5 @@
+package board;
+
 import pieces.*;
 
 public class ChessBoard extends Board {
@@ -64,14 +66,22 @@ public class ChessBoard extends Board {
         return new int[]{rowDistance, columnDistance};
     }
 
-    protected void movePiece(String start, String end) {
+    public void movePiece(String start, String end) {
         int[] startLocation = parseLocation(start);
         int[] endLocation = parseLocation(end);
+        int[] distance = distance(start, end);
 
         if (startLocation != null && endLocation != null) {
-            Piece temp = grid[startLocation[0]][startLocation[1]];
-            grid[startLocation[0]][startLocation[1]] = grid[endLocation[0]][endLocation[1]];
-            grid[endLocation[0]][endLocation[1]] = temp;
+
+            // Holds the reference of the piece to change, NOT a new piece.
+            Piece pieceToMove = grid[startLocation[0]][startLocation[1]];
+
+            if (pieceToMove.isValidMove(this, startLocation, endLocation)) {
+                Piece temp = grid[startLocation[0]][startLocation[1]];
+                grid[startLocation[0]][startLocation[1]] = grid[endLocation[0]][endLocation[1]];
+                grid[endLocation[0]][endLocation[1]] = temp;
+            }
+
         }
     }
 
@@ -80,7 +90,7 @@ public class ChessBoard extends Board {
      * @param location Takes an input of a chess board location
      * @return the coordinate index on the 2D array that the location is at in the form (row, column), returns null if invalid location
      */
-    protected int[] parseLocation(String location) {
+    public int[] parseLocation(String location) {
         if (!isValidLocation(location)) {
             return null;
         }
@@ -120,7 +130,7 @@ public class ChessBoard extends Board {
      * @param location Take a chess board location as a String argument.
      * @return Returns true or false depending on whether or not the chess board location is a valid location or not.
      */
-    protected static boolean isValidLocation(String location) {
+    public static boolean isValidLocation(String location) {
         if (location.length() != 2)
             return false;
 
@@ -138,7 +148,7 @@ public class ChessBoard extends Board {
         return checks == 2;
     }
 
-    protected Piece getPiece(String location) {
+    public Piece getPiece(String location) {
         int[] coordinate = parseLocation(location);
         return new Piece(grid[coordinate[0]][coordinate[1]]);
     }

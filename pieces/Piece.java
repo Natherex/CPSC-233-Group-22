@@ -1,5 +1,7 @@
 package pieces;
 
+import board.*;
+
 public class Piece {
     private String color;
     private int timesMoved = 0;
@@ -20,7 +22,15 @@ public class Piece {
         return color;
     }
 
+    public int getTimesMoved() {
+        return timesMoved;
+    }
+
+    public boolean isValidMove(ChessBoard board, int[] startLocation, int[] endLocation) {
+        return false;
+    }
+
     public String toString() {
-        return "(Type: Piece, Color: " + getColor() + ")";
+        return "Piece(" + getColor() + ")";
     }
 }
