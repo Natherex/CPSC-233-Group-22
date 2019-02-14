@@ -32,7 +32,7 @@ public class ChessBoard extends Board {
         for (int i = 0; i < 8; i++)
             grid[6][i] = new Pawn("b");
 
-        System.out.println("Completed Initialization.");
+        // System.out.println("Completed Initialization.");
     }
 
     /**
@@ -51,7 +51,7 @@ public class ChessBoard extends Board {
         isFlipped = !isFlipped;
     }
 
-    public void movePiece(String start, String end) {
+    protected void movePiece(String start, String end) {
         int[] startLocation = parseLocation(start);
         int[] endLocation = parseLocation(end);
 
@@ -61,7 +61,6 @@ public class ChessBoard extends Board {
             grid[endLocation[0]][endLocation[1]] = temp;
         }
     }
-
 
     /**
      * Converts chess board location to the grid location's indices.
@@ -102,7 +101,6 @@ public class ChessBoard extends Board {
         coordinates[1] = columnIndex;
         return coordinates;
     }
-
 
     protected static boolean isValidLocation(String location) {
         if (location.length() != 2)
