@@ -8,10 +8,17 @@ public class ChessBoard extends Board {
     private static final char[] validColumns = new char[]{'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'};
     private static final int[] validRows = new int[]{1, 2, 3, 4, 5, 6, 7, 8};
 
+    /**
+     * Sets up an 8x8 chess board.
+     * All further logic relies on this.
+     */
     public ChessBoard() {
         super(8, 8);
     }
 
+    /**
+     * Initializes standard chess board setup.
+     */
     public void initialize() {
         grid[0][0] = new Rook("w");
         grid[0][1] = new Knight("w");
@@ -74,6 +81,13 @@ public class ChessBoard extends Board {
         return new int[]{rowDistance, columnDistance};
     }
 
+    /**
+     * Used to find out whether the starting location and the ending location are blocked by
+     * any pieces in between them.
+     * @param start Starting location of the piece on the chess board.
+     * @param end Ending location of the piece on the chess board.
+     * @return Returns true is the start and end have open line-of-sight, false otherwise.
+     */
     public boolean isNotBlocked(String start, String end) {
         int[] totalDistance = distance(start, end);
         if (totalDistance == null)
@@ -93,7 +107,7 @@ public class ChessBoard extends Board {
         // Checks blockages to the right
         if (yDirectionChange == 0 && xDirectionChange > 0) {
             for (int i = startColumn + 1; i <= endColumn; i++) {
-                if (grid[startCoordinate[0]][i] != null)
+                if (grid[startRow][i] != null)
                     return false;
             }
         }
@@ -122,9 +136,56 @@ public class ChessBoard extends Board {
             }
         }
 
+        // Checks blockages up and right
+        else if (xDirectionChange > 0 && yDirectionChange > 0 && Math.abs(xDirectionChange) == Math.abs(yDirectionChange)) {
+            for (int i = startColumn + 1, j = startRow + 1; i <= endColumn; i++, j++) {
+                if (grid[j][i] != null)
+                    return false;
+            }
+        }
+
+        // Checks blockages up and left
+        else if (xDirectionChange < 0 && yDirectionChange > 0 && Math.abs(xDirectionChange) == Math.abs(yDirectionChange)) {
+            for (int i = startColumn - 1, j = startRow + 1; i >= endColumn; i--, j++) {
+                if (grid[j][i] != null)
+                    return false;
+            }
+        }
+
+        // Checks blockages down and right
+        else if (xDirectionChange > 0 && yDirectionChange < 0 && Math.abs(xDirectionChange) == Math.abs(yDirectionChange)) {
+            for (int i = startColumn + 1, j = startRow - 1; i <= endColumn; i++, j--) {
+                if (grid[j][i] != null)
+                    return false;
+            }
+        }
+
+        // Checks blockages down and right
+        else if (xDirectionChange < 0 && yDirectionChange < 0 && Math.abs(xDirectionChange) == Math.abs(yDirectionChange)) {
+            for (int i = startColumn - 1, j = startRow - 1; i >= endColumn; i--, j--) {
+                if (grid[j][i] != null)
+                    return false;
+            }
+        }
+
         return true;
     }
 
+    /**
+     * Calls isNotBlocked() and flips the boolean, exists purely for convenience and to avoid double negatives.
+     * @param start Starting location of the piece on the chess board.
+     * @param end Ending location of the piece on the chess board.
+     * @return Returns opposite boolean from isNotBlocked().
+     */
+    public boolean isBlocked(String start, String end) {
+        return !isNotBlocked(start, end);
+    }
+
+    /**
+     * Moves piece and given location to another location.
+     * @param start Starting location of the piece on the chess board.
+     * @param end Ending location of the piece on the chess board.
+     */
     public void movePiece(String start, String end) {
         int[] startLocation = parseLocation(start);
         int[] endLocation = parseLocation(end);
@@ -145,9 +206,20 @@ public class ChessBoard extends Board {
     }
 
     /**
+     * Removes chess piece at given location.
+     * @param location Location of the piece on the chess board to remove.
+     */
+    public void removePiece(String location) {
+        int[] coordinates = parseLocation(location);
+        if (grid[coordinates[0]][coordinates[1]] != null)
+            grid[coordinates[0]][coordinates[1]] = null;
+    }
+
+    /**
      * Converts chess board location to the grid location's indices.
      * @param location Takes an input of a chess board location
-     * @return the coordinate index on the 2D array that the location is at in the form (row, column), returns null if invalid location
+     * @return Returns the coordinate index on the 2D array that the location is at in the form (row, column),
+     *         else returns null if the location is invalid.
      */
     public int[] parseLocation(String location) {
         if (!isValidLocation(location)) {
