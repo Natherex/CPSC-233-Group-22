@@ -16,6 +16,7 @@ public class Piece {
 
     public Piece(Piece p) {
         this.color = p.getColor();
+        this.timesMoved = p.getTimesMoved();
     }
 
     public String getColor() {
@@ -26,7 +27,11 @@ public class Piece {
         return timesMoved;
     }
 
-    public boolean isValidMove(ChessBoard board, int[] startLocation, int[] endLocation) {
+    public void incrementTimesMoved() {
+        timesMoved++;
+    }
+
+    public boolean isValidMove(ChessBoard board, String startLocation, String endLocation) {
         return false;
     }
 

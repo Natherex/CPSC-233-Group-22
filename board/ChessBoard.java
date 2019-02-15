@@ -1,6 +1,7 @@
 package board;
 
 import pieces.*;
+import java.util.Scanner;
 
 public class ChessBoard extends Board {
     private boolean isFlipped = false;
@@ -53,6 +54,13 @@ public class ChessBoard extends Board {
         isFlipped = !isFlipped;
     }
 
+    /**
+     * Used to find out how far the starting location and the ending location of two spots on the chess board are.
+     * @param start Starting location of the piece on the chess board.
+     * @param end Ending location of the piece on the chess board.
+     * @return Returns the how far away the row and the column is from each other,
+     *         or returns null if an invalid location is given.
+     */
     public int[] distance(String start, String end) {
         if (!isValidLocation(start) || !isValidLocation(end))
             return null;
@@ -66,6 +74,57 @@ public class ChessBoard extends Board {
         return new int[]{rowDistance, columnDistance};
     }
 
+    public boolean isNotBlocked(String start, String end) {
+        int[] totalDistance = distance(start, end);
+        if (totalDistance == null)
+            return false;
+
+        int xDirectionChange = totalDistance[1];
+        int yDirectionChange = totalDistance[0];
+
+        int[] startCoordinate = parseLocation(start);
+        int startRow = startCoordinate[0];
+        int startColumn = startCoordinate[1];
+
+        int[] endCoordinate = parseLocation(end);
+        int endRow = endCoordinate[0];
+        int endColumn = endCoordinate[1];
+
+        // Checks blockages to the right
+        if (yDirectionChange == 0 && xDirectionChange > 0) {
+            for (int i = startColumn + 1; i <= endColumn; i++) {
+                if (grid[startCoordinate[0]][i] != null)
+                    return false;
+            }
+        }
+
+        // Checks blockages to the left
+        else if (yDirectionChange == 0 && xDirectionChange < 0) {
+            for (int i = startColumn - 1; i >= endColumn; i--) {
+                if (grid[startRow][i] != null)
+                    return false;
+            }
+        }
+
+        // Checks blockages upwards
+        else if (xDirectionChange == 0 && yDirectionChange > 0) {
+            for (int i = startRow + 1; i <= endRow; i++) {
+                if (grid[i][startColumn] != null)
+                    return false;
+            }
+        }
+
+        // Checks blockages downwards
+        else if (xDirectionChange == 0 && yDirectionChange < 0) {
+            for (int i = startRow - 1; i >= endRow; i--) {
+                if (grid[i][startColumn] != null)
+                    return false;
+            }
+        }
+
+        return true;
+    }
+
     public void movePiece(String start, String end) {
         int[] startLocation = parseLocation(start);
         int[] endLocation = parseLocation(end);
@@ -73,13 +132,13 @@ public class ChessBoard extends Board {
 
         if (startLocation != null && endLocation != null) {
 
-            // Holds the reference of the piece to change, NOT a new piece.
-            Piece pieceToMove = grid[startLocation[0]][startLocation[1]];
-
-            if (pieceToMove.isValidMove(this, startLocation, endLocation)) {
+            if (grid[startLocation[0]][startLocation[1]].isValidMove(this, start, end)) {
                 Piece temp = grid[startLocation[0]][startLocation[1]];
                 grid[startLocation[0]][startLocation[1]] = grid[endLocation[0]][endLocation[1]];
                 grid[endLocation[0]][endLocation[1]] = temp;
+                System.out.println("Valid Move");
+            } else {
+                System.out.println("Invalid Move");
             }
 
         }
@@ -153,6 +212,7 @@ public class ChessBoard extends Board {
         return new Piece(grid[coordinate[0]][coordinate[1]]);
     }
 
+
     public String toString() {
         StringBuilder builder = new StringBuilder();
 
@@ -179,12 +239,16 @@ public class ChessBoard extends Board {
     // Testing Method
     public static void main(String[] args) {
         ChessBoard board = new ChessBoard();
-        board.initialize();
-        System.out.println(board);
+        Scanner input = new Scanner(System.in);
+        String start;
+        String end;
 
-        board.flipBoard();
-        int[] test = board.distance("A1", "B2");
-        System.out.print(test[0]);
-        System.out.print(test[1]);
+        board.initialize();
+        while (true) {
+            System.out.println(board);
+            start = input.nextLine();
+            end = input.nextLine();
+            board.movePiece(start, end);
+        }
     }
 }

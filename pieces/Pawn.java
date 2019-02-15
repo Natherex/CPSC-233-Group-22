@@ -11,10 +11,21 @@ public class Pawn extends Piece {
         super(color);
     }
 
-    public boolean isValidMove(ChessBoard board, int rowChange, int columnChange) {
+    public boolean isValidMove(ChessBoard board, String start, String end) {
+        int[] totalDistance = board.distance(start, end);
+        if (totalDistance == null)
+            return false;
 
-        if (getTimesMoved() == 0 && rowChange == 2)
+        int xDirection = totalDistance[1];
+        int yDirection = totalDistance[0];
+
+        if (getTimesMoved() == 0 && yDirection == 2 && board.isNotBlocked(start, end)) {
+            incrementTimesMoved();
             return true;
+        } else if (yDirection == 1 && board.isNotBlocked(start, end)) {
+            incrementTimesMoved();
+            return true;
+        }
 
         return false;
     }
