@@ -160,7 +160,7 @@ public class ChessBoard extends Board {
             }
         }
 
-        // Checks blockages down and right
+        // Checks blockages down and left
         else if (xDirectionChange < 0 && yDirectionChange < 0 && Math.abs(xDirectionChange) == Math.abs(yDirectionChange)) {
             for (int i = startColumn - 1, j = startRow - 1; i >= endColumn; i--, j--) {
                 if (grid[j][i] != null)
