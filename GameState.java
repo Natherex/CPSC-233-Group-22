@@ -1,3 +1,4 @@
+import java.util.*;
 public class GameState
 {
 	private boolean castleLeft;
@@ -36,11 +37,11 @@ public class GameState
 		}
 		if(castleLeft)
 		{
-			castleLeft = isLeftCastleLegal()
+			castleLeft = isLeftCastleLegal();
 		}
 		if(castleRight)
 		{
-			castleRight = isRightCastleLegal()
+			castleRight = isRightCastleLegal();
 		}
 	}
 	//Assumes king is in check and decides if it is actually a checkmate.
@@ -69,6 +70,13 @@ public class GameState
 	}
 	public boolean canKingbeBlocked(ChessBoard c)
 	{
+		if(doubleCheck(c))
+		{
+			return false;
+		}
+		int[] kingsLocation = new int[2];
+		kingslocation = findKing(c,"white").clone();
+		
 		return false;
 	}
 	public boolean canTileBeFilled(ChessBoard c, int[] coordinate)
