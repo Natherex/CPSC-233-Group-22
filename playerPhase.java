@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class playerPhase{
 
-  private String playerNumber;
+  private String playerColor;
   private int piecesLeft;
   
   public playerPhase(){
@@ -11,15 +11,15 @@ public class playerPhase{
   
   }
   
-  public playerPhase(String number){
+  public playerPhase(String color){
   
-    this.playerNumber = number;
+    this.playerColor = color;
     
   }
   
   public String getPlayer(){
   
-    return ("Player " + playerNumber);
+    return (playerColor);
   
   }
   
