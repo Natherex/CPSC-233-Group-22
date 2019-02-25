@@ -5,6 +5,7 @@ import board.*;
 public class Piece {
     private String color;
     private int timesMoved = 0;
+    private String name;
 
     public Piece() {
         this.color = "white";
@@ -31,6 +32,14 @@ public class Piece {
         timesMoved++;
     }
 
+    public String getName() {
+        return name;
+    }
+  
+    public String setName(String nameOfPiece) {
+        this.name = nameOfPiece;
+    }
+  
     public boolean isValidMove(ChessBoard board, String startLocation, String endLocation) {
         return false;
     }
