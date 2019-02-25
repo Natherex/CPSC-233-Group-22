@@ -4,6 +4,7 @@ import board.*;
 
 public class Piece {
     private String color;
+    private String name;
     private int timesMoved = 0;
 
     public Piece() {
@@ -21,6 +22,10 @@ public class Piece {
 
     public String getColor() {
         return color;
+    }
+    
+    public String getName() {
+        return name;
     }
 
     public int getTimesMoved() {
