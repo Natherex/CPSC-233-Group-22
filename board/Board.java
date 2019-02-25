@@ -21,4 +21,16 @@ public class Board {
         return height;
     }
 
+    public Piece[][] getGrid() {
+        Piece[][] tempGrid = new Piece[height][length];
+
+        for (int row = 0; row < height; row++) {
+            for (int column = 0; column < length; column++) {
+                tempGrid[row][column] = new Piece(grid[row][column]);
+            }
+        }
+
+        return tempGrid;
+    }
+
 }

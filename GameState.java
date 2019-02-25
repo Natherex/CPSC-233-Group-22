@@ -17,7 +17,7 @@ public class GameState
 	{
 		return gameState;
 	}
-	public int updateGameState(ChessBoard c)
+	public void updateGameState(ChessBoard c)
 	{
 		if(isCheck(c))
 		{
@@ -39,11 +39,11 @@ public class GameState
 		}
 		if(castleLeft)
 		{
-			castleLeft = isLeftCastleLegal()
+			castleLeft = isLeftCastleLegal();
 		}
 		if(castleRight)
 		{
-			castleRight = isRightCastleLegal()
+			castleRight = isRightCastleLegal();
 		}
 	}
 	//Assumes king is in check and decides if it is actually a checkmate.

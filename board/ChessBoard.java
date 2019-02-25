@@ -284,6 +284,10 @@ public class ChessBoard extends Board {
         return new Piece(grid[coordinate[0]][coordinate[1]]);
     }
 
+    public Piece getPiece(int[] coordinates) {
+        return new Piece(grid[coordinates[0]][coordinates[1]]);
+    }
+
 
     public String toString() {
         StringBuilder builder = new StringBuilder();

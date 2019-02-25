@@ -36,7 +36,7 @@ public class Piece {
         return name;
     }
   
-    public String setName(String nameOfPiece) {
+    public void setName(String nameOfPiece) {
         this.name = nameOfPiece;
     }
   
