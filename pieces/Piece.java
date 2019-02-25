@@ -5,7 +5,7 @@ import board.*;
 public class Piece {
     private String color;
     private int timesMoved = 0;
-    private String name = null;
+    private String name;
 
     public Piece() {
         this.color = "white";
@@ -31,19 +31,20 @@ public class Piece {
     public void incrementTimesMoved() {
         timesMoved++;
     }
-    //Do we need this in piece?
-    //public boolean isValidMove(ChessBoard board, String startLocation, String endLocation) {
-    //    return false;
-    //}
+
+    public String getName() {
+        return name;
+    }
+  
+    public String setName(String nameOfPiece) {
+        this.name = nameOfPiece;
+    }
+  
+    public boolean isValidMove(ChessBoard board, String startLocation, String endLocation) {
+        return false;
+    }
 
     public String toString() {
         return "Piece(" + getColor() + ")";
-    }
-    public String getName(){
-    	return name;
-    }
-    public String setName(String nameOfPiece)
-    {
-    	this.name = nameOfPiece;
     }
 }

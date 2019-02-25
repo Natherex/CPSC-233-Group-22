@@ -1,5 +1,6 @@
 import board.ChessBoard;
 import java.util.Arrays;
+
 public class GameState
 {
 	private boolean castleLeft;
