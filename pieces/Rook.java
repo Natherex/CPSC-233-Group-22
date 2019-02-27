@@ -16,21 +16,21 @@ public class Rook extends Piece {
     public String toString() {
         return "Ro(" + getColor() + ")";
     }
-}
-public boolean isValidMove(ChessBoard c, String start, String end) {
-   
-	int[] totalDistance = board.distance(start, end);
-    if (totalDistance == null)
-        return false;
 
-    int xDirection = totalDistance[1];
-    int yDirection = totalDistance[0];
-    // Can move one space forwards
-    if (c.isNotBlocked(start, end) &&(xDirection == 0 || yDirection == 0 ))
-    {
-    	incrementTimesMoved();
-    	return true;
+    public boolean isValidMove(ChessBoard c, String start, String end) {
+
+        int[] totalDistance = c.distance(start, end);
+        if (totalDistance == null)
+            return false;
+
+        int xDirection = totalDistance[1];
+        int yDirection = totalDistance[0];
+        // Can move one space forwards
+        if (c.isNotBlocked(start, end) && (xDirection == 0 || yDirection == 0)) {
+            incrementTimesMoved();
+            return true;
+        }
+        return false;
     }
-    return false;
 }
 

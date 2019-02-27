@@ -1,6 +1,6 @@
 package pieces;
 
-import board.Chessboard;
+import board.ChessBoard;
 
 public class Queen extends Piece {
     public Queen() {
@@ -26,7 +26,7 @@ public class Queen extends Piece {
         int yDirection = totalDistance[0];
         
         //Can move in either cardinal direction
-        else if ((xDirection == 0 || yDirection == 0) && board.isNotBlocked(start, end)) {
+        if ((xDirection == 0 || yDirection == 0) && board.isNotBlocked(start, end)) {
             incrementTimesMoved();
             return true;
         
@@ -38,7 +38,7 @@ public class Queen extends Piece {
         //    board.removePiece(end);
         //    return true;
         
-        }
+
         
         //Can move on diagonals
         else if ((Math.abs(xDirection) == Math.abs(yDirection)) && board.isNotBlocked(start, end)) {
@@ -53,7 +53,7 @@ public class Queen extends Piece {
         //    board.removePiece(end);
         //    return true;
         
-        }
+
     
         return false;
     

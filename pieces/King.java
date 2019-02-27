@@ -1,4 +1,5 @@
 package pieces;
+import board.*;
 
 public class King extends Piece {
     public King() {
@@ -17,7 +18,7 @@ public class King extends Piece {
     
 	public boolean isValidMove(ChessBoard c, String start, String end) {
 		   
-		int[] totalDistance = board.distance(start, end);
+		int[] totalDistance = c.distance(start, end);
 	    if (totalDistance == null)
 	        return false;
 	

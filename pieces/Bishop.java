@@ -1,6 +1,6 @@
 package pieces;
 
-import board.Chessboard;
+import board.ChessBoard;
 
 public class Bishop extends Piece {
     public Bishop() {
@@ -29,7 +29,7 @@ public class Bishop extends Piece {
         if (Math.abs(xDirection) == Math.abs(yDirection) && board.isNotBlocked(start, end)) {
             incrementTimesMoved();
             return true;
-        ]
+        }
         
         //Not required
         //Kills piece if end location has an enemy piece

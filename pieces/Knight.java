@@ -1,5 +1,7 @@
 package pieces;
 
+import board.*;
+
 public class Knight extends Piece {
     public Knight() {
         super();
@@ -15,7 +17,7 @@ public class Knight extends Piece {
     }
     public boolean isValidMove(ChessBoard c, String start, String end) {
     	   
-    	int[] totalDistance = board.distance(start, end);
+    	int[] totalDistance = c.distance(start, end);
     	boolean valid = false;
         if (totalDistance == null)
             return false;
@@ -28,7 +30,7 @@ public class Knight extends Piece {
         if(Math.abs(xDirection) == 1 && Math.abs(yDirection) == 2)
         	valid = true;
         	
-        if (valid == true ))
+        if (valid == true)
         {
         	incrementTimesMoved();
         	return true;

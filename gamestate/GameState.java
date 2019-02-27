@@ -1,3 +1,5 @@
+package gamestate;
+
 import board.ChessBoard;
 import java.util.Arrays;
 
@@ -6,22 +8,38 @@ public class GameState
 	private boolean castleLeft;
 	private boolean castleRight;
 	private int gameState;
+	private boolean isWhiteTurn = true;
+	private boolean isBlackTurn = false;
 	
-	GameState()
+	public GameState()
 	{
 		castleLeft = true;
 		castleRight = true;
 		gameState = 0;
 	}
+
+	public void changeTurn() {
+		isWhiteTurn = !isWhiteTurn;
+		isBlackTurn = !isBlackTurn;
+	}
+
+	public boolean isWhiteTurn() {
+		return isWhiteTurn;
+	}
+
+	public boolean isBlackTurn() {
+		return isBlackTurn;
+	}
+
 	public int getGameState()
 	{
 		return gameState;
 	}
-	public void updateGameState(ChessBoard c)
+	public void updateGameState(ChessBoard c, int[] checkersLocation, String color)
 	{
 		if(isCheck(c))
 		{
-			if(isCheckMate(c))
+			if(isCheckmate(c, checkersLocation, color))
 			{
 				gameState = 2;
 			}
@@ -72,15 +90,15 @@ public class GameState
 		
 		return coordinates;
 	}
-	public boolean canKingbeBlocked(ChessBoard c,int[] checkersLocation, String color)
+	public boolean canKingBeBlocked(ChessBoard c,int[] checkersLocation, String color)
 	{
 		int[] kingsLocation = new int[2];
 		kingsLocation = findKing(c, color);
-		if(c.getGrid()[checkersLocation[0]][checkersLocation[1]].getName().equal("knight"))
+		if(c.getGrid()[checkersLocation[0]][checkersLocation[1]].getName().equals("knight"))
 		{
 			return false;
 		}
-		if(c.getGrid()[checkersLocation[0]][checkersLocation[1]].getName().equal("pawn"))
+		if(c.getGrid()[checkersLocation[0]][checkersLocation[1]].getName().equals("pawn"))
 		{
 			return false;
 		}
@@ -114,63 +132,63 @@ public class GameState
 		//check if knight can fill tile
 		if(coordinate[0]>=1 && coordinate[1]>=2)
 		{
-			if(c.getGrid()[coordinate[0]-1][coordinate[1]-2].getName().equal("knight"))
+			if(c.getGrid()[coordinate[0]-1][coordinate[1]-2].getName().equals("knight"))
 			{
 				return true;
 			}
 		}
 		if(coordinate[0]>=2 && coordinate[1]>=1)
 		{
-			if(c.getGrid()[coordinate[0]-2][coordinate[1]-1].getName().equal("knight"))
+			if(c.getGrid()[coordinate[0]-2][coordinate[1]-1].getName().equals("knight"))
 			{
 				return true;
 			}
 		}
 		if(coordinate[0]<7 && coordinate[1]>= 2)
 		{
-			if(c.getGrid()[coordinate[0]+1][coordinate[1]-2].getName().equal("knight"))
+			if(c.getGrid()[coordinate[0]+1][coordinate[1]-2].getName().equals("knight"))
 			{
 				return true;
 			}
 		}
 		if(coordinate[0]<6 && coordinate[1]>= 1)
 		{
-			if(c.getGrid()[coordinate[0]+2][coordinate[1]-1].getName().equal("knight"))
+			if(c.getGrid()[coordinate[0]+2][coordinate[1]-1].getName().equals("knight"))
 			{
 				return true;
 			}
 		}
 		if(coordinate[0]>=1 && coordinate[1] <6)
 		{
-			if(c.getGrid()[coordinate[0]-1][coordinate[1]+2].getName().equal("knight"))
+			if(c.getGrid()[coordinate[0]-1][coordinate[1]+2].getName().equals("knight"))
 			{
 				return true;
 			}
 		}
 		if(coordinate[0]>=2 && coordinate[1] <7)
 		{
-			if(c.getGrid()[coordinate[0]-2][coordinate[1]+1].getName().equal("knight"))
+			if(c.getGrid()[coordinate[0]-2][coordinate[1]+1].getName().equals("knight"))
 			{
 				return true;
 			}
 		}
 		if(coordinate[0]<7 && coordinate[1] <6)
 		{
-			if(c.getGrid()[coordinate[0]+1][coordinate[1]+2].getName().equal("knight"))
+			if(c.getGrid()[coordinate[0]+1][coordinate[1]+2].getName().equals("knight"))
 			{
 				return true;
 			}
 		}
 		if(coordinate[0]<6 && coordinate[1] <7)
 		{
-			if(c.getGrid()[coordinate[0]+2][coordinate[1]+1].getName().equal("knight"))
+			if(c.getGrid()[coordinate[0]+2][coordinate[1]+1].getName().equals("knight"))
 			{
 				return true;
 			}
 		}
 		
 		//check if pawn can fill tile
-		if(c.getGrid()[coordinate[0]][coordinate[1]-1].getName().equal("pawn"))
+		if(c.getGrid()[coordinate[0]][coordinate[1]-1].getName().equals("pawn"))
 		{
 			return true;
 		}
@@ -179,7 +197,7 @@ public class GameState
 		boolean open = true;
 		while(coordinate[1]+i<8 && open)
 		{
-			if(c.getGrid()[coordinate[0]][coordinate[1]+i].getName().equal("rook") || c.getGrid()[coordinate[0]][coordinate[1]+i].getName().equal("queen") )
+			if(c.getGrid()[coordinate[0]][coordinate[1]+i].getName().equals("rook") || c.getGrid()[coordinate[0]][coordinate[1]+i].getName().equals("queen") )
 			{
 				return true;
 			}
@@ -194,7 +212,7 @@ public class GameState
 		open = true;
 		while(coordinate[0]+i<8 && open)
 		{
-			if(c.getGrid()[coordinate[0]+i][coordinate[1]].getName().equal("rook") || c.getGrid()[coordinate[0]+i][coordinate[1]].getName().equal("queen") )
+			if(c.getGrid()[coordinate[0]+i][coordinate[1]].getName().equals("rook") || c.getGrid()[coordinate[0]+i][coordinate[1]].getName().equals("queen") )
 			{
 				return true;
 			}
@@ -209,7 +227,7 @@ public class GameState
 		open = true;
 		while(coordinate[1]-i>=0 && open)
 		{
-			if(c.getGrid()[coordinate[0]][coordinate[1]-i].getName().equal("rook") || c.getGrid()[coordinate[0]][coordinate[1]-i].getName().equal("queen") )
+			if(c.getGrid()[coordinate[0]][coordinate[1]-i].getName().equals("rook") || c.getGrid()[coordinate[0]][coordinate[1]-i].getName().equals("queen") )
 			{
 				return true;
 			}
@@ -224,7 +242,7 @@ public class GameState
 		open = true;
 		while(coordinate[0]-i >= 0 && open)
 		{
-			if(c.getGrid()[coordinate[0]-i][coordinate[1]].getName().equal("rook") || c.getGrid()[coordinate[0]-i][coordinate[1]].getName().equal("queen") )
+			if(c.getGrid()[coordinate[0]-i][coordinate[1]].getName().equals("rook") || c.getGrid()[coordinate[0]-i][coordinate[1]].getName().equals("queen") )
 			{
 				return true;
 			}
@@ -239,7 +257,7 @@ public class GameState
 		open = true;
 		while(coordinate[0]+i < 8 && coordinate[1]+i < 8 &&  open)
 		{
-			if(c.getGrid()[coordinate[0]+i][coordinate[1]+i].getName().equal("bishop") || c.getGrid()[coordinate[0]+i][coordinate[1]+i].getName().equal("queen") )
+			if(c.getGrid()[coordinate[0]+i][coordinate[1]+i].getName().equals("bishop") || c.getGrid()[coordinate[0]+i][coordinate[1]+i].getName().equals("queen") )
 			{
 				return true;
 			}
@@ -254,7 +272,7 @@ public class GameState
 		open = true;
 		while(coordinate[0]-i >= 0 && coordinate[1]+i < 8 &&  open)
 		{
-			if(c.getGrid()[coordinate[0]-i][coordinate[1]+i].getName().equal("bishop") || c.getGrid()[coordinate[0]-i][coordinate[1]+i].getName().equal("queen") )
+			if(c.getGrid()[coordinate[0]-i][coordinate[1]+i].getName().equals("bishop") || c.getGrid()[coordinate[0]-i][coordinate[1]+i].getName().equals("queen") )
 			{
 				return true;
 			}
@@ -269,7 +287,7 @@ public class GameState
 		open = true;
 		while(coordinate[0]-i >= 0 && coordinate[1]-1 >= 0 &&  open)
 		{
-			if(c.getGrid()[coordinate[0]-i][coordinate[1]-i].getName().equal("bishop") || c.getGrid()[coordinate[0]-i][coordinate[1]-i].getName().equal("queen") )
+			if(c.getGrid()[coordinate[0]-i][coordinate[1]-i].getName().equals("bishop") || c.getGrid()[coordinate[0]-i][coordinate[1]-i].getName().equals("queen") )
 			{
 				return true;
 			}
@@ -284,7 +302,7 @@ public class GameState
 		open = true;
 		while(coordinate[0]+i < 8 && coordinate[1]-1 >= 0 &&  open)
 		{
-			if(c.getGrid()[coordinate[0]+i][coordinate[1]-i].getName().equal("bishop") || c.getGrid()[coordinate[0]+i][coordinate[1]-i].getName().equal("queen") )
+			if(c.getGrid()[coordinate[0]+i][coordinate[1]-i].getName().equals("bishop") || c.getGrid()[coordinate[0]+i][coordinate[1]-i].getName().equals("queen") )
 			{
 				return true;
 			}
@@ -297,7 +315,7 @@ public class GameState
 		return false;
 		
 	}
-	public boolean canCheckerbeTaken(ChessBoard c)
+	public boolean canCheckerBeTaken(ChessBoard c, int[] checkersLocation, String color)
 	{
 		return false;
 	}
