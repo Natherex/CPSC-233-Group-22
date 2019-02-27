@@ -31,12 +31,13 @@ public class Bishop extends Piece {
             return true;
         ]
         
+        //Not required
         //Kills piece if end location has an enemy piece
-        else if (xDirection == yDirection && board.isBlocked(start, end)) {
-            incrementTimesMoved();
-            board.removePiece(end);
-            return true;
-        }
+        //else if (xDirection == yDirection && board.isBlocked(start, end)) {
+        //    incrementTimesMoved();
+        //    board.removePiece(end);
+        //    return true;
+        //}
         
         return false;
     
