@@ -5,10 +5,12 @@ import board.Chessboard;
 public class Bishop extends Piece {
     public Bishop() {
         super();
+        setName("Bishop");
     }
 
     public Bishop(String color) {
         super(color);
+        setName("Bishop");
     }
 
     public String toString() {
