@@ -34,16 +34,17 @@ public class playerPhase{
     System.out.print("Select piece to move: ")
     Scanner choosePiece = new Scanner(System.in);
     String currentPosition = choosePiece;
-    return currentPosition.toLowerCase();
+    return currentPosition.toUpperCase();
   
   }
+  
   //use isValidLocation(string)
-  public String movePiece(){
+  public String placeToMove(){
   
     System.out.print("Select space to move piece to: ")
     Scanner boardSpace = new Scanner(System.in);
     String newPosition = boardSpace;
-    return newPosition.toLowerCase();
+    return newPosition.toUpperCase();
   
   }
   
