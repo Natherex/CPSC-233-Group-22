@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class playerPhase{
 
-  private String playerColor;
+  private String playerNumber;
   private int piecesLeft;
   
   public playerPhase(){
@@ -11,15 +11,15 @@ public class playerPhase{
   
   }
   
-  public playerPhase(String color){
+  public playerPhase(String number){
   
-    this.playerColor = color;
+    this.playerNumber = number;
     
   }
   
   public String getPlayer(){
   
-    return (playerColor);
+    return ("Player " + playerNumber);
   
   }
   
@@ -34,16 +34,17 @@ public class playerPhase{
     System.out.print("Select piece to move: ")
     Scanner choosePiece = new Scanner(System.in);
     String currentPosition = choosePiece;
-    return currentPosition.toLowerCase();
+    return currentPosition.toUpperCase();
   
   }
+  
   //use isValidLocation(string)
-  public String movePiece(){
+  public String placeToMove(){
   
     System.out.print("Select space to move piece to: ")
     Scanner boardSpace = new Scanner(System.in);
     String newPosition = boardSpace;
-    return newPosition.toLowerCase();
+    return newPosition.toUpperCase();
   
   }
   
