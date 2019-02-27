@@ -26,7 +26,7 @@ public class Bishop extends Piece {
         int yDirection = totalDistance[0];
         
         //Can only move diagonally if clear
-        if (xDirection == yDirection && board.isNotBlocked(start, end)) {
+        if (Math.abs(xDirection) == Math.abs(yDirection) && board.isNotBlocked(start, end)) {
             incrementTimesMoved();
             return true;
         ]
