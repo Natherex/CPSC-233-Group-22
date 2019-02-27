@@ -1,5 +1,6 @@
 package board;
 
+import gamestate.GameState;
 import pieces.*;
 import java.util.Scanner;
 
@@ -7,6 +8,9 @@ public class ChessBoard extends Board {
     private boolean isFlipped = false;
     private static final char[] validColumns = new char[]{'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'};
     private static final int[] validRows = new int[]{1, 2, 3, 4, 5, 6, 7, 8};
+    private static final char[] flippedColumns = new char[]{'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A'};
+    private static final int[] flippedRows = new int[]{8, 7, 6, 5, 4, 3, 2, 1};
+    private GameState state = new GameState();
 
     /**
      * Sets up an 8x8 chess board.
@@ -55,6 +59,14 @@ public class ChessBoard extends Board {
                 Piece temp = grid[y][x];
                 grid[y][x] = grid[7 - y][x];
                 grid[7 - y][x] = temp;
+            }
+        }
+
+        for (int x = 0; x < 4; x++) {
+            for (int y = 0; y < 8; y++) {
+                Piece temp = grid[y][x];
+                grid[y][x] = grid[y][7 - x];
+                grid[y][7- x] = temp;
             }
         }
 
@@ -186,23 +198,25 @@ public class ChessBoard extends Board {
      * @param start Starting location of the piece on the chess board.
      * @param end Ending location of the piece on the chess board.
      */
-    public void movePiece(String start, String end) {
+    public boolean movePiece(String start, String end) {
         int[] startLocation = parseLocation(start);
         int[] endLocation = parseLocation(end);
-        int[] distance = distance(start, end);
+        // int[] distance = distance(start, end);
 
         if (startLocation != null && endLocation != null) {
-
             if (grid[startLocation[0]][startLocation[1]].isValidMove(this, start, end)) {
                 Piece temp = grid[startLocation[0]][startLocation[1]];
                 grid[startLocation[0]][startLocation[1]] = grid[endLocation[0]][endLocation[1]];
                 grid[endLocation[0]][endLocation[1]] = temp;
-                System.out.println("Valid Move");
-            } else {
-                System.out.println("Invalid Move");
+                return true;
             }
-
         }
+        return false;
+    }
+
+    public boolean isCorrectColor(String location) {
+        int[] startLocation = parseLocation(location);
+        return grid[startLocation[0]][startLocation[1]].getColor().equals(currentPlayer());
     }
 
     /**
@@ -227,8 +241,6 @@ public class ChessBoard extends Board {
         }
 
         int[] coordinates = new int[2];
-        char[] flippedColumns = new char[]{'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A'};
-        int[] flippedRows = new int[]{8, 7, 6, 5, 4, 3, 2, 1};
 
         char column = location.charAt(0);
         int row = Character.getNumericValue(location.charAt(1));
@@ -279,34 +291,113 @@ public class ChessBoard extends Board {
         return checks == 2;
     }
 
+    public void changeTurn() {
+        flipBoard();
+        state.changeTurn();
+    }
+
+    public boolean isWhiteTurn() {
+        return state.isWhiteTurn();
+    }
+
+    public boolean isBlackTurn() {
+        return state.isBlackTurn();
+    }
+
+    public String currentPlayer() {
+        if (isWhiteTurn())
+            return "w";
+        else
+            return "b";
+    }
+
     public Piece getPiece(String location) {
         int[] coordinate = parseLocation(location);
-        return new Piece(grid[coordinate[0]][coordinate[1]]);
+        if (coordinate == null)
+            return null;
+        else
+            return new Piece(grid[coordinate[0]][coordinate[1]]);
     }
 
     public Piece getPiece(int[] coordinates) {
         return new Piece(grid[coordinates[0]][coordinates[1]]);
     }
 
-
     public String toString() {
         StringBuilder builder = new StringBuilder();
 
-        for (int y = 7; y >= 0; y--) {
+        if (isWhiteTurn()) {
+            builder.append("Player 1's Turn\n\n");
 
-            for (int x = 0; x < 7; x++) {
-                if (grid[y][x] != null)
-                    builder.append(grid[y][x].toString());
+            for (int y = 7; y >= 0; y--) {
+
+                builder.append(validRows[y]);
+                builder.append(" ");
+
+                for (int x = 0; x < 7; x++) {
+                    if (grid[y][x] != null)
+                        builder.append(grid[y][x].toString());
+                    else
+                        builder.append("     ");
+                    builder.append("|");
+                }
+
+                if (grid[y][7] != null)
+                    builder.append(grid[y][7].toString());
                 else
-                    builder.append("0");
-                builder.append("|");
+                    builder.append("     ");
+
+
+                if (y != 0) {
+                    builder.append("\n  ");
+                    for (int i = 0; i < 47; i++)
+                        builder.append("-");
+                    builder.append("\n");
+                }
             }
 
-            if (grid[y][7] != null)
-                builder.append(grid[y][7].toString());
-            else
-                builder.append("0");
-            builder.append("\n---------------------------------\n");
+            builder.append("\n  ");
+            for (int i = 0; i < 8; i++) {
+                String temp = "  " + validColumns[i] + "   ";
+                builder.append(temp);
+            }
+        }
+
+        if (isBlackTurn()) {
+            builder.append("Player 2's Turn\n\n");
+
+            for (int y = 7; y >= 0; y--) {
+
+                builder.append(flippedRows[y]);
+                builder.append(" ");
+
+                for (int x = 0; x < 7; x++) {
+                    if (grid[y][x] != null)
+                        builder.append(grid[y][x].toString());
+                    else
+                        builder.append("     ");
+                    builder.append("|");
+                }
+
+                if (grid[y][7] != null)
+                    builder.append(grid[y][7].toString());
+                else
+                    builder.append("     ");
+
+
+                if (y != 0) {
+                    builder.append("\n  ");
+                    for (int i = 0; i < 47; i++)
+                        builder.append("-");
+                    builder.append("\n");
+                }
+            }
+
+            builder.append("\n  ");
+            for (int i = 0; i < 8; i++) {
+                String temp = "  " + flippedColumns[i] + "   ";
+                builder.append(temp);
+            }
         }
 
         return builder.toString();

@@ -14,7 +14,7 @@ public class Bishop extends Piece {
     }
 
     public String toString() {
-        return "Bishop(" + getColor() + ")";
+        return "Bi(" + getColor() + ")";
     }
     
     public boolean isValidMove(ChessBoard board, String start, String end) {

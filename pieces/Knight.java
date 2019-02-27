@@ -11,7 +11,7 @@ public class Knight extends Piece {
         setName("knight");
     }
     public String toString() {
-        return "Knight(" + getColor() + ")";
+        return "Kn(" + getColor() + ")";
     }
     public boolean isValidMove(ChessBoard c, String start, String end) {
     	   

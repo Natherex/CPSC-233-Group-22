@@ -14,7 +14,7 @@ public class Queen extends Piece {
     }
 
     public String toString() {
-        return "Queen(" + getColor() + ")";
+        return "Qu(" + getColor() + ")";
     }
     
     public boolean isValidMove(ChessBoard board, String start, String end) {

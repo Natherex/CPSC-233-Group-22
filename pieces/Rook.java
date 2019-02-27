@@ -14,7 +14,7 @@ public class Rook extends Piece {
     }
 
     public String toString() {
-        return "Rook(" + getColor() + ")";
+        return "Ro(" + getColor() + ")";
     }
 }
 public boolean isValidMove(ChessBoard c, String start, String end) {
