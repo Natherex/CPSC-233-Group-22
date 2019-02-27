@@ -7,11 +7,16 @@ public class TextMain {
         Scanner input = new Scanner(System.in);
         String start;
         String end;
+        String currentPlayer;
 
         board.initialize();
         while (true) {
-            System.out.println(board);
+            if (board.isWhiteTurn())
+                currentPlayer = "w";
+            else
+                currentPlayer = "b";
 
+            System.out.println(board);
             try {
                 System.out.print("Start Location: ");
                 start = input.nextLine();
@@ -19,11 +24,16 @@ public class TextMain {
                 System.out.print("End Location: ");
                 end = input.nextLine();
 
-                board.movePiece(start, end);
+
+                if (board.isCorrectColor(start)) {
+                    if (board.movePiece(start, end)) {
+                        board.changeTurn();
+                    }
+                }
+
             } catch (NullPointerException e) {
                 System.out.println("Invalid Input\n");
             }
-
         }
     }
 }

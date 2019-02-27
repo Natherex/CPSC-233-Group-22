@@ -1,4 +1,5 @@
 import board.ChessBoard;
+import gamestate.GameState;
 
 public class Main {
     public static void main(String[] args) {
