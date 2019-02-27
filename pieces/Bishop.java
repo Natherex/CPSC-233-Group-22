@@ -24,13 +24,13 @@ public class Bishop extends Piece {
         int yDirection = totalDistance[0];
         
         //Can only move diagonally if clear
-        if (xDirection == yDirection && board.isNotBlocked(start, end) {
+        if (xDirection == yDirection && board.isNotBlocked(start, end)) {
             incrementTimesMoved();
             return true;
         ]
         
         //Kills piece if end location has an enemy piece
-        else if (xDirection == yDirection && bpard.isBlocked(start, end) {
+        else if (xDirection == yDirection && board.isBlocked(start, end)) {
             incrementTimesMoved();
             board.removePiece(end);
             return true;
