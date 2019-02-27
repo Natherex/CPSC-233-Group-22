@@ -192,16 +192,11 @@ public class ChessBoard extends Board {
         int[] distance = distance(start, end);
 
         if (startLocation != null && endLocation != null) {
-
             if (grid[startLocation[0]][startLocation[1]].isValidMove(this, start, end)) {
                 Piece temp = grid[startLocation[0]][startLocation[1]];
                 grid[startLocation[0]][startLocation[1]] = grid[endLocation[0]][endLocation[1]];
                 grid[endLocation[0]][endLocation[1]] = temp;
-                System.out.println("Valid Move");
-            } else {
-                System.out.println("Invalid Move");
             }
-
         }
     }
 
@@ -288,21 +283,30 @@ public class ChessBoard extends Board {
     public String toString() {
         StringBuilder builder = new StringBuilder();
 
+        if (!isFlipped)
+            builder.append("Player 1's Turn\n\n");
+        else
+            builder.append("Player 2's Turn\n\n");
+
         for (int y = 7; y >= 0; y--) {
 
             for (int x = 0; x < 7; x++) {
                 if (grid[y][x] != null)
                     builder.append(grid[y][x].toString());
                 else
-                    builder.append("0");
+                    builder.append("     ");
                 builder.append("|");
             }
 
             if (grid[y][7] != null)
                 builder.append(grid[y][7].toString());
             else
-                builder.append("0");
-            builder.append("\n---------------------------------\n");
+                builder.append("     ");
+
+            builder.append("\n");
+            for (int i = 0; i < 47; i++)
+                builder.append("-");
+            builder.append("\n");
         }
 
         return builder.toString();

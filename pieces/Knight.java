@@ -9,6 +9,6 @@ public class Knight extends Piece {
         super(color);
     }
     public String toString() {
-        return "Knight(" + getColor() + ")";
+        return "Kn(" + getColor() + ")";
     }
 }

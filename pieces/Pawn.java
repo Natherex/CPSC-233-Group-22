@@ -57,7 +57,7 @@ public class Pawn extends Piece {
     }
 
     public String toString() {
-        return "Pawn(" + getColor() + ")";
+        return "Pa(" + getColor() + ")";
     }
 
 }
