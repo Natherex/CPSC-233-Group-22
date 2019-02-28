@@ -95,7 +95,7 @@ public class ChessBoard extends Board {
 
     /**
      * Used to find out whether the starting location and the ending location are blocked by
-     * any pieces in between them.
+     * any pieces in between them including the piece at the end location.
      * @param start Starting location of the piece on the chess board.
      * @param end Ending location of the piece on the chess board.
      * @return Returns true is the start and end have open line-of-sight, false otherwise.
