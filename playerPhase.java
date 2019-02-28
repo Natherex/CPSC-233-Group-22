@@ -7,7 +7,7 @@ public class playerPhase{
   
   public playerPhase(){
     
-    this.playerNumber = "One"
+    this.playerNumber = "One";
   
   }
   
@@ -31,7 +31,7 @@ public class playerPhase{
   
   public String choosePiece(){
   
-    System.out.print("Select piece to move: ")
+    System.out.print("Select piece to move: ");
     Scanner choosePiece = new Scanner(System.in);
     String currentPosition = choosePiece;
     return currentPosition.toUpperCase();
@@ -41,7 +41,7 @@ public class playerPhase{
   //use isValidLocation(string)
   public String placeToMove(){
   
-    System.out.print("Select space to move piece to: ")
+    System.out.print("Select space to move piece to: ");
     Scanner boardSpace = new Scanner(System.in);
     String newPosition = boardSpace;
     return newPosition.toUpperCase();

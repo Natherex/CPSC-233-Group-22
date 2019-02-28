@@ -194,9 +194,12 @@ public class ChessBoard extends Board {
     }
 
     /**
-     * Moves piece and given location to another location.
+     * Moves piece and given location to another location. This method can be used as a normal void method; however
+     * to check if the move was valid or not, it also returns true or false.
      * @param start Starting location of the piece on the chess board.
      * @param end Ending location of the piece on the chess board.
+     * @return Returns true if the piece is successfully moved (valid move).
+     *         Returns false is the piece is unsuccessfully moved (invalid move).
      */
     public boolean movePiece(String start, String end) {
         int[] startLocation = parseLocation(start);
@@ -214,9 +217,17 @@ public class ChessBoard extends Board {
         return false;
     }
 
+    /**
+     * @param location Location of the piece on the chess board.
+     * @return Returns whether or not the piece at the select location is the
+     *         correct color for the corresponding player.
+     */
     public boolean isCorrectColor(String location) {
         int[] startLocation = parseLocation(location);
-        return grid[startLocation[0]][startLocation[1]].getColor().equals(currentPlayer());
+        if (startLocation == null)
+            return false;
+        else
+            return grid[startLocation[0]][startLocation[1]].getColor().equals(currentPlayer());
     }
 
     /**
@@ -320,7 +331,10 @@ public class ChessBoard extends Board {
     }
 
     public Piece getPiece(int[] coordinates) {
-        return new Piece(grid[coordinates[0]][coordinates[1]]);
+        if (coordinates[0] > 7 || coordinates[1] > 7 || coordinates[0] < 0 || coordinates[1] < 0)
+            return null;
+        else
+            return new Piece(grid[coordinates[0]][coordinates[1]]);
     }
 
     public String toString() {

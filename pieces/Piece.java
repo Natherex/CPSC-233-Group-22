@@ -15,9 +15,15 @@ public class Piece {
         this.color = color;
     }
 
+    public Piece(String color, String name) {
+        this.color = color;
+        this.name = name;
+    }
+
     public Piece(Piece p) {
         this.color = p.getColor();
         this.timesMoved = p.getTimesMoved();
+        this.name = p.getName();
     }
 
     public String getColor() {

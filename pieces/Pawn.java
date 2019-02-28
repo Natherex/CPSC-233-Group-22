@@ -4,11 +4,11 @@ import board.ChessBoard;
 
 public class Pawn extends Piece {
     public Pawn() {
-        super();
+        super("w", "Pawn");
     }
 
     public Pawn(String color) {
-        super(color);
+        super(color, "Pawn");
     }
 
     /**
