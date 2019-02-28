@@ -4,13 +4,11 @@ import board.ChessBoard;
 
 public class Bishop extends Piece {
     public Bishop() {
-        super();
-        setName("Bishop");
+        super("w", "Bishop");
     }
 
     public Bishop(String color) {
-        super(color);
-        setName("Bishop");
+        super(color, "Bishop");
     }
 
     public String toString() {
@@ -25,7 +23,7 @@ public class Bishop extends Piece {
         int xDirection = totalDistance[1];
         int yDirection = totalDistance[0];
         
-        //Can only move diagonally if clear
+        // Can only move diagonally if clear
         if (Math.abs(xDirection) == Math.abs(yDirection) && board.isNotBlocked(start, end)) {
             incrementTimesMoved();
             return true;

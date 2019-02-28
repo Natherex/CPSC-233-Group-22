@@ -51,7 +51,7 @@ public class ChessBoard extends Board {
 
     /**
      * Flips all the coordinate system of the board.
-     * Reassigns pieces accordingly.
+     * Reassigns pieces on the grid accordingly.
      */
     public void flipBoard() {
         for (int y = 0; y < 4; y++) {
@@ -187,7 +187,7 @@ public class ChessBoard extends Board {
      * Calls isNotBlocked() and flips the boolean, exists purely for convenience and to avoid double negatives.
      * @param start Starting location of the piece on the chess board.
      * @param end Ending location of the piece on the chess board.
-     * @return Returns opposite boolean from isNotBlocked().
+     * @return Returns the opposite boolean from isNotBlocked().
      */
     public boolean isBlocked(String start, String end) {
         return !isNotBlocked(start, end);
@@ -302,34 +302,51 @@ public class ChessBoard extends Board {
         return checks == 2;
     }
 
+    /**
+     * Changed from white's turn to black's turn.
+     * Flips the board and changes the game state to reflect this.
+     */
     public void changeTurn() {
         flipBoard();
         state.changeTurn();
     }
 
+    /**
+     * @return Returns if it's currently white's turn.
+     */
     public boolean isWhiteTurn() {
         return state.isWhiteTurn();
     }
 
+    /**
+     * @return Returns if it's currently black's turn.
+     */
     public boolean isBlackTurn() {
         return state.isBlackTurn();
     }
 
+    /**
+     * @return Returns the current player's color.
+     */
     public String currentPlayer() {
-        if (isWhiteTurn())
-            return "w";
-        else
-            return "b";
+        return isWhiteTurn() ? "w" : "b";
     }
 
+    /**
+     * @param location Location of the piece on the chess board.
+     * @return Returns the piece at the given location.
+     *         Returns null if no piece is at that location.
+     */
     public Piece getPiece(String location) {
         int[] coordinate = parseLocation(location);
-        if (coordinate == null)
-            return null;
-        else
-            return new Piece(grid[coordinate[0]][coordinate[1]]);
+        return coordinate == null ? null : new Piece(grid[coordinate[0]][coordinate[1]]);
     }
 
+    /**
+     * @param coordinates Coordinates of the piece on the grid.
+     * @return Returns the piece at the given location.
+     *         Returns null if no piece is at that location.
+     */
     public Piece getPiece(int[] coordinates) {
         if (coordinates[0] > 7 || coordinates[1] > 7 || coordinates[0] < 0 || coordinates[1] < 0)
             return null;
@@ -337,6 +354,10 @@ public class ChessBoard extends Board {
             return new Piece(grid[coordinates[0]][coordinates[1]]);
     }
 
+    /**
+     * Creates a text based version of the board.
+     * @return Returns a string of the board.
+     */
     public String toString() {
         StringBuilder builder = new StringBuilder();
 
@@ -375,9 +396,8 @@ public class ChessBoard extends Board {
                 String temp = "  " + validColumns[i] + "   ";
                 builder.append(temp);
             }
-        }
 
-        if (isBlackTurn()) {
+        } else if (isBlackTurn()) {
             builder.append("Player 2's Turn\n\n");
 
             for (int y = 7; y >= 0; y--) {
@@ -412,6 +432,7 @@ public class ChessBoard extends Board {
                 String temp = "  " + flippedColumns[i] + "   ";
                 builder.append(temp);
             }
+
         }
 
         return builder.toString();
