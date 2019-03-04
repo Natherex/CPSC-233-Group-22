@@ -17,8 +17,6 @@ public class GUIMain extends Application {
 
         GridPane grid = new GridPane();
 
-
-
         primaryStage.setResizable(false);
         primaryStage.show();
     }

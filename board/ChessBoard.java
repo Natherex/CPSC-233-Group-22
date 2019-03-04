@@ -204,7 +204,6 @@ public class ChessBoard extends Board {
     public boolean movePiece(String start, String end) {
         int[] startLocation = parseLocation(start);
         int[] endLocation = parseLocation(end);
-        // int[] distance = distance(start, end);
 
         if (startLocation != null && endLocation != null) {
             if (grid[startLocation[0]][startLocation[1]].isValidMove(this, start, end)) {
