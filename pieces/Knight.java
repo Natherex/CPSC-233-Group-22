@@ -34,12 +34,18 @@ public class Knight extends Piece {
         int yDirection = totalDistance[0];
 
         // Can move two spaces forwards or backwards and one left or right
-        if (Math.abs(xDirection) == 2 && Math.abs(yDirection) == 1)
-        	valid = true;
+        if (Math.abs(xDirection) == 2 && Math.abs(yDirection) == 1) {
+            c.removePiece(end);
+            valid = true;
+        }
+
 
         // Can move one space forward or backward and two left or right
-        else if (Math.abs(xDirection) == 1 && Math.abs(yDirection) == 2)
-        	valid = true;
+        else if (Math.abs(xDirection) == 1 && Math.abs(yDirection) == 2) {
+            c.removePiece(end);
+            valid = true;
+        }
+
         	
         if (valid) {
         	incrementTimesMoved();

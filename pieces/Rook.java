@@ -25,11 +25,20 @@ public class Rook extends Piece {
 
         int xDirection = totalDistance[1];
         int yDirection = totalDistance[0];
-        // Can move one space forwards
+
+        // Can move up/down/left/right
         if (c.isNotBlocked(start, end) && (xDirection == 0 || yDirection == 0)) {
             incrementTimesMoved();
             return true;
         }
+
+        // Can kill up/down/left/right
+        else if (c.isBlocked(start, end) && (xDirection == 0 || yDirection == 0)) {
+            incrementTimesMoved();
+            c.removePiece(end);
+            return true;
+        }
+
         return false;
     }
 }
