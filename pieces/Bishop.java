@@ -1,14 +1,30 @@
 package pieces;
 
 import board.ChessBoard;
+import javafx.scene.image.Image;
 
 public class Bishop extends Piece {
+    private Image icon;
+    
     public Bishop() {
         super("w", "Bishop");
+        
+        // If the color is white, set the icon of the piece to the white bishop, otherwise it'll be the black bishop.
+        if (getColor().equals("w"))
+            setIcon(new Image("/assets/Chess_blt60.png"));
+        else
+            setIcon(new Image("/assets/Chess_bdt60.png"));
+
     }
 
     public Bishop(String color) {
         super(color, "Bishop");
+        
+        // If the color is white, set the icon of the piece to the white bishop, otherwise it'll be the black bishop.
+        if (getColor().equals("w"))
+            setIcon(new Image("/assets/Chess_blt60.png"));
+        else
+            setIcon(new Image("/assets/Chess_bdt60.png"));
     }
 
     public String toString() {
