@@ -6,11 +6,23 @@ public class Queen extends Piece {
     public Queen() {
         super();
         setName("Queen");
+        
+        //If the color is white, set the icon of the piece to the white queen, otherwise it'll be the black queen.
+	    if (getColor().equals("w"))
+	        setIcon(new Image("/assets/Chess_qlt60.png"));
+	    else
+	        setIcon(new Image("/assets/Chess_qdt60.png"));
     }
 
     public Queen(String color) {
         super(color);
         setName("Queen");
+        
+        //If the color is white, set the icon of the piece to the white queen, otherwise it'll be the black queen.
+	    if (getColor().equals("w"))
+	        setIcon(new Image("/assets/Chess_qlt60.png"));
+	    else
+	        setIcon(new Image("/assets/Chess_qdt60.png"));
     }
 
     public String toString() {
