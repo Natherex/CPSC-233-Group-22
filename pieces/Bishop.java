@@ -10,7 +10,7 @@ public class Bishop extends Piece {
         super("w", "Bishop");
         
         //If the color is white, set the icon of the pie to the white bishop, otherwise it'll be the black bishop
-        if (getColor().equals("w")
+        if (getColor().equals("w"))
             setIcon(new Image("/assets/Chess_blt60.png"));
         else
             setIcon(new Image("/assets/Chess_bdt60.png"));
@@ -20,7 +20,7 @@ public class Bishop extends Piece {
         super(color, "Bishop");
         
          //If the color is white, set the icon of the pie to the white bishop, otherwise it'll be the black bishop
-        if (getColor().equals("w")
+        if (getColor().equals("w"))
             setIcon(new Image("/assets/Chess_blt60.png"));
         else
             setIcon(new Image("/assets/Chess_bdt60.png"));
