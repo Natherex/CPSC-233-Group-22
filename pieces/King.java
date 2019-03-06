@@ -18,7 +18,7 @@ public class King extends Piece {
 
     public King(String color) {
         super(color);
-        setName("rook");
+        setName("king");
 	    
 	//If the color is white, set the icon of the piece to the white king, otherwise it'll be the black king.
 	if (getColor().equals("w"))
