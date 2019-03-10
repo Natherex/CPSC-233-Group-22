@@ -71,8 +71,14 @@ public class GameState
 			return false;
 		return true;
 	}
+	//returns true if in check or if in checkmate
 	public boolean isCheck(ChessBoard c)
 	{
+		//check if being attacked by knights
+		//check if being attacked from top left right bottom
+		//check if being attacked by sides
+		// if being checked set location of checker
+		
 		return false;
 	}
 	public boolean isStaleMate(ChessBoard c)
