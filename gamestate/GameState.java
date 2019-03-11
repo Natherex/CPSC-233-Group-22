@@ -75,10 +75,37 @@ public class GameState
 	{
 		return false;
 	}
-	public boolean isStaleMate(ChessBoard c)
-	{
+	
+	/**
+	 * Checks if the game is in stalemate
+	 * @param c the ChessBoard object
+	 * @param checkersLocation the location of the piece "checking" King
+	 * @param color color of the pieces
+	 * @return true if board is in stalemate, false otherwise
+	*/
+	public boolean isStaleMate(ChessBoard c, int [] checkersLocation, String color) {
+		
+		int timesOccured;
+		//call some function to check of board has happened 3 times
+		
+		//If King is not in check AND has no valid moves, game is in stalemate
+		if ((!isCheck(c) && canKingMove(c)) && !canKingBeBlocked(c, checkersLocation, color)) {
+			
+			return true;	
+		
+		// if board has occured 3 times, game is in stalemate
+		} else if (timesOccured == 3) {
+		
+			return true;
+		}
+		
+		//need to add function that checks
+		//if no pieces were taken in last 50 turns
+		
 		return false;
 	}
+		    
+		    
 	public boolean canKingMove(ChessBoard c)
 	{
 		return false;
