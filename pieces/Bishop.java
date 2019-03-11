@@ -4,7 +4,7 @@ import board.ChessBoard;
 
 public class Bishop extends Piece {
     public Bishop() {
-        super("w", "Bishop");
+        super("w", "  Bishop");
     }
 
     public Bishop(String color) {

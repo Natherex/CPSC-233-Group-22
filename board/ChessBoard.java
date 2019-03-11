@@ -93,6 +93,112 @@ public class ChessBoard extends Board {
         return new int[]{rowDistance, columnDistance};
     }
 
+    public boolean wayIsClear(String start, String end) {
+        
+    	int[] totalDistance = distance(start, end);
+        int xDirectionChange = totalDistance[1];
+        int yDirectionChange = totalDistance[0];
+ 
+        int[] startCoordinate = parseLocation(start);
+        int startY = startCoordinate[0];
+        int startX = startCoordinate[1];
+
+        int[] endCoordinate = parseLocation(end);
+        int endY = endCoordinate[0];
+        int endX = endCoordinate[1];
+        int temp;
+        if(xDirectionChange == 0)
+        {
+        	if(endY < startY)
+        	{
+        		temp = endY;
+        		endY = startY;
+        		startY = temp;
+        	}
+        	endY--;
+        	startY ++;
+        	while(endY >= startY)
+        	{
+        		if(!grid[endX][startY].getName().equals(null))
+        			return false;
+        		startY++;
+        	}
+        	return true;
+        }
+        if(yDirectionChange == 0)
+        {
+        	if(endX < startX)
+        	{
+        		temp = endX;
+        		endX = startX;
+        		startX = temp;
+        	}
+        	endX--;
+        	startX++;
+        	while(endX >= startX)
+        	{
+        		if(!grid[startX][endY].getName().equals(null))
+        			return false;
+        		startX++;
+        	}
+        	return true;
+        	
+        }
+        if(xDirectionChange == yDirectionChange)
+        {
+        	if(endX < startX)
+        	{
+        		temp = endX;
+        		endX = startX;
+        		startX = temp;
+        	}
+        	if(endY < startY)
+        	{
+        		temp = endY;
+        		endY = startY;
+        		startY = temp;
+        	}
+        	endX--;
+        	startX++;
+        	endY--;
+        	startY ++;
+        	while(endX >= startX && endY >= startY)
+        	{
+        		if(!grid[startX][startY].getName().equals(null))
+        			return false;
+            	startX++;
+            	startY++;
+        	}
+        	return true;
+        }
+        if(xDirectionChange*-1 == yDirectionChange)
+        {
+        	if(endX < startX)
+        	{
+        		temp = endX;
+        		endX = startX;
+        		startX = temp;
+        		temp = endY;
+        		endY = startY;
+        		startY = temp;
+        	}
+
+        	endX--;
+        	startX++;
+        	endY++;
+        	startY--;
+        	while(endX >= startX && endY <= startY)
+        	{
+        		if(!grid[startX][startY].getName().equals(null))
+        			return false;
+            	startX++;
+            	startY--;
+        	}
+        	return true;
+        	
+        }
+        return true;
+    }
     /**
      * Used to find out whether the starting location and the ending location are blocked by
      * any pieces in between them including the piece at the end location.
