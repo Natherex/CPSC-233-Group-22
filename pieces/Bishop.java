@@ -14,7 +14,6 @@ public class Bishop extends Piece {
             setIcon(new Image("/assets/Chess_blt60.png"));
         else
             setIcon(new Image("/assets/Chess_bdt60.png"));
-
     }
 
     public Bishop(String color) {
