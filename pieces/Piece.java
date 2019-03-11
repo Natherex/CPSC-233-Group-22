@@ -22,10 +22,17 @@ public class Piece {
         this.name = name;
     }
 
+    public Piece(String color, String name, String icon) {
+        this.color = color;
+        this.name = name;
+        this.icon = icon;
+    }
+
     public Piece(Piece p) {
         this.color = p.getColor();
         this.timesMoved = p.getTimesMoved();
         this.name = p.getName();
+        this.icon = p.getIconLocation();
     }
 
     protected void setIconLocation(String location) {
