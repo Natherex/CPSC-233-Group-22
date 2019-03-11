@@ -1,29 +1,26 @@
 package pieces;
 
 import board.*;
-import javafx.scene.image.Image;
 
 public class Knight extends Piece {
-    private Image icon;
-    
     public Knight() {
         super("w", "Knight");
         
         //If the color is white, set the icon of the piece to the white knight, otherwise it'll be the black knight.
 	    if (getColor().equals("w"))
-	        setIcon(new Image("/assets/Chess_nlt60.png"));
+	        setIconLocation("/assets/Chess_nlt60.png");
 	    else
-	        setIcon(new Image("/assets/Chess_ndt60.png"));
+	        setIconLocation("/assets/Chess_ndt60.png");
     }
 
     public Knight(String color) {
         super(color, "Knight");
         
         //If the color is white, set the icon of the piece to the white knight, otherwise it'll be the black knight.
-	    if (getColor().equals("w"))
-	        setIcon(new Image("/assets/Chess_nlt60.png"));
-	    else
-	        setIcon(new Image("/assets/Chess_ndt60.png"));
+        if (getColor().equals("w"))
+            setIconLocation("/assets/Chess_nlt60.png");
+        else
+            setIconLocation("/assets/Chess_ndt60.png");
     }
 
     public String toString() {

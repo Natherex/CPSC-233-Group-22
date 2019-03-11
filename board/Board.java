@@ -26,7 +26,8 @@ public class Board {
 
         for (int row = 0; row < height; row++) {
             for (int column = 0; column < length; column++) {
-                tempGrid[row][column] = new Piece(grid[row][column]);
+                if (grid[row][column] != null)
+                    tempGrid[row][column] = new Piece(grid[row][column]);
             }
         }
 

@@ -1,6 +1,7 @@
 package board;
 
 import gamestate.GameState;
+import javafx.scene.paint.Color;
 import pieces.*;
 import java.util.Scanner;
 
@@ -11,6 +12,8 @@ public class ChessBoard extends Board {
     private static final char[] flippedColumns = new char[]{'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A'};
     private static final int[] flippedRows = new int[]{8, 7, 6, 5, 4, 3, 2, 1};
     private GameState state = new GameState();
+    public static final Color BROWN = Color.rgb(150, 92, 37);
+    public static final Color WHITE = Color.rgb(250, 250, 250);
 
     /**
      * Sets up an 8x8 chess board.

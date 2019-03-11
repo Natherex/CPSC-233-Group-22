@@ -1,16 +1,27 @@
 package pieces;
 
 import board.*;
+import javafx.scene.image.Image;
 
 public class Rook extends Piece {
     public Rook() {
         super();
         setName("Rook");
+
+        if (getColor().equals("w"))
+            setIconLocation("/assets/Chess_rlt60.png");
+        else
+            setIconLocation("/assets/Chess_rdt60.png");
     }
 
     public Rook(String color) {
         super(color);
         setName("Rook");
+
+        if (getColor().equals("w"))
+            setIconLocation("/assets/Chess_rlt60.png");
+        else
+            setIconLocation("/assets/Chess_rdt60.png");
     }
 
     public String toString() {
