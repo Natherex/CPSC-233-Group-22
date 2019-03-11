@@ -1,11 +1,13 @@
 package pieces;
 
 import board.*;
+import javafx.scene.image.Image;
 
 public class Piece {
     private String color;
     private String name;
     private int timesMoved = 0;
+    private Image icon;
 
     public Piece() {
         this.color = "w";
@@ -24,6 +26,14 @@ public class Piece {
         this.color = p.getColor();
         this.timesMoved = p.getTimesMoved();
         this.name = p.getName();
+    }
+
+    protected void setIcon(Image i) {
+        this.icon = new Image(i.getUrl());
+    }
+
+    public Image getIcon() {
+        return new Image(icon.getUrl());
     }
 
     public String getColor() {
