@@ -29,7 +29,7 @@ public class GUIMain extends Application {
         }
 
         // Sets the background for each square on the grid in an alternating pattern.
-        boolean isWhiteSquare = false;
+        boolean isWhiteSquare = true;
         for (int row = 0; row < 8; row++) {
             for (int column = 0; column < 8; column++) {
                 if (isWhiteSquare) {
@@ -38,11 +38,8 @@ public class GUIMain extends Application {
                     grid[row][column].setBackground(new Background(new BackgroundFill(ChessBoard.BROWN, CornerRadii.EMPTY, Insets.EMPTY)));
                 }
 
-                //
-                //new Image("/assets/Chess_bdt60.png")
                 if (boardGrid[row][column] != null) {
                     String imgLocation = boardGrid[row][column].getIconLocation();
-                    System.out.println(imgLocation);
                     ImageView img = new ImageView(new Image(imgLocation));
                     grid[row][column].getChildren().add(img);
                 }
@@ -67,6 +64,7 @@ public class GUIMain extends Application {
             }
         }
 
+        // Creates a new scene and adds it to the stage
         primaryStage.getIcons().add(new Image("/assets/Chess_klt60.png"));
         primaryStage.setTitle("Chess");
         primaryStage.setScene(new Scene(root, 480, 480));

@@ -5,18 +5,18 @@ import board.ChessBoard;
 public class Bishop extends Piece {
     public Bishop() {
         super("w", "Bishop");
-        
-        //If the color is white, set the icon of the pie to the white bishop, otherwise it'll be the black bishop
-        if (getColor().equals("w"))
-            setIconLocation("/assets/Chess_blt60.png");
-        else
-            setIconLocation("/assets/Chess_bdt60.png");
+        setIconLocation();
     }
 
     public Bishop(String color) {
         super(color, "Bishop");
-        
-         //If the color is white, set the icon of the pie to the white bishop, otherwise it'll be the black bishop
+        setIconLocation();
+    }
+
+    /**
+     * Sets the icon's picture location to the appropriate picture.
+     */
+    private void setIconLocation() {
         if (getColor().equals("w"))
             setIconLocation("/assets/Chess_blt60.png");
         else

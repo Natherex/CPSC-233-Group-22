@@ -1,23 +1,22 @@
 package pieces;
 
-import board.*;
-import javafx.scene.image.Image;
+import board.ChessBoard;
 
 public class Rook extends Piece {
     public Rook() {
-        super();
-        setName("Rook");
-
-        if (getColor().equals("w"))
-            setIconLocation("/assets/Chess_rlt60.png");
-        else
-            setIconLocation("/assets/Chess_rdt60.png");
+        super("w", "Rook");
+        setIconLocation();
     }
 
     public Rook(String color) {
-        super(color);
-        setName("Rook");
+        super(color, "Rook");
+        setIconLocation();
+    }
 
+    /**
+     * Sets the icon's picture location to the appropriate picture.
+     */
+    private void setIconLocation() {
         if (getColor().equals("w"))
             setIconLocation("/assets/Chess_rlt60.png");
         else

@@ -1,7 +1,6 @@
 package pieces;
 
 import board.*;
-import javafx.scene.image.Image;
 
 public class Piece {
     private String color;

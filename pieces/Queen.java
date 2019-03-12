@@ -4,21 +4,19 @@ import board.ChessBoard;
 
 public class Queen extends Piece {
     public Queen() {
-        super();
-        setName("Queen");
-        
-        //If the color is white, set the icon of the piece to the white queen, otherwise it'll be the black queen.
-	    if (getColor().equals("w"))
-	        setIconLocation("/assets/Chess_qlt60.png");
-	    else
-	        setIconLocation("/assets/Chess_qdt60.png");
+        super("w", "Queen");
+        setIconLocation();
     }
 
     public Queen(String color) {
-        super(color);
-        setName("Queen");
-        
-        //If the color is white, set the icon of the piece to the white queen, otherwise it'll be the black queen.
+        super(color, "Queen");
+        setIconLocation();
+    }
+
+    /**
+     * Sets the icon's picture location to the appropriate picture.
+     */
+    private void setIconLocation() {
         if (getColor().equals("w"))
             setIconLocation("/assets/Chess_qlt60.png");
         else
