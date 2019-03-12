@@ -20,7 +20,7 @@ public class GUIMain extends Application {
         board.initialize();
         Piece[][] boardGrid = board.getGrid();
 
-        // Initialize 8x8 StackPanes.
+        // Initializes 8x8 StackPanes.
         StackPane[][] grid = new StackPane[8][8];
         for (int row = 0; row < 8; row++) {
             for (int column = 0; column < 8; column++) {
@@ -29,7 +29,7 @@ public class GUIMain extends Application {
         }
 
         // Sets the background for each square on the grid in an alternating pattern.
-        boolean isWhiteSquare = true;
+        boolean isWhiteSquare = false;
         for (int row = 0; row < 8; row++) {
             for (int column = 0; column < 8; column++) {
                 if (isWhiteSquare) {
@@ -38,6 +38,7 @@ public class GUIMain extends Application {
                     grid[row][column].setBackground(new Background(new BackgroundFill(ChessBoard.BROWN, CornerRadii.EMPTY, Insets.EMPTY)));
                 }
 
+                // Adds the piece to the StackPane as well.
                 if (boardGrid[row][column] != null) {
                     String imgLocation = boardGrid[row][column].getIconLocation();
                     ImageView img = new ImageView(new Image(imgLocation));
@@ -60,7 +61,7 @@ public class GUIMain extends Application {
         // Adds all the StackPanes to the GridPane.
         for (int row = 0; row < 8; row++) {
             for (int column = 0; column < 8; column++) {
-                root.add(grid[row][column], column, row);
+                root.add(grid[7 - row][column], column, row);
             }
         }
 
