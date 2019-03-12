@@ -202,6 +202,7 @@ public class ChessBoard extends Board {
         }
         return true;
     }
+
     /**
      * Used to find out whether the starting location and the ending location are blocked by
      * any pieces in between them including the piece at the end location.
@@ -387,6 +388,24 @@ public class ChessBoard extends Board {
         return coordinates;
     }
 
+    public String unparseLocation(int[] coordinates) {
+        if (!isValidLocation(coordinates))
+            return null;
+
+        char letter;
+        int number;
+
+        if (!isFlipped) {
+            letter = validColumns[coordinates[1]];
+            number = validRows[coordinates[0]];
+        } else {
+            letter = flippedColumns[coordinates[1]];
+            number = flippedRows[coordinates[0]];
+        }
+
+        return Character.toString(letter) + Integer.toString(number);
+    }
+
     /**
      * Boolean on whether the chess board location is valid or not.
      * @param location Take a chess board location as a String argument.
@@ -408,6 +427,17 @@ public class ChessBoard extends Board {
         }
 
         return checks == 2;
+    }
+
+    public static boolean isValidLocation(int[] coordinates) {
+        if (coordinates.length != 2)
+            return false;
+        else if (coordinates[0] < 0 || coordinates[0] > 7)
+            return false;
+        else if (coordinates[1] < 0 || coordinates[1] > 7)
+            return false;
+        else
+            return true;
     }
 
     /**

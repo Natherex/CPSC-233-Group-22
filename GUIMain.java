@@ -1,8 +1,8 @@
 import board.ChessBoard;
+import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
@@ -12,21 +12,28 @@ import javafx.scene.image.Image;
 import pieces.Piece;
 
 public class GUIMain extends Application {
+    private String firstLocation;
+    private String secondLocation;
 
     public class MouseEventHandler implements EventHandler<MouseEvent> {
         private int row;
         private int column;
+        private ChessBoard board;
 
-        public MouseEventHandler(int row, int column) {
+        public MouseEventHandler(ChessBoard board, int row, int column) {
             this.row = row;
             this.column = column;
+            this.board = board;
         }
 
         @Override
         public void handle(MouseEvent event) {
-            System.out.printf("Mouse clicked on cell [%d, %d]%n", row, column);
+             System.out.printf("Mouse clicked on cell [%d, %d]%n", row, column);
+             // System.out.println(board.unparseLocation(new int[]{row, column}));
+             firstLocation = board.unparseLocation(new int[]{row, column});
         }
     }
+
 
     public static void main(String[] args) {
         launch(args);
@@ -34,8 +41,6 @@ public class GUIMain extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-
-
         ChessBoard board = new ChessBoard();
         board.initialize();
         Piece[][] boardGrid = board.getGrid();
@@ -45,7 +50,7 @@ public class GUIMain extends Application {
         for (int row = 0; row < 8; row++) {
             for (int column = 0; column < 8; column++) {
                 grid[row][column] = new StackPane();
-                grid[row][column].setOnMouseClicked(new MouseEventHandler(row, column));
+                grid[row][column].setOnMouseClicked(new MouseEventHandler(board, row, column));
             }
         }
 
@@ -92,5 +97,17 @@ public class GUIMain extends Application {
         primaryStage.setScene(new Scene(root, 480, 480));
         primaryStage.setResizable(false);
         primaryStage.show();
+
+        AnimationTimer mainLoop = new AnimationTimer() {
+            @Override
+            public void handle(long now) {
+                if (firstLocation != null) {
+                    System.out.println(firstLocation);
+                    firstLocation = null;
+                }
+            }
+        };
+
+        mainLoop.start();
     }
 }
