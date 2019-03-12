@@ -3,8 +3,6 @@ package pieces;
 import board.ChessBoard;
 
 public class Rook extends Piece {
-    private Image icon;
-    
     public Rook() {
         super("w", "Rook");
         setIconLocation();

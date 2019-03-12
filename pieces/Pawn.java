@@ -1,24 +1,22 @@
 package pieces;
 
 import board.ChessBoard;
-import javafx.scene.image.Image;
 
 public class Pawn extends Piece {
     public Pawn() {
         super("w", "Pawn");
-
-        // If the color is white, set the icon of the piece to the white pawn, otherwise it'll be the black pawn.
-        if (getColor().equals("w"))
-            setIconLocation("/assets/Chess_plt60.png");
-        else
-            setIconLocation("/assets/Chess_pdt60.png");
-
+        setIconLocation();
     }
 
     public Pawn(String color) {
         super(color, "Pawn");
+        setIconLocation();
+    }
 
-        // If the color is white, set the icon of the piece to the white pawn, otherwise it'll be the black pawn.
+    /**
+     * Sets the icon's picture location to the appropriate picture.
+     */
+    private void setIconLocation() {
         if (getColor().equals("w"))
             setIconLocation("/assets/Chess_plt60.png");
         else
