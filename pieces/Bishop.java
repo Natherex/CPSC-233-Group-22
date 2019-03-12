@@ -3,6 +3,8 @@ package pieces;
 import board.ChessBoard;
 
 public class Bishop extends Piece {
+    private Image icon;
+    
     public Bishop() {
         super("w", "Bishop");
         setIconLocation();
@@ -21,6 +23,7 @@ public class Bishop extends Piece {
             setIconLocation("/assets/Chess_blt60.png");
         else
             setIconLocation("/assets/Chess_bdt60.png");
+
     }
 
     public String toString() {

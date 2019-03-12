@@ -3,6 +3,7 @@ package pieces;
 import board.ChessBoard;
 
 public class Queen extends Piece {
+    
     public Queen() {
         super("w", "Queen");
         setIconLocation();
