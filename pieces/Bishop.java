@@ -3,7 +3,6 @@ package pieces;
 import board.ChessBoard;
 
 public class Bishop extends Piece {
-    private Image icon;
     
     public Bishop() {
         super("w", "Bishop");
