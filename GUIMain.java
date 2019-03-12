@@ -1,8 +1,10 @@
 import board.ChessBoard;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -11,11 +13,29 @@ import pieces.Piece;
 
 public class GUIMain extends Application {
 
+    public class MouseEventHandler implements EventHandler<MouseEvent> {
+        private int row;
+        private int column;
+
+        public MouseEventHandler(int row, int column) {
+            this.row = row;
+            this.column = column;
+        }
+
+        @Override
+        public void handle(MouseEvent event) {
+            System.out.printf("Mouse clicked on cell [%d, %d]%n", row, column);
+        }
+    }
+
     public static void main(String[] args) {
         launch(args);
     }
 
+    @Override
     public void start(Stage primaryStage) {
+
+
         ChessBoard board = new ChessBoard();
         board.initialize();
         Piece[][] boardGrid = board.getGrid();
@@ -25,6 +45,7 @@ public class GUIMain extends Application {
         for (int row = 0; row < 8; row++) {
             for (int column = 0; column < 8; column++) {
                 grid[row][column] = new StackPane();
+                grid[row][column].setOnMouseClicked(new MouseEventHandler(row, column));
             }
         }
 
