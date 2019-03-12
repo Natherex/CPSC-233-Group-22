@@ -1,31 +1,28 @@
 package pieces;
 
-import board.*;
-import javafx.scence.image.Image;
+import board.ChessBoard;
 
 public class Rook extends Piece {
     private Image icon;
     
     public Rook() {
-        super();
-        setName("Rook");
-        
-        //If the color is white, set the icon of the piece to the white rook, otherwise it'll be the black rook.
-	    if (getColor().equals("w"))
-	        setIcon(new Image("/assets/Chess_rlt60.png"));
-	    else
-	        setIcon(new Image("/assets/Chess_rdt60.png"));
+        super("w", "Rook");
+        setIconLocation();
     }
 
     public Rook(String color) {
-        super(color);
-        setName("Rook");
-        
-        //If the color is white, set the icon of the piece to the white rook, otherwise it'll be the black rook.
-	    if (getColor().equals("w"))
-	        setIcon(new Image("/assets/Chess_rlt60.png"));
-	    else
-	        setIcon(new Image("/assets/Chess_rdt60.png"));
+        super(color, "Rook");
+        setIconLocation();
+    }
+
+    /**
+     * Sets the icon's picture location to the appropriate picture.
+     */
+    private void setIconLocation() {
+        if (getColor().equals("w"))
+            setIconLocation("/assets/Chess_rlt60.png");
+        else
+            setIconLocation("/assets/Chess_rdt60.png");
     }
 
     public String toString() {

@@ -1,29 +1,28 @@
 package pieces;
 
-import board.*;
-import javafx.scene.image.Image;
+import board.ChessBoard;
 
 public class Knight extends Piece {
     private Image icon;
     
     public Knight() {
         super("w", "Knight");
-        
-        //If the color is white, set the icon of the piece to the white knight, otherwise it'll be the black knight.
-	    if (getColor().equals("w"))
-	        setIcon(new Image("/assets/Chess_nlt60.png"));
-	    else
-	        setIcon(new Image("/assets/Chess_ndt60.png"));
+        setIconLocation();
     }
 
     public Knight(String color) {
         super(color, "Knight");
-        
-        //If the color is white, set the icon of the piece to the white knight, otherwise it'll be the black knight.
-	    if (getColor().equals("w"))
-	        setIcon(new Image("/assets/Chess_nlt60.png"));
-	    else
-	        setIcon(new Image("/assets/Chess_ndt60.png"));
+        setIconLocation();
+    }
+
+    /**
+     * Sets the icon's picture location to the appropriate picture.
+     */
+    private void setIconLocation() {
+        if (getColor().equals("w"))
+            setIconLocation("/assets/Chess_nlt60.png");
+        else
+            setIconLocation("/assets/Chess_ndt60.png");
     }
 
     public String toString() {
@@ -54,14 +53,12 @@ public class Knight extends Piece {
             valid = true;
         }
 
-
         // Can move one space forward or backward and two left or right
         else if (Math.abs(xDirection) == 1 && Math.abs(yDirection) == 2) {
             c.removePiece(end);
             valid = true;
         }
 
-        	
         if (valid) {
         	incrementTimesMoved();
         	return true;
