@@ -109,8 +109,16 @@ public class GUIMain extends Application {
             @Override
             public void handle(long now) {
                 if (startLocation != null && endLocation != null) {
+                    if (startLocation.equals(endLocation)) {
+                        startLocation = null;
+                        endLocation = null;
+                    }
+                }
+
+                if (startLocation != null && endLocation != null) {
                     System.out.println(startLocation);
                     System.out.println(endLocation);
+                    System.out.println(board.isNotBlocked(startLocation, endLocation));
 
                     if (board.isCorrectColor(startLocation)) {
                         if (board.movePiece(startLocation, endLocation)) {

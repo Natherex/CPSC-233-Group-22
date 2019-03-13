@@ -308,7 +308,8 @@ public class ChessBoard extends Board {
      * @return Returns the opposite boolean from isNotBlocked().
      */
     public boolean isBlocked(String start, String end) {
-        return !isNotBlocked(start, end);
+        boolean isNotBlocked = isNotBlocked(start, end);
+        return !isNotBlocked;
     }
 
     /**
@@ -470,6 +471,11 @@ public class ChessBoard extends Board {
             return false;
         else
             return true;
+    }
+
+    public boolean isOppositeColor(String start, String end) {
+        // TODO
+        return false;
     }
 
     /**
