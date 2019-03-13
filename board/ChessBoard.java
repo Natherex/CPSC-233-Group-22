@@ -103,6 +103,7 @@ public final class ChessBoard extends Board {
         return new int[]{rowDistance, columnDistance};
     }
 
+    public boolean isWayClear(String start, String end) {
         
     	int[] totalDistance = distance(start, end);
         int xDirectionChange = totalDistance[1];
