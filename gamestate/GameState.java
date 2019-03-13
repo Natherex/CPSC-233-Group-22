@@ -57,11 +57,11 @@ public class GameState
 		}
 		if(castleLeft)
 		{
-			castleLeft = isLeftCastleLegal(chessBoard c);
+			castleLeft = isLeftCastleLegal(ChessBoard c);
 		}
 		if(castleRight)
 		{
-			castleRight = isRightCastleLegal(chessBoard c);
+			castleRight = isRightCastleLegal(ChessBoard c);
 		}
 	}
 	//Assumes king is in check and decides if it is actually a checkmate.
@@ -323,7 +323,7 @@ public class GameState
 	{
 		return false;
 	}
-	public boolean isLeftCastleLegal(chessBoard c)
+	public boolean isLeftCastleLegal(ChessBoard c)
 	{
 		if(c.getGrid()[0][0].getName().equals("rook") && c.getGrid()[0][1].getName() == null && c.getGrid()[0][2].getName() == null && c.getGrid()[0][3].getName() == null && c.getGrid()[0][4].getName().equals("king"))
 		{
@@ -335,7 +335,7 @@ public class GameState
 		}			
 		return false;
 	}
-	public boolean isRightCastleLegal(chessBoard c)
+	public boolean isRightCastleLegal(ChessBoard c)
 	{
 		if(c.getGrid()[0][7].getName().equals("rook") && c.getGrid()[0][6].getName() == null && c.getGrid()[0][5].getName() == null && c.getGrid()[0][4].getName().equals("king"))
 		{
