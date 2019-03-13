@@ -57,11 +57,11 @@ public class GameState
 		}
 		if(castleLeft)
 		{
-			castleLeft = isLeftCastleLegal(ChessBoard c);
+			castleLeft = isLeftCastleLegal(c);
 		}
 		if(castleRight)
 		{
-			castleRight = isRightCastleLegal(ChessBoard c);
+			castleRight = isRightCastleLegal(c);
 		}
 	}
 	//Assumes king is in check and decides if it is actually a checkmate.
