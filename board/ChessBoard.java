@@ -482,6 +482,10 @@ public class ChessBoard extends Board {
         state.changeTurn();
     }
 
+    /**
+     * Sets whether flipping is on or not.
+     * @param flip The value on whether the user wants flipping on or off.
+     */
     public void doFlipping(boolean flip) {
         this.doFlipping = flip;
     }

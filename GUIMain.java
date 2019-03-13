@@ -49,7 +49,7 @@ public class GUIMain extends Application {
         board.doFlipping(false);
         pieceGrid = board.getGrid();
 
-        // Initializes 8x8 StackPanes.
+        // Initializes 8x8 StackPanes and adds event handler to each one.
         stackPaneGrid = new StackPane[8][8];
         for (int row = 0; row < 8; row++) {
             for (int column = 0; column < 8; column++) {
@@ -68,7 +68,7 @@ public class GUIMain extends Application {
                     stackPaneGrid[row][column].setBackground(new Background(new BackgroundFill(ChessBoard.BROWN, CornerRadii.EMPTY, Insets.EMPTY)));
                 }
 
-                // Adds the piece to the StackPane as well.
+                // Adds the current piece to the StackPane as well.
                 if (pieceGrid[row][column] != null) {
                     String imgLocation = pieceGrid[row][column].getIconLocation();
                     ImageView img = new ImageView(new Image(imgLocation));
@@ -83,7 +83,7 @@ public class GUIMain extends Application {
             isCurrentlyWhiteSquare = !isCurrentlyWhiteSquare;
         }
 
-        // Sets row and column constraints for each square on the grid.
+        // Sets row and column constraints for each square on the grid to be 60x60.
         GridPane mainGroup = new GridPane();
         for (int i = 0; i < 8; i++) {
             mainGroup.getColumnConstraints().add(new ColumnConstraints(60));
