@@ -26,6 +26,33 @@ public class Pawn extends Piece {
         else
             setIcon(new Image("/assets/Chess_pdt60.png"));
     }
+    
+    /**
+     * Promotes pawn to piece of choice when on the furthest rank
+     * from its side
+     * @param board the ChessBoard object 
+     * @param end the end location of the pawn
+     */    
+    public void promote(ChessBoard board, String end) {
+        
+        int[] endLocation = board.parseLocation(end);
+        
+        //if pawn is white and reaches the 8th rank, promote
+        if ((getColor() == "w") && endLocation[0] == 8 {
+            
+            board.removePiece(end);
+            
+            
+               
+        }
+        
+        //if pawn is black and reaches the 1st rank, promote
+        else if ((getColor() == "b") && endLocation[0] == 1 {
+        
+           
+            
+        }
+    }
 
 
     /**
@@ -69,7 +96,7 @@ public class Pawn extends Piece {
             board.removePiece(end);
             return true;
         }
-
+        
         return false;
     }
 
