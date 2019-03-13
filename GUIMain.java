@@ -120,6 +120,7 @@ public class GUIMain extends Application {
                         System.out.println(startLocation);
                         System.out.println(endLocation);
                         System.out.println(board.isNotBlocked(startLocation, endLocation));
+                        //System.out.println(board.isWayClear(startLocation,endLocation));
 
                         if (board.isCorrectColor(startLocation)) {
                             if (board.movePiece(startLocation, endLocation)) {

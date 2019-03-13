@@ -129,7 +129,7 @@ public final class ChessBoard extends Board {
         	startY ++;
         	while(endY >= startY)
         	{
-        		if(!grid[endX][startY].getName().equals(null))
+        		if(grid[startY][endX] != null)
         			return false;
         		startY++;
         	}
@@ -147,7 +147,7 @@ public final class ChessBoard extends Board {
         	startX++;
         	while(endX >= startX)
         	{
-        		if(!grid[startX][endY].getName().equals(null))
+        		if(grid[endY][startX] != null)
         			return false;
         		startX++;
         	}
@@ -174,7 +174,7 @@ public final class ChessBoard extends Board {
         	startY ++;
         	while(endX >= startX && endY >= startY)
         	{
-        		if(!grid[startX][startY].getName().equals(null))
+        		if(grid[startY][startX] != null)
         			return false;
             	startX++;
             	startY++;
@@ -199,7 +199,7 @@ public final class ChessBoard extends Board {
         	startY--;
         	while(endX >= startX && endY <= startY)
         	{
-        		if(!grid[startX][startY].getName().equals(null))
+        		if(grid[startY][startX] != null)
         			return false;
             	startX++;
             	startY--;
