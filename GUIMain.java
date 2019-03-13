@@ -120,6 +120,8 @@ public class GUIMain extends Application {
                         System.out.println(startLocation);
                         System.out.println(endLocation);
                         System.out.println(board.isNotBlocked(startLocation, endLocation));
+                        System.out.println("test");
+                        // System.out.println(board.wayIsClear(startLocation, endLocation));
 
                         if (board.isCorrectColor(startLocation)) {
                             if (board.movePiece(startLocation, endLocation)) {
@@ -131,7 +133,7 @@ public class GUIMain extends Application {
                         startLocation = null;
                         endLocation = null;
                     }
-                } catch (NullPointerException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                     System.exit(1);
                 }
