@@ -1,4 +1,4 @@
 @echo off
-javac RunGUI.java
-java RunGUI
+javac GUIMain.java
+java GUIMain
 PAUSE
