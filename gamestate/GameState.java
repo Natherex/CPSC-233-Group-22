@@ -90,9 +90,22 @@ public class GameState
 	}
 	public int[] findKing(ChessBoard c, String color)
 	{
-		int[] coordinates = {0,0};
+		int[] coordinates = new int[2];
+		for (int row = 0; row < c.getHeight(); row++)
+		{
+			for (int column = 0; column < c.getLength(); column++) 
+			{
+				if(c.getGrid()[row][column].getName().equals("king") && c.getGrid()[row][column].getColor().equals(color))
+				{
+					coordinates[0] = row;
+					coordinates[1] = column;
+					return coordinates;
+				}	
+			}
+        	}
 		
-		return coordinates;
+		return null;
+
 	}
 	public boolean canKingBeBlocked(ChessBoard c,int[] checkersLocation, String color)
 	{
