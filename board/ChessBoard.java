@@ -5,8 +5,9 @@ import javafx.scene.paint.Color;
 import pieces.*;
 import java.util.Scanner;
 
-public class ChessBoard extends Board {
+public final class ChessBoard extends Board {
     private boolean isFlipped = false;
+    private boolean doFlipping = true;
     private static final char[] validColumns = new char[]{'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'};
     private static final int[] validRows = new int[]{1, 2, 3, 4, 5, 6, 7, 8};
     private static final char[] flippedColumns = new char[]{'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A'};
@@ -87,11 +88,17 @@ public class ChessBoard extends Board {
         if (!isValidLocation(start) || !isValidLocation(end))
             return null;
 
+
         int[] endLocation = parseLocation(end);
         int[] startLocation = parseLocation(start);
 
         int rowDistance = endLocation[0] - startLocation[0];
         int columnDistance = endLocation[1] - startLocation[1];
+
+        if (!doFlipping && isBlackTurn()) {
+            rowDistance *= -1;
+            columnDistance *= -1;
+        }
 
         return new int[]{rowDistance, columnDistance};
     }
@@ -202,6 +209,7 @@ public class ChessBoard extends Board {
         }
         return true;
     }
+
     /**
      * Used to find out whether the starting location and the ending location are blocked by
      * any pieces in between them including the piece at the end location.
@@ -299,7 +307,8 @@ public class ChessBoard extends Board {
      * @return Returns the opposite boolean from isNotBlocked().
      */
     public boolean isBlocked(String start, String end) {
-        return !isNotBlocked(start, end);
+        boolean isNotBlocked = isNotBlocked(start, end);
+        return !isNotBlocked;
     }
 
     /**
@@ -332,7 +341,7 @@ public class ChessBoard extends Board {
      */
     public boolean isCorrectColor(String location) {
         int[] startLocation = parseLocation(location);
-        if (startLocation == null)
+        if (startLocation == null || grid[startLocation[0]][startLocation[1]] == null)
             return false;
         else
             return grid[startLocation[0]][startLocation[1]].getColor().equals(currentPlayer());
@@ -351,8 +360,8 @@ public class ChessBoard extends Board {
     /**
      * Converts chess board location to the grid location's indices.
      * @param location Takes an input of a chess board location
-     * @return Returns the coordinate index on the 2D array that the location is at in the form (row, column),
-     *         else returns null if the location is invalid.
+     * @return Returns the coordinate indices on the 2D array that the location is at in the form (row, column).
+     *         Else returns null if the location is invalid.
      */
     public int[] parseLocation(String location) {
         if (!isValidLocation(location)) {
@@ -366,18 +375,27 @@ public class ChessBoard extends Board {
         int columnIndex = -1;
         int rowIndex = -1;
 
-        if (!isFlipped) {
+        if (doFlipping) {
+            if (!isFlipped) {
+                for (int i = 0; i < 8; i++) {
+                    if (column == validColumns[i])
+                        columnIndex = i;
+                    if (row == validRows[i])
+                        rowIndex = i;
+                }
+            } else {
+                for (int i = 0; i < 8; i++) {
+                    if (column == flippedColumns[i])
+                        columnIndex = i;
+                    if (row == flippedRows[i])
+                        rowIndex = i;
+                }
+            }
+        } else {
             for (int i = 0; i < 8; i++) {
                 if (column == validColumns[i])
                     columnIndex = i;
                 if (row == validRows[i])
-                    rowIndex = i;
-            }
-        } else {
-            for (int i = 0; i < 8; i++) {
-                if (column == flippedColumns[i])
-                    columnIndex = i;
-                if (row == flippedRows[i])
                     rowIndex = i;
             }
         }
@@ -385,6 +403,34 @@ public class ChessBoard extends Board {
         coordinates[0] = rowIndex;
         coordinates[1] = columnIndex;
         return coordinates;
+    }
+
+    /**
+     * Converts the grid location's indices to a chess board location.
+     * @param coordinates The coordinate indices on the 2D array of the chess board.
+     * @return Returns chess board locations (e.g. "A1", "E7").
+     */
+    public String unparseLocation(int[] coordinates) {
+        if (!isValidLocation(coordinates))
+            return null;
+
+        char letter;
+        int number;
+
+        if (doFlipping) {
+            if (!isFlipped) {
+                letter = validColumns[coordinates[1]];
+                number = validRows[coordinates[0]];
+            } else {
+                letter = flippedColumns[coordinates[1]];
+                number = flippedRows[coordinates[0]];
+            }
+        } else {
+            letter = validColumns[coordinates[1]];
+            number = validRows[coordinates[0]];
+        }
+
+        return Character.toString(letter) + Integer.toString(number);
     }
 
     /**
@@ -411,13 +457,44 @@ public class ChessBoard extends Board {
     }
 
     /**
+     * Boolean on whether the chess board location is valid or not.
+     * @param coordinates The coordinate indices on the 2D array of the chess board.
+     * @return Returns true or false depending on whether or not the chess board location is a valid location or not.
+     */
+    public static boolean isValidLocation(int[] coordinates) {
+        if (coordinates.length != 2)
+            return false;
+        else if (coordinates[0] < 0 || coordinates[0] > 7)
+            return false;
+        else if (coordinates[1] < 0 || coordinates[1] > 7)
+            return false;
+        else
+            return true;
+    }
+
+    public boolean isOppositeColor(String start, String end) {
+        // TODO
+        return false;
+    }
+
+    /**
      * Changed from white's turn to black's turn.
      * Flips the board and changes the game state to reflect this.
      */
     public void changeTurn() {
-        flipBoard();
+        if (doFlipping)
+            flipBoard();
         state.changeTurn();
     }
+
+    /**
+     * Sets whether flipping is on or not.
+     * @param flip The value on whether the user wants flipping on or off.
+     */
+    public void doFlipping(boolean flip) {
+        this.doFlipping = flip;
+    }
+
 
     /**
      * @return Returns if it's currently white's turn.
@@ -462,6 +539,14 @@ public class ChessBoard extends Board {
             return new Piece(grid[coordinates[0]][coordinates[1]]);
     }
 
+
+    /**
+     * @return Returns a string representation of the current player's turn.
+     */
+    private String currentTurnString() {
+        return isWhiteTurn() ? "Player 1's Turn" : "Player 2's Turn";
+    }
+
     /**
      * Creates a text based version of the board.
      * @return Returns a string of the board.
@@ -469,8 +554,9 @@ public class ChessBoard extends Board {
     public String toString() {
         StringBuilder builder = new StringBuilder();
 
-        if (isWhiteTurn()) {
-            builder.append("Player 1's Turn\n\n");
+        if (isWhiteTurn() || !doFlipping) {
+            builder.append(currentTurnString());
+            builder.append("\n\n");
 
             for (int y = 7; y >= 0; y--) {
 
@@ -506,7 +592,8 @@ public class ChessBoard extends Board {
             }
 
         } else if (isBlackTurn()) {
-            builder.append("Player 2's Turn\n\n");
+            builder.append(currentTurnString());
+            builder.append("\n\n");
 
             for (int y = 7; y >= 0; y--) {
 
