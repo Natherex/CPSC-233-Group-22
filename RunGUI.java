@@ -17,6 +17,7 @@ public class RunGUI {
                 runProcess("javac GUIMain.java");
                 runProcess("javac pieces" + separator + "*.java");
                 runProcess("javac board" + separator + "*.java");
+                runProcess("javac gamestate" + separator + "*/.java");
                 runProcess("java GUIMain");
             } catch (Exception e) {
                 e.printStackTrace();

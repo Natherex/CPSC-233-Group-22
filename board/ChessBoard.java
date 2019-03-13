@@ -473,7 +473,14 @@ public final class ChessBoard extends Board {
     }
 
     public boolean isOppositeColor(String start, String end) {
-        // TODO
+        int[] startLocation = parseLocation(start);
+        int[] endLocation = parseLocation(end);
+
+        if (startLocation == null || endLocation == null)
+            return false;
+
+        String startColor = grid[startLocation[0]][startLocation[1]].getColor();
+
         return false;
     }
 
