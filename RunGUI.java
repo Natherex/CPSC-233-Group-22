@@ -17,6 +17,7 @@ public class RunGUI {
                 runProcess("javac GUIMain.java");
                 runProcess("javac pieces" + separator + "*.java");
                 runProcess("javac board" + separator + "*.java");
+                runProcess("javac gamestate" + separator + "*/.java");
                 runProcess("java GUIMain");
             } catch (Exception e) {
                 e.printStackTrace();
@@ -38,7 +39,7 @@ public class RunGUI {
     private static void runProcess(String command) throws Exception {
         Process pro = Runtime.getRuntime().exec(command);
         printLines(pro.getInputStream());
-        printLines(pro.getInputStream());
+        printLines(pro.getErrorStream());
         pro.waitFor();
     }
 
