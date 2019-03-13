@@ -57,11 +57,11 @@ public class GameState
 		}
 		if(castleLeft)
 		{
-			castleLeft = isLeftCastleLegal(c);
+			castleLeft = isLeftCastleLegal();
 		}
 		if(castleRight)
 		{
-			castleRight = isRightCastleLegal(c);
+			castleRight = isRightCastleLegal();
 		}
 	}
 	//Assumes king is in check and decides if it is actually a checkmate.
@@ -90,22 +90,9 @@ public class GameState
 	}
 	public int[] findKing(ChessBoard c, String color)
 	{
-		int[] coordinates = new int[2];
-		for (int row = 0; row < c.getHeight(); row++)
-		{
-			for (int column = 0; column < c.getLength(); column++) 
-			{
-				if(c.getGrid()[row][column].getName().equals("king") && c.getGrid()[row][column].getColor().equals(color))
-				{
-					coordinates[0] = row;
-					coordinates[1] = column;
-					return coordinates;
-				}	
-			}
-        }
+		int[] coordinates = {0,0};
 		
-		return null;
-
+		return coordinates;
 	}
 	public boolean canKingBeBlocked(ChessBoard c,int[] checkersLocation, String color)
 	{
@@ -357,27 +344,12 @@ public class GameState
 	{
 		return false;
 	}
-	public boolean isLeftCastleLegal(ChessBoard c)
+	public boolean isLeftCastleLegal()
 	{
-		if(c.getGrid()[0][0].getName().equals("rook") && c.getGrid()[0][1].getName() == null && c.getGrid()[0][2].getName() == null && c.getGrid()[0][3].getName() == null && c.getGrid()[0][4].getName().equals("king"))
-		{
-			if(c.getGrid()[0][0].getColor() == c.getGrid()[0][4].getColor())
-			{
-				return true;
-			}
-				
-		}			
 		return false;
 	}
-	public boolean isRightCastleLegal(ChessBoard c)
+	public boolean isRightCastleLegal()
 	{
-		if(c.getGrid()[0][7].getName().equals("rook") && c.getGrid()[0][6].getName() == null && c.getGrid()[0][5].getName() == null && c.getGrid()[0][4].getName().equals("king"))
-		{
-			if(c.getGrid()[0][7].getColor() == c.getGrid()[0][4].getColor())
-			{
-				return true;
-			}
-		}
 		return false;
 	}
 	
