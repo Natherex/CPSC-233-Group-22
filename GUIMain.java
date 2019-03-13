@@ -46,7 +46,7 @@ public class GUIMain extends Application {
     public void start(Stage primaryStage) {
         board = new ChessBoard();
         board.initialize();
-        board.doFlipping(false);
+        board.doFlipping(true);
         pieceGrid = board.getGrid();
 
         // Initializes 8x8 StackPanes and adds event handler to each one.
@@ -108,27 +108,32 @@ public class GUIMain extends Application {
         AnimationTimer mainLoop = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                if (startLocation != null && endLocation != null) {
-                    if (startLocation.equals(endLocation)) {
-                        startLocation = null;
-                        endLocation = null;
-                    }
-                }
-
-                if (startLocation != null && endLocation != null) {
-                    System.out.println(startLocation);
-                    System.out.println(endLocation);
-                    System.out.println(board.isNotBlocked(startLocation, endLocation));
-
-                    if (board.isCorrectColor(startLocation)) {
-                        if (board.movePiece(startLocation, endLocation)) {
-                            board.changeTurn();
-                            updateWindow();
+                try {
+                    if (startLocation != null && endLocation != null) {
+                        if (startLocation.equals(endLocation)) {
+                            startLocation = null;
+                            endLocation = null;
                         }
                     }
 
-                    startLocation = null;
-                    endLocation = null;
+                    if (startLocation != null && endLocation != null) {
+                        System.out.println(startLocation);
+                        System.out.println(endLocation);
+                        System.out.println(board.isNotBlocked(startLocation, endLocation));
+
+                        if (board.isCorrectColor(startLocation)) {
+                            if (board.movePiece(startLocation, endLocation)) {
+                                board.changeTurn();
+                                updateWindow();
+                            }
+                        }
+
+                        startLocation = null;
+                        endLocation = null;
+                    }
+                } catch (NullPointerException e) {
+                    e.printStackTrace();
+                    System.exit(1);
                 }
             }
         };

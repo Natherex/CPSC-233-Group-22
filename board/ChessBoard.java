@@ -5,7 +5,7 @@ import javafx.scene.paint.Color;
 import pieces.*;
 import java.util.Scanner;
 
-public class ChessBoard extends Board {
+public final class ChessBoard extends Board {
     private boolean isFlipped = false;
     private boolean doFlipping = true;
     private static final char[] validColumns = new char[]{'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'};
@@ -15,7 +15,6 @@ public class ChessBoard extends Board {
     private GameState state = new GameState();
     public static final Color BROWN = Color.rgb(150, 92, 37);
     public static final Color WHITE = Color.rgb(250, 250, 250);
-
 
     /**
      * Sets up an 8x8 chess board.
@@ -342,7 +341,7 @@ public class ChessBoard extends Board {
      */
     public boolean isCorrectColor(String location) {
         int[] startLocation = parseLocation(location);
-        if (startLocation == null)
+        if (startLocation == null || grid[startLocation[0]][startLocation[1]] == null)
             return false;
         else
             return grid[startLocation[0]][startLocation[1]].getColor().equals(currentPlayer());
