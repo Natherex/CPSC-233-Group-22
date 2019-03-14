@@ -34,15 +34,16 @@ public class Pawn extends Piece {
         int[] endLocation = board.parseLocation(end);
         int xSpot = endLocation[1];
         int ySpot = endLocation[0];
+        Piece[][] grid = board.getGrid();
         
         //if pawn is white and reaches the 8th rank, promote
-        if ((getColor() == "w") && endLocation[0] == 8 {         
+        if ((getColor() == "w") && endLocation[0] == 8) {
             board.removePiece(end);
-            grid[ySpot][xSpot] = new Queen("w");                      
+            grid[ySpot][xSpot] = new Queen("w");
         }
         
         //if pawn is black and reaches the 1st rank, promote
-        else if ((getColor() == "b") && endLocation[0] == 1 {     
+        else if ((getColor() == "b") && endLocation[0] == 1) {
             board.removePiece(end);
             grid[ySpot][xSpot] = new Queen("b");          
         }

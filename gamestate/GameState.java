@@ -10,7 +10,7 @@ public class GameState
 	private int gameState;
 	private boolean isWhiteTurn = true;
 	private boolean isBlackTurn = false;
-	
+
 	public GameState()
 	{
 		castleLeft = true;
@@ -76,61 +76,34 @@ public class GameState
 	{
 		if(canTileBeFilled(c,findKing(c,color),color))
 			return true;
-		
+
 		return false;
 	}
-	
-	/**
-	 * Checks if the game is in stalemate
-	 * @param c the ChessBoard object
-	 * @param checkersLocation the location of the piece "checking" King
-	 * @param color color of the pieces
-	 * @return true if board is in stalemate, false otherwise
-	*/
-	public boolean isStaleMate(ChessBoard c, int [] checkersLocation, String color) {
-		
-		int timesOccured;
-		//call some function to check of board has happened 3 times
-		
-		//If King is not in check AND has no valid moves, game is in stalemate
-		if ((!isCheck(c) && canKingMove(c)) && !canKingBeBlocked(c, checkersLocation, color)) {
-			
-			return true;	
-		
-		// if board has occured 3 times, game is in stalemate
-		} else if (timesOccured == 3) {
-		
-			return true;
-		}
-		
-		//need to add function that checks
-		//if no pieces were taken in last 50 turns
-		
+	public boolean isStaleMate(ChessBoard c)
+	{
 		return false;
 	}
-		    
-		    
 	public boolean canKingMove(ChessBoard c)
 	{
 		return false;
-		
+
 	}
 	public int[] findKing(ChessBoard c, String color)
 	{
 		int[] coordinates = new int[2];
 		for (int row = 0; row < c.getHeight(); row++)
 		{
-			for (int column = 0; column < c.getLength(); column++) 
+			for (int column = 0; column < c.getLength(); column++)
 			{
 				if(c.getGrid()[row][column].getName().equals("king") && c.getGrid()[row][column].getColor().equals(color))
 				{
 					coordinates[0] = row;
 					coordinates[1] = column;
 					return coordinates;
-				}	
+				}
 			}
-        	}
-		
+		}
+
 		return null;
 
 	}
@@ -168,7 +141,7 @@ public class GameState
 				checkersLocation[1]--;
 			}
 		}
-		
+
 		return false;
 	}
 	public boolean canTileBeFilled(ChessBoard c, int[] coordinate, String color)
@@ -179,7 +152,7 @@ public class GameState
 			if(c.getGrid()[coordinate[0]-1][coordinate[1]-2].getName().equals("knight"))
 			{
 				if(c.getGrid()[coordinate[0]-1][coordinate[1]-2].getColor().equals(color))
-						return true;
+					return true;
 			}
 		}
 		if(coordinate[0]>=2 && coordinate[1]>=1)
@@ -238,7 +211,7 @@ public class GameState
 					return true;
 			}
 		}
-		
+
 		//check if pawn can fill tile
 		if(c.getGrid()[coordinate[0]][coordinate[1]-1].getName().equals("pawn"))
 		{
@@ -269,7 +242,7 @@ public class GameState
 			if(c.getGrid()[coordinate[0]+i][coordinate[1]].getName().equals("rook") || c.getGrid()[coordinate[0]+i][coordinate[1]].getName().equals("queen") )
 			{
 				if(c.getGrid()[coordinate[0]+i][coordinate[1]].getColor().equals(color))
-						return true;
+					return true;
 			}
 			if(c.getGrid()[coordinate[0]+i][coordinate[1]].getName() == null)
 			{
@@ -301,7 +274,7 @@ public class GameState
 			if(c.getGrid()[coordinate[0]-i][coordinate[1]].getName().equals("rook") || c.getGrid()[coordinate[0]-i][coordinate[1]].getName().equals("queen") )
 			{
 				if(c.getGrid()[coordinate[0]-i][coordinate[1]].getColor().equals(color))
-						return true;
+					return true;
 			}
 			if(c.getGrid()[coordinate[0]-i][coordinate[1]].getName() == null)
 			{
@@ -317,7 +290,7 @@ public class GameState
 			if(c.getGrid()[coordinate[0]+i][coordinate[1]+i].getName().equals("bishop") || c.getGrid()[coordinate[0]+i][coordinate[1]+i].getName().equals("queen") )
 			{
 				if(c.getGrid()[coordinate[0]+i][coordinate[1]+i].getColor().equals(color))
-						return true;
+					return true;
 			}
 			if(c.getGrid()[coordinate[0]+i][coordinate[1]+i].getName() == null)
 			{
@@ -349,7 +322,7 @@ public class GameState
 			if(c.getGrid()[coordinate[0]-i][coordinate[1]-i].getName().equals("bishop") || c.getGrid()[coordinate[0]-i][coordinate[1]-i].getName().equals("queen") )
 			{
 				if(c.getGrid()[coordinate[0]-i][coordinate[1]-i].getColor().equals(color))
-						return true;
+					return true;
 			}
 			if(c.getGrid()[coordinate[0]-i][coordinate[1]-i].getName() == null)
 			{
@@ -365,7 +338,7 @@ public class GameState
 			if(c.getGrid()[coordinate[0]+i][coordinate[1]-i].getName().equals("bishop") || c.getGrid()[coordinate[0]+i][coordinate[1]-i].getName().equals("queen") )
 			{
 				if(c.getGrid()[coordinate[0]+i][coordinate[1]-i].getColor().equals(color))
-						return true;
+					return true;
 			}
 			if(c.getGrid()[coordinate[0]+i][coordinate[1]-i].getName() == null)
 			{
@@ -374,7 +347,7 @@ public class GameState
 			i++;
 		}
 		return false;
-		
+
 	}
 	public boolean canCheckerBeTaken(ChessBoard c, int[] checkersLocation, String color)
 	{
@@ -392,5 +365,5 @@ public class GameState
 	{
 		return false;
 	}
-	
+
 }
