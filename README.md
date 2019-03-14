@@ -11,13 +11,13 @@ A Simple Chess game made using Java.
 **For Windows:**
   1. If playing the text-based version:
     - Run "runText.bat"
-  If playing the GUI-based version:
+  2. playing the GUI-based version:
     - Run "runGUI.bat"
     
 **For Linux:**
   1. If playing the text-based version:
     - Run "runText.sh"
-  If playing the GUI-based version:
+  2. playing the GUI-based version:
     - Run "runGUI.sh"  
 
 ### How to Play (Text-Based Version)
