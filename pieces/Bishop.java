@@ -40,13 +40,27 @@ public class Bishop extends Piece {
         // Can only move diagonally if clear
         if (Math.abs(xDirection) == Math.abs(yDirection) && board.isNotBlocked(start, end) && board.isWayClear(start,end)) {
             incrementTimesMoved();
+            System.out.println("test1");
             return true;
         }
 
         else if (Math.abs(xDirection) == Math.abs(yDirection) && board.isBlocked(start, end) && board.isWayClear(start,end)) {
-            incrementTimesMoved();
-            board.removePiece(end);
-            return true;
+        	
+            int[] startCoordinate = parseLocation(start);
+            int startY = startCoordinate[0];
+            int startX = startCoordinate[1];
+
+            int[] endCoordinate = parseLocation(end);
+            int endY = endCoordinate[0];
+            int endX = endCoordinate[1];
+            if(board.getGrid()[startY][startX].getColor().equals(board.getGrid()[endY][endX].getColor()))
+            {
+            	System.out.println("test 2")
+	            incrementTimesMoved();
+	            board.removePiece(end);
+	            return true;
+	        }
+ 
         }
         
         return false;
