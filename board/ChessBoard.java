@@ -8,10 +8,10 @@ import java.util.Scanner;
 public final class ChessBoard extends Board {
     private boolean isFlipped = false;
     private boolean doFlipping = true;
-    private static final char[] validColumns = new char[]{'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'};
-    private static final int[] validRows = new int[]{1, 2, 3, 4, 5, 6, 7, 8};
-    private static final char[] flippedColumns = new char[]{'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A'};
-    private static final int[] flippedRows = new int[]{8, 7, 6, 5, 4, 3, 2, 1};
+    private static final char[] VALID_COLUMNS = new char[]{'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'};
+    private static final int[] VALID_ROWS = new int[]{1, 2, 3, 4, 5, 6, 7, 8};
+    private static final char[] FLIPPED_COLUMNS = new char[]{'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A'};
+    private static final int[] FLIPPED_ROWS = new int[]{8, 7, 6, 5, 4, 3, 2, 1};
     private GameState state = new GameState();
     public static final Color BROWN = Color.rgb(150, 92, 37);
     public static final Color WHITE = Color.rgb(250, 250, 250);
@@ -378,24 +378,24 @@ public final class ChessBoard extends Board {
         if (doFlipping) {
             if (!isFlipped) {
                 for (int i = 0; i < 8; i++) {
-                    if (column == validColumns[i])
+                    if (column == VALID_COLUMNS[i])
                         columnIndex = i;
-                    if (row == validRows[i])
+                    if (row == VALID_ROWS[i])
                         rowIndex = i;
                 }
             } else {
                 for (int i = 0; i < 8; i++) {
-                    if (column == flippedColumns[i])
+                    if (column == FLIPPED_COLUMNS[i])
                         columnIndex = i;
-                    if (row == flippedRows[i])
+                    if (row == FLIPPED_ROWS[i])
                         rowIndex = i;
                 }
             }
         } else {
             for (int i = 0; i < 8; i++) {
-                if (column == validColumns[i])
+                if (column == VALID_COLUMNS[i])
                     columnIndex = i;
-                if (row == validRows[i])
+                if (row == VALID_ROWS[i])
                     rowIndex = i;
             }
         }
@@ -419,15 +419,15 @@ public final class ChessBoard extends Board {
 
         if (doFlipping) {
             if (!isFlipped) {
-                letter = validColumns[coordinates[1]];
-                number = validRows[coordinates[0]];
+                letter = VALID_COLUMNS[coordinates[1]];
+                number = VALID_ROWS[coordinates[0]];
             } else {
-                letter = flippedColumns[coordinates[1]];
-                number = flippedRows[coordinates[0]];
+                letter = FLIPPED_COLUMNS[coordinates[1]];
+                number = FLIPPED_ROWS[coordinates[0]];
             }
         } else {
-            letter = validColumns[coordinates[1]];
-            number = validRows[coordinates[0]];
+            letter = VALID_COLUMNS[coordinates[1]];
+            number = VALID_ROWS[coordinates[0]];
         }
 
         return Character.toString(letter) + Integer.toString(number);
@@ -447,9 +447,9 @@ public final class ChessBoard extends Board {
         int checks = 0;
 
         for (int i  = 0; i < 8; i++) {
-            if (column == validColumns[i])
+            if (column == VALID_COLUMNS[i])
                 checks++;
-            if (row == validRows[i])
+            if (row == VALID_ROWS[i])
                 checks++;
         }
 
@@ -567,7 +567,7 @@ public final class ChessBoard extends Board {
 
             for (int y = 7; y >= 0; y--) {
 
-                builder.append(validRows[y]);
+                builder.append(VALID_ROWS[y]);
                 builder.append(" ");
 
                 for (int x = 0; x < 7; x++) {
@@ -594,7 +594,7 @@ public final class ChessBoard extends Board {
 
             builder.append("\n  ");
             for (int i = 0; i < 8; i++) {
-                String temp = "  " + validColumns[i] + "   ";
+                String temp = "  " + VALID_COLUMNS[i] + "   ";
                 builder.append(temp);
             }
 
@@ -604,7 +604,7 @@ public final class ChessBoard extends Board {
 
             for (int y = 7; y >= 0; y--) {
 
-                builder.append(flippedRows[y]);
+                builder.append(FLIPPED_ROWS[y]);
                 builder.append(" ");
 
                 for (int x = 0; x < 7; x++) {
@@ -631,7 +631,7 @@ public final class ChessBoard extends Board {
 
             builder.append("\n  ");
             for (int i = 0; i < 8; i++) {
-                String temp = "  " + flippedColumns[i] + "   ";
+                String temp = "  " + FLIPPED_COLUMNS[i] + "   ";
                 builder.append(temp);
             }
 
