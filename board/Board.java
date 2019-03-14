@@ -22,17 +22,20 @@ public class Board {
     }
 
     public Piece[][] getGrid() {
-//        Piece[][] tempGrid = new Piece[height][length];
-//
-//        for (int row = 0; row < height; row++) {
-//            for (int column = 0; column < length; column++) {
-//                if (grid[row][column] != null)
-//                    tempGrid[row][column] = new Piece(grid[row][column]);
-//            }
-//        }
-//
-//        return tempGrid;
         return grid;
+    }
+
+    public Piece[][] getCopyGrid() {
+        Piece[][] tempGrid = new Piece[height][length];
+
+        for (int row = 0; row < height; row++) {
+            for (int column = 0; column < length; column++) {
+                if (grid[row][column] != null)
+                    tempGrid[row][column] = new Piece(grid[row][column]);
+            }
+        }
+
+        return tempGrid;
     }
 
 }
