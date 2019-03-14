@@ -64,33 +64,34 @@ public class playerPhase{
   public void updatePiecesLeft(ChessBoard board, String piece) {
     
     int[] endLocation = board.parseLocation(end);
+    String pieceName = endLocation[0][1].getName();
     
-    if (endLocation[0][1] == Queen) {
+    if (pieceName.equals("Queen")) {
       this.queenLeft = 0;
       this.piecesLeft -= 1;
       
     }
     
-    else if (endLocation[0][1] == Knight) {
+    else if (pieceName.equals("Knight")) {
       this.knightsLeft -= 1;
       this.piecesLeft -= 1;
       
     }
     
-    else if (endLocation[0][1] == Bishop) {
+    else if (pieceName.equals("Bishop")) {
       
       this.bishopsLeft -= 1;
       this.piecesLeft -=1;
      
     }
     
-    else if (endLocation[0][1] == Rook) {
+    else if (pieceName.equals("Rook")) {
       this.rooksLeft -= 1;
       this.piecesLeft -=1;
       
     }
     
-    else if (endLocation[0][1] == Pawn) {
+    else if (pieceName.equals("Pawn")) {
       this.pawnsLeft -= 1;
       this.piecesLeft -=1;
     
