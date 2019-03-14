@@ -65,6 +65,7 @@ public class Pawn extends Piece {
 
         int xDirection = totalDistance[1];
         int yDirection = totalDistance[0];
+
         int[] startCoordinate = board.parseLocation(start);
         int startY = startCoordinate[0];
         int startX = startCoordinate[1];
@@ -87,23 +88,18 @@ public class Pawn extends Piece {
 
         // Can kill piece one up and one right
         else if (yDirection == 1 && xDirection == 1 && board.isBlocked(start, end) && board.getGrid()[startY][startX] != null ) {
-
-            if(!board.getGrid()[startY][startX].getColor().equals(board.getGrid()[endY][endX].getColor()))
-            {
-            	System.out.println("test 2");
+            // Check if the piece there is the opposite color
+            if(!board.getGrid()[startY][startX].getColor().equals(board.getGrid()[endY][endX].getColor())) {
 	            incrementTimesMoved();
 	            board.removePiece(end);
 	            return true;
 	        }
-            return true;
         }
 
         // Can kill piece one up and one left
         else if (yDirection == 1 && xDirection == -1 && board.isBlocked(start, end) && board.getGrid()[startY][startX] != null) {
-
-            if(!board.getGrid()[startY][startX].getColor().equals(board.getGrid()[endY][endX].getColor()))
-            {
-            	System.out.println("test 2");
+            // Check if the piece there is the opposite color
+            if(!board.getGrid()[startY][startX].getColor().equals(board.getGrid()[endY][endX].getColor())) {
 	            incrementTimesMoved();
 	            board.removePiece(end);
 	            return true;
