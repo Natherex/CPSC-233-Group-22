@@ -30,14 +30,14 @@ public class Knight extends Piece {
 
     /**
      * Tests if move is a valid move on a given chess board.
-     * @param c Needs a chess board that the pawn is on.
+     * @param board Needs a chess board that the pawn is on.
      * @param start Starting location of the piece on the chess board.
      * @param end Ending location of the piece on the chess board.
      * @return Returns true if the piece can make the move given,
      *         returns false otherwise.
      */
-    public boolean isValidMove(ChessBoard c, String start, String end) {
-    	int[] totalDistance = c.distance(start, end);
+    public boolean isValidMove(ChessBoard board, String start, String end) {
+    	int[] totalDistance = board.distance(start, end);
     	boolean valid = false;
 
         if (totalDistance == null)
@@ -48,7 +48,7 @@ public class Knight extends Piece {
 
         // Can move two spaces forwards or backwards and one left or right
         if (Math.abs(xDirection) == 2 && Math.abs(yDirection) == 1) {
-            c.removePiece(end);
+            board.removePiece(end);
             valid = true;
         }
 
