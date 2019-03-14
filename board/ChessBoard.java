@@ -1,16 +1,20 @@
 package board;
 
 import gamestate.GameState;
+import javafx.scene.paint.Color;
 import pieces.*;
 import java.util.Scanner;
 
-public class ChessBoard extends Board {
+public final class ChessBoard extends Board {
     private boolean isFlipped = false;
-    private static final char[] validColumns = new char[]{'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'};
-    private static final int[] validRows = new int[]{1, 2, 3, 4, 5, 6, 7, 8};
-    private static final char[] flippedColumns = new char[]{'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A'};
-    private static final int[] flippedRows = new int[]{8, 7, 6, 5, 4, 3, 2, 1};
+    private boolean doFlipping = true;
+    private static final char[] VALID_COLUMNS = new char[]{'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'};
+    private static final int[] VALID_ROWS = new int[]{1, 2, 3, 4, 5, 6, 7, 8};
+    private static final char[] FLIPPED_COLUMNS = new char[]{'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A'};
+    private static final int[] FLIPPED_ROWS = new int[]{8, 7, 6, 5, 4, 3, 2, 1};
     private GameState state = new GameState();
+    public static final Color BROWN = Color.rgb(150, 92, 37);
+    public static final Color WHITE = Color.rgb(250, 250, 250);
 
     /**
      * Sets up an 8x8 chess board.
@@ -84,18 +88,131 @@ public class ChessBoard extends Board {
         if (!isValidLocation(start) || !isValidLocation(end))
             return null;
 
+
         int[] endLocation = parseLocation(end);
         int[] startLocation = parseLocation(start);
 
         int rowDistance = endLocation[0] - startLocation[0];
         int columnDistance = endLocation[1] - startLocation[1];
 
+        if (!doFlipping && isBlackTurn()) {
+            rowDistance *= -1;
+            columnDistance *= -1;
+        }
+
         return new int[]{rowDistance, columnDistance};
+    }
+
+    public boolean isWayClear(String start, String end) {
+        
+    	int[] totalDistance = distance(start, end);
+        int xDirectionChange = totalDistance[1];
+        int yDirectionChange = totalDistance[0];
+ 
+        int[] startCoordinate = parseLocation(start);
+        int startY = startCoordinate[0];
+        int startX = startCoordinate[1];
+
+        int[] endCoordinate = parseLocation(end);
+        int endY = endCoordinate[0];
+        int endX = endCoordinate[1];
+        int temp;
+        if(xDirectionChange == 0)
+        {
+        	if(endY < startY)
+        	{
+        		temp = endY;
+        		endY = startY;
+        		startY = temp;
+        	}
+        	endY--;
+        	startY ++;
+        	while(endY >= startY)
+        	{
+        		if(grid[startY][endX] != null)
+        			return false;
+        		startY++;
+        	}
+        	return true;
+        }
+        if(yDirectionChange == 0)
+        {
+        	if(endX < startX)
+        	{
+        		temp = endX;
+        		endX = startX;
+        		startX = temp;
+        	}
+        	endX--;
+        	startX++;
+        	while(endX >= startX)
+        	{
+        		if(grid[endY][startX] != null)
+        			return false;
+        		startX++;
+        	}
+        	return true;
+        	
+        }
+        if(xDirectionChange == yDirectionChange)
+        {
+        	if(endX < startX)
+        	{
+        		temp = endX;
+        		endX = startX;
+        		startX = temp;
+        	}
+        	if(endY < startY)
+        	{
+        		temp = endY;
+        		endY = startY;
+        		startY = temp;
+        	}
+        	endX--;
+        	startX++;
+        	endY--;
+        	startY ++;
+        	while(endX >= startX && endY >= startY)
+        	{
+        		if(grid[startY][startX] != null)
+        			return false;
+            	startX++;
+            	startY++;
+        	}
+        	return true;
+        }
+        if(xDirectionChange*-1 == yDirectionChange)
+        {
+        	if(endX < startX)
+        	{
+        		temp = endX;
+        		endX = startX;
+        		startX = temp;
+        		temp = endY;
+        		endY = startY;
+        		startY = temp;
+        	}
+
+        	endX--;
+        	startX++;
+        	endY++;
+        	startY--;
+        	while(endX >= startX && endY <= startY)
+        	{
+        		if(grid[startY][startX] != null)
+        			return false;
+            	startX++;
+            	startY--;
+        	}
+        	return true;
+        	
+        }
+        return true;
     }
 
     /**
      * Used to find out whether the starting location and the ending location are blocked by
-     * any pieces in between them.
+     * any pieces in between them including the piece at the end location.
      * @param start Starting location of the piece on the chess board.
      * @param end Ending location of the piece on the chess board.
      * @return Returns true is the start and end have open line-of-sight, false otherwise.
@@ -190,7 +307,8 @@ public class ChessBoard extends Board {
      * @return Returns the opposite boolean from isNotBlocked().
      */
     public boolean isBlocked(String start, String end) {
-        return !isNotBlocked(start, end);
+        boolean isNotBlocked = isNotBlocked(start, end);
+        return !isNotBlocked;
     }
 
     /**
@@ -204,7 +322,6 @@ public class ChessBoard extends Board {
     public boolean movePiece(String start, String end) {
         int[] startLocation = parseLocation(start);
         int[] endLocation = parseLocation(end);
-        // int[] distance = distance(start, end);
 
         if (startLocation != null && endLocation != null) {
             if (grid[startLocation[0]][startLocation[1]].isValidMove(this, start, end)) {
@@ -224,7 +341,7 @@ public class ChessBoard extends Board {
      */
     public boolean isCorrectColor(String location) {
         int[] startLocation = parseLocation(location);
-        if (startLocation == null)
+        if (startLocation == null || grid[startLocation[0]][startLocation[1]] == null)
             return false;
         else
             return grid[startLocation[0]][startLocation[1]].getColor().equals(currentPlayer());
@@ -243,8 +360,8 @@ public class ChessBoard extends Board {
     /**
      * Converts chess board location to the grid location's indices.
      * @param location Takes an input of a chess board location
-     * @return Returns the coordinate index on the 2D array that the location is at in the form (row, column),
-     *         else returns null if the location is invalid.
+     * @return Returns the coordinate indices on the 2D array that the location is at in the form (row, column).
+     *         Else returns null if the location is invalid.
      */
     public int[] parseLocation(String location) {
         if (!isValidLocation(location)) {
@@ -258,18 +375,27 @@ public class ChessBoard extends Board {
         int columnIndex = -1;
         int rowIndex = -1;
 
-        if (!isFlipped) {
-            for (int i = 0; i < 8; i++) {
-                if (column == validColumns[i])
-                    columnIndex = i;
-                if (row == validRows[i])
-                    rowIndex = i;
+        if (doFlipping) {
+            if (!isFlipped) {
+                for (int i = 0; i < 8; i++) {
+                    if (column == VALID_COLUMNS[i])
+                        columnIndex = i;
+                    if (row == VALID_ROWS[i])
+                        rowIndex = i;
+                }
+            } else {
+                for (int i = 0; i < 8; i++) {
+                    if (column == FLIPPED_COLUMNS[i])
+                        columnIndex = i;
+                    if (row == FLIPPED_ROWS[i])
+                        rowIndex = i;
+                }
             }
         } else {
             for (int i = 0; i < 8; i++) {
-                if (column == flippedColumns[i])
+                if (column == VALID_COLUMNS[i])
                     columnIndex = i;
-                if (row == flippedRows[i])
+                if (row == VALID_ROWS[i])
                     rowIndex = i;
             }
         }
@@ -277,6 +403,34 @@ public class ChessBoard extends Board {
         coordinates[0] = rowIndex;
         coordinates[1] = columnIndex;
         return coordinates;
+    }
+
+    /**
+     * Converts the grid location's indices to a chess board location.
+     * @param coordinates The coordinate indices on the 2D array of the chess board.
+     * @return Returns chess board locations (e.g. "A1", "E7").
+     */
+    public String unparseLocation(int[] coordinates) {
+        if (!isValidLocation(coordinates))
+            return null;
+
+        char letter;
+        int number;
+
+        if (doFlipping) {
+            if (!isFlipped) {
+                letter = VALID_COLUMNS[coordinates[1]];
+                number = VALID_ROWS[coordinates[0]];
+            } else {
+                letter = FLIPPED_COLUMNS[coordinates[1]];
+                number = FLIPPED_ROWS[coordinates[0]];
+            }
+        } else {
+            letter = VALID_COLUMNS[coordinates[1]];
+            number = VALID_ROWS[coordinates[0]];
+        }
+
+        return Character.toString(letter) + Integer.toString(number);
     }
 
     /**
@@ -293,9 +447,9 @@ public class ChessBoard extends Board {
         int checks = 0;
 
         for (int i  = 0; i < 8; i++) {
-            if (column == validColumns[i])
+            if (column == VALID_COLUMNS[i])
                 checks++;
-            if (row == validRows[i])
+            if (row == VALID_ROWS[i])
                 checks++;
         }
 
@@ -303,13 +457,51 @@ public class ChessBoard extends Board {
     }
 
     /**
+     * Boolean on whether the chess board location is valid or not.
+     * @param coordinates The coordinate indices on the 2D array of the chess board.
+     * @return Returns true or false depending on whether or not the chess board location is a valid location or not.
+     */
+    public static boolean isValidLocation(int[] coordinates) {
+        if (coordinates.length != 2)
+            return false;
+        else if (coordinates[0] < 0 || coordinates[0] > 7)
+            return false;
+        else if (coordinates[1] < 0 || coordinates[1] > 7)
+            return false;
+        else
+            return true;
+    }
+
+    public boolean isOppositeColor(String start, String end) {
+        int[] startLocation = parseLocation(start);
+        int[] endLocation = parseLocation(end);
+
+        if (startLocation == null || endLocation == null)
+            return false;
+
+        String startColor = grid[startLocation[0]][startLocation[1]].getColor();
+
+        return false;
+    }
+
+    /**
      * Changed from white's turn to black's turn.
      * Flips the board and changes the game state to reflect this.
      */
     public void changeTurn() {
-        flipBoard();
+        if (doFlipping)
+            flipBoard();
         state.changeTurn();
     }
+
+    /**
+     * Sets whether flipping is on or not.
+     * @param flip The value on whether the user wants flipping on or off.
+     */
+    public void doFlipping(boolean flip) {
+        this.doFlipping = flip;
+    }
+
 
     /**
      * @return Returns if it's currently white's turn.
@@ -354,6 +546,14 @@ public class ChessBoard extends Board {
             return new Piece(grid[coordinates[0]][coordinates[1]]);
     }
 
+
+    /**
+     * @return Returns a string representation of the current player's turn.
+     */
+    private String currentTurnString() {
+        return isWhiteTurn() ? "Player 1's Turn" : "Player 2's Turn";
+    }
+
     /**
      * Creates a text based version of the board.
      * @return Returns a string of the board.
@@ -361,12 +561,13 @@ public class ChessBoard extends Board {
     public String toString() {
         StringBuilder builder = new StringBuilder();
 
-        if (isWhiteTurn()) {
-            builder.append("Player 1's Turn\n\n");
+        if (isWhiteTurn() || !doFlipping) {
+            builder.append(currentTurnString());
+            builder.append("\n\n");
 
             for (int y = 7; y >= 0; y--) {
 
-                builder.append(validRows[y]);
+                builder.append(VALID_ROWS[y]);
                 builder.append(" ");
 
                 for (int x = 0; x < 7; x++) {
@@ -393,16 +594,17 @@ public class ChessBoard extends Board {
 
             builder.append("\n  ");
             for (int i = 0; i < 8; i++) {
-                String temp = "  " + validColumns[i] + "   ";
+                String temp = "  " + VALID_COLUMNS[i] + "   ";
                 builder.append(temp);
             }
 
         } else if (isBlackTurn()) {
-            builder.append("Player 2's Turn\n\n");
+            builder.append(currentTurnString());
+            builder.append("\n\n");
 
             for (int y = 7; y >= 0; y--) {
 
-                builder.append(flippedRows[y]);
+                builder.append(FLIPPED_ROWS[y]);
                 builder.append(" ");
 
                 for (int x = 0; x < 7; x++) {
@@ -429,7 +631,7 @@ public class ChessBoard extends Board {
 
             builder.append("\n  ");
             for (int i = 0; i < 8; i++) {
-                String temp = "  " + flippedColumns[i] + "   ";
+                String temp = "  " + FLIPPED_COLUMNS[i] + "   ";
                 builder.append(temp);
             }
 
