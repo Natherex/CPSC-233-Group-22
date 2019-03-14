@@ -357,12 +357,12 @@ public class GameState
 	{
 		return false;
 	}
-	public boolean isLeftCastleLegal(ChessBoard c, Piece n)
+	public boolean isLeftCastleLegal()
 	{
 
 		return false;
 	}
-	public boolean isRightCastleLegal(ChessBoard c, Piece n)
+	public boolean isRightCastleLegal()
 	{
 		
 		return false;
