@@ -37,13 +37,13 @@ public class Rook extends Piece {
         int yDirection = totalDistance[0];
 
         // Can move up/down/left/right
-        if (c.isNotBlocked(start, end) && (xDirection == 0 || yDirection == 0)) {
+        if (c.isNotBlocked(start, end) && (xDirection == 0 || yDirection == 0) && c.isWayClear(start,end)) {
             incrementTimesMoved();
             return true;
         }
 
         // Can kill up/down/left/right
-        else if (c.isBlocked(start, end) && (xDirection == 0 || yDirection == 0)) {
+        else if (c.isBlocked(start, end) && (xDirection == 0 || yDirection == 0) && c.isWayClear(start,end)) {
             incrementTimesMoved();
             c.removePiece(end);
             return true;
