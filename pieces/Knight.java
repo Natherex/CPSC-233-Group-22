@@ -48,10 +48,8 @@ public class Knight extends Piece {
 
         // Can move two spaces forwards or backwards and one left or right
         if (Math.abs(xDirection) == 2 && Math.abs(yDirection) == 1) {
-<<<<<<< HEAD
-            int[] startCoordinate = board.parseLocation(start);
-=======
 
+            int[] startCoordinate = board.parseLocation(start);
             int startY = startCoordinate[0];
             int startX = startCoordinate[1];
 
