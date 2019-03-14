@@ -6,9 +6,21 @@ A Simple Chess game made using Java.
 ## How to Download and Run Files
 
 - To run the game files, download all files within the repository and save them in a folder together. 
-- Run the file named "runText.bat" in order to start the game. 
+- Run the correct file depending on your OS (Operating System)
 
-### How to Play
+For Windows:
+  If playing the text-based version:
+    - Run "runText.bat"
+  If playing the GUI-based version:
+    - Run "runGUI.bat"
+    
+For Linux:
+  If playing the text-based version:
+    - Run "runText.sh"
+  If playing the GUI-based version:
+    - Run "runGUI.sh"  
+
+### How to Play (Text-Based Version)
 
 1. To play, the user is prompted with a command console with a picture of the board state. Player One plays first.
 2. To select a piece to move, type in the coordinate of the piece that corresponds to your color. (ie. Player One only selects white pieces, Player Two only selects black pieces)
