@@ -8,13 +8,13 @@ A Simple Chess game made using Java.
 - To run the game files, download all files within the repository and save them in a folder together. 
 - Run the correct file depending on your OS (Operating System)
 
-For Windows:
+**For Windows:**
   If playing the text-based version:
     - Run "runText.bat"
   If playing the GUI-based version:
     - Run "runGUI.bat"
     
-For Linux:
+**For Linux:**
   If playing the text-based version:
     - Run "runText.sh"
   If playing the GUI-based version:
