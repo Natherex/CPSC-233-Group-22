@@ -3,17 +3,19 @@ import java.util.Scanner;
 public class playerPhase{
 
   private String playerNumber;
-  private int piecesLeft = 16;
+  private int piecesLeft;
   
   public playerPhase(){
     
     this.playerNumber = "One";
+    this.piecesLeft = 16;
   
   }
   
   public playerPhase(String number){
   
     this.playerNumber = number;
+    this.piecesLeft = 16;
     
   }
   
@@ -53,7 +55,7 @@ public class playerPhase{
    * each time a piece is captured
    */
   public void updatePiecesLeft() {
-  
+    
     this.piecesLeft -= 1;
   
   }
