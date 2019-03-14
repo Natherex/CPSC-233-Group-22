@@ -16,9 +16,9 @@ A Simple Chess game made using Java.
     
 **For Linux:**
   1. If playing the text-based version:
-    - Run "runText.sh"
+      Run "runText.sh"
   2. If playing the GUI-based version:
-    - Run "runGUI.sh"  
+      Run "runGUI.sh"  
 
 ### How to Play (Text-Based Version)
 
