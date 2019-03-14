@@ -1,4 +1,4 @@
 @echo off
-javac RunGUI.java
-java RunGUI -nc
+rem Runs GUIMain without recompiling files.
+java GUIMain
 PAUSE
