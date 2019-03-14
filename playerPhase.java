@@ -4,6 +4,11 @@ public class playerPhase{
 
   private String playerNumber;
   private int piecesLeft;
+  private int bishopsLeft;
+  private int rooksLeft;
+  private int knightsLeft;
+  private int queensLeft;
+  private int pawnsLeft;
   
   public playerPhase(){
     
@@ -52,11 +57,44 @@ public class playerPhase{
   
   /**
    * Updates the total pieces remaining for the player
-   * each time a piece is captured
+   * each time a piece is captured depending on piece
+   * @param board the ChestBoard object
+   * @param piece the location of the piece being removed
    */
-  public void updatePiecesLeft() {
+  public void updatePiecesLeft(ChessBoard board, String piece) {
     
-    this.piecesLeft -= 1;
+    int[] endLocation = board.parseLocation(end);
+    
+    if (endLocation[0][1] == Queen) {
+      this.queenLeft = 0;
+      this.piecesLeft -= 1;
+      
+    }
+    
+    else if (endLocation[0][1] == Knight) {
+      this.knightsLeft -= 1;
+      this.piecesLeft -= 1;
+      
+    }
+    
+    else if (endLocation[0][1] == Bishop) {
+      
+      this.bishopsLeft -= 1;
+      this.piecesLeft -=1;
+     
+    }
+    
+    else if (endLocation[0][1] == Rook) {
+      this.rooksLeft -= 1;
+      this.piecesLeft -=1;
+      
+    }
+    
+    else if (endLocation[0][1] == Pawn) {
+      this.pawnsLeft -= 1;
+      this.piecesLeft -=1;
+    
+    }
   
   }
   
