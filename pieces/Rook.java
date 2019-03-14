@@ -44,9 +44,20 @@ public class Rook extends Piece {
 
         // Can kill up/down/left/right
         else if (c.isBlocked(start, end) && (xDirection == 0 || yDirection == 0) && c.isWayClear(start,end)) {
-            incrementTimesMoved();
-            c.removePiece(end);
-            return true;
+            int[] startCoordinate = c.parseLocation(start);
+            int startY = startCoordinate[0];
+            int startX = startCoordinate[1];
+
+            int[] endCoordinate = c.parseLocation(end);
+            int endY = endCoordinate[0];
+            int endX = endCoordinate[1];
+            if(!c.getGrid()[startY][startX].getColor().equals(c.getGrid()[endY][endX].getColor()))
+            {
+            	System.out.println("test 2");
+	            incrementTimesMoved();
+	            c.removePiece(end);
+	            return true;
+	        }
         }
 
         return false;

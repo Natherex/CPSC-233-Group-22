@@ -48,23 +48,34 @@ public class Knight extends Piece {
 
         // Can move two spaces forwards or backwards and one left or right
         if (Math.abs(xDirection) == 2 && Math.abs(yDirection) == 1) {
-            c.removePiece(end);
-            valid = true;
+            int[] startCoordinate = c.parseLocation(start);
+            int startY = startCoordinate[0];
+            int startX = startCoordinate[1];
+
+            int[] endCoordinate = c.parseLocation(end);
+            int endY = endCoordinate[0];
+            int endX = endCoordinate[1];
+            if(!c.getGrid()[startY][startX].getColor().equals(c.getGrid()[endY][endX].getColor()))
+            {
+	            incrementTimesMoved();
+	            c.removePiece(end);
+	            return true;
+	        }
         }
 
         // Can move one space forward or backward and two left or right
         else if (Math.abs(xDirection) == 1 && Math.abs(yDirection) == 2) {
-            int[] startCoordinate = board.parseLocation(start);
+            int[] startCoordinate = c.parseLocation(start);
             int startY = startCoordinate[0];
             int startX = startCoordinate[1];
 
-            int[] endCoordinate = board.parseLocation(end);
+            int[] endCoordinate = c.parseLocation(end);
             int endY = endCoordinate[0];
             int endX = endCoordinate[1];
-            if(!board.getGrid()[startY][startX].getColor().equals(board.getGrid()[endY][endX].getColor()))
+            if(!c.getGrid()[startY][startX].getColor().equals(c.getGrid()[endY][endX].getColor()))
             {
 	            incrementTimesMoved();
-	            board.removePiece(end);
+	            c.removePiece(end);
 	            return true;
 	        }
         }
