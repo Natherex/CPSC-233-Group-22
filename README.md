@@ -10,9 +10,9 @@ A Simple Chess game made using Java.
 
 **For Windows:**
   1. If playing the text-based version:
-    - Run "runText.bat"
+      Run "runText.bat"
   2. If playing the GUI-based version:
-    - Run "runGUI.bat"
+      Run "runGUI.bat"
     
 **For Linux:**
   1. If playing the text-based version:
