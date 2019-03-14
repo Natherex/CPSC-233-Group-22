@@ -39,6 +39,13 @@ public class Pawn extends Piece {
 
         int xDirection = totalDistance[1];
         int yDirection = totalDistance[0];
+        int[] startCoordinate = board.parseLocation(start);
+        int startY = startCoordinate[0];
+        int startX = startCoordinate[1];
+
+        int[] endCoordinate = board.parseLocation(end);
+        int endY = endCoordinate[0];
+        int endX = endCoordinate[1];
 
         // Can move two spaces forwards if it's the first move of the pawn and it's not blocked.
         if (getTimesMoved() == 0 && yDirection == 2 && board.isNotBlocked(start, end)) {
@@ -54,16 +61,27 @@ public class Pawn extends Piece {
 
         // Can kill piece one up and one right
         else if (yDirection == 1 && xDirection == 1 && board.isBlocked(start, end)) {
-            incrementTimesMoved();
-            board.removePiece(end);
+
+            if(!board.getGrid()[startY][startX].getColor().equals(board.getGrid()[endY][endX].getColor()))
+            {
+            	System.out.println("test 2");
+	            incrementTimesMoved();
+	            board.removePiece(end);
+	            return true;
+	        }
             return true;
         }
 
         // Can kill piece one up and one left
         else if (yDirection == 1 && xDirection == -1 && board.isBlocked(start, end)) {
-            incrementTimesMoved();
-            board.removePiece(end);
-            return true;
+
+            if(!board.getGrid()[startY][startX].getColor().equals(board.getGrid()[endY][endX].getColor()))
+            {
+            	System.out.println("test 2");
+	            incrementTimesMoved();
+	            board.removePiece(end);
+	            return true;
+	        }
         }
 
 
