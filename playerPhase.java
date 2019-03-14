@@ -67,7 +67,7 @@ public class playerPhase{
     String pieceName = endLocation[0][1].getName();
     
     if (pieceName.equals("Queen")) {
-      this.queenLeft = 0;
+      this.queensLeft = 0;
       this.piecesLeft -= 1;
       
     }
