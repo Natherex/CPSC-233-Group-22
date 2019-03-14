@@ -27,3 +27,10 @@ A Simple Chess game made using Java.
 3. After selecting a piece, type in the coordinate of the space you want to move your piece to.
 4. If the piece selected matches the player and the move is valid, the play proceeds and the turn will swap to the opponent.
 5. Repeat steps 2-4 for Player Two.
+
+### How to Play (GUI-Based Version)
+
+1. To play, the user is promted with a standard Chessboard. Player One is white side and begins first.
+2. To move a piece, select a piece of the appropriate color (white pieces if white side, black pieces if black)
+3. After selecting a piece, click another space that the corrosponding piece can move to (either empty or with a black piece).    If move is illegal, the piece will not move and you will have to reselect a piece again.
+4. After the move completes, it is now Player Two's turn (black side) and repeat steps 2-3 for their turn.
