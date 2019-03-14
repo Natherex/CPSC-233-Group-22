@@ -10,15 +10,15 @@ A Simple Chess game made using Java.
 
 **For Windows:**
   1. If playing the text-based version:
-      Run "runText.bat"
+      __Run "runText.bat"__
   2. If playing the GUI-based version:
-      Run "runGUI.bat"
+     __Run "runGUI.bat"__
     
 **For Linux:**
   1. If playing the text-based version:
-      Run "runText.sh"
+      __Run "runText.sh"__
   2. If playing the GUI-based version:
-      Run "runGUI.sh"  
+      __Run "runGUI.sh"__  
 
 ### How to Play (Text-Based Version)
 
