@@ -54,8 +54,19 @@ public class Knight extends Piece {
 
         // Can move one space forward or backward and two left or right
         else if (Math.abs(xDirection) == 1 && Math.abs(yDirection) == 2) {
-            c.removePiece(end);
-            valid = true;
+            int[] startCoordinate = board.parseLocation(start);
+            int startY = startCoordinate[0];
+            int startX = startCoordinate[1];
+
+            int[] endCoordinate = board.parseLocation(end);
+            int endY = endCoordinate[0];
+            int endX = endCoordinate[1];
+            if(!board.getGrid()[startY][startX].getColor().equals(board.getGrid()[endY][endX].getColor()))
+            {
+	            incrementTimesMoved();
+	            board.removePiece(end);
+	            return true;
+	        }
         }
 
         if (valid) {
