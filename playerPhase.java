@@ -1,4 +1,5 @@
 import java.util.Scanner;
+import pieces.Piece;
 
 public class playerPhase{
 
