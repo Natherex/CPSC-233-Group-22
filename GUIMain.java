@@ -90,7 +90,6 @@ public class GUIMain extends Application {
             mainGroup.getRowConstraints().add(new RowConstraints(60));
         }
         mainGroup.setPrefSize(480, 480);
-
         // Adds all the StackPanes to the GridPane.
         for (int row = 0; row < 8; row++) {
             for (int column = 0; column < 8; column++) {
