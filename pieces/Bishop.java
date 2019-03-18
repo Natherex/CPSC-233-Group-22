@@ -5,7 +5,7 @@ import board.ChessBoard;
 public class Bishop extends Piece {
     
     public Bishop() {
-        super("w", "Bishop");
+        super("b", "Bishop");
         setIconLocation();
     }
 
@@ -28,7 +28,15 @@ public class Bishop extends Piece {
     public String toString() {
         return "Bi(" + getColor() + ")";
     }
-    
+
+    /**
+     * Tests if move is a valid move on a given chess board.
+     * @param board Needs a chess board that the pawn is on.
+     * @param start Starting location of the piece on the chess board.
+     * @param end Ending location of the piece on the chess board.
+     * @return Returns true if the piece can make the move given,
+     *         returns false otherwise.
+     */
     public boolean isValidMove(ChessBoard board, String start, String end) {
         int[] totalDistance = board.distance(start, end);
         if (totalDistance == null)
@@ -37,22 +45,26 @@ public class Bishop extends Piece {
         int xDirection = totalDistance[1];
         int yDirection = totalDistance[0];
         
+        int[] startCoordinate = board.parseLocation(start);
+        int startY = startCoordinate[0];
+        int startX = startCoordinate[1];
+
+        int[] endCoordinate = board.parseLocation(end);
+        int endY = endCoordinate[0];
+        int endX = endCoordinate[1];
+        
+        
+        String color = board.getGrid()[startY][startX].getColor();
+        
         // Can only move diagonally if clear
-        if (Math.abs(xDirection) == Math.abs(yDirection) && board.isNotBlocked(start, end) && board.isWayClear(start,end)) {
+        if (Math.abs(xDirection) == Math.abs(yDirection) && board.isNotBlocked(start, end) && board.isWayClear(start,end) && canPieceMoveLegally(board,start,end,color)) {
             incrementTimesMoved();
             System.out.println("test1");
             return true;
         }
 
-        else if (Math.abs(xDirection) == Math.abs(yDirection) && board.isBlocked(start, end) && board.isWayClear(start,end)) {
+        else if (Math.abs(xDirection) == Math.abs(yDirection) && board.isBlocked(start, end) && board.isWayClear(start,end) && canPieceMoveLegally(board,start,end,color)) {
         	
-            int[] startCoordinate = board.parseLocation(start);
-            int startY = startCoordinate[0];
-            int startX = startCoordinate[1];
-
-            int[] endCoordinate = board.parseLocation(end);
-            int endY = endCoordinate[0];
-            int endX = endCoordinate[1];
             if(!board.getGrid()[startY][startX].getColor().equals(board.getGrid()[endY][endX].getColor()))
             {
 	            incrementTimesMoved();

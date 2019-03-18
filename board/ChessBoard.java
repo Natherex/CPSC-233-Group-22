@@ -102,7 +102,13 @@ public final class ChessBoard extends Board {
 
         return new int[]{rowDistance, columnDistance};
     }
-
+    /**
+     *	Checks if there are any pieces between the start and end location
+     * @param start starting location of a piece in form row letter then column number ie. A1
+     * @param end destination of said piece in form row letter then column number ie. A1
+     * @return  true if there is nothing in the way
+     *
+     */
     public boolean isWayClear(String start, String end) {
         
     	int[] totalDistance = distance(start, end);
@@ -333,6 +339,23 @@ public final class ChessBoard extends Board {
         }
         return false;
     }
+    
+    /**
+     * Moves piece and given location to another location. This method forces a movement and does not care
+     * if the movement is valid or not.
+     * DO NOT USE FOR REAL MOVES ONLY USED FOR THEORETICAL MOVES
+     * @param start Starting location of the piece on the chess board.
+     * @param end Ending location of the piece on the chess board.
+     * 
+     */
+    public void forcedMove(String start, String end) {
+        int[] startLocation = parseLocation(start);
+        int[] endLocation = parseLocation(end);
+        Piece temp = grid[startLocation[0]][startLocation[1]];
+        grid[startLocation[0]][startLocation[1]] = grid[endLocation[0]][endLocation[1]];
+        grid[endLocation[0]][endLocation[1]] = temp;
+    }
+    
 
     /**
      * @param location Location of the piece on the chess board.

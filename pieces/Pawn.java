@@ -65,6 +65,7 @@ public class Pawn extends Piece {
 
         int xDirection = totalDistance[1];
         int yDirection = totalDistance[0];
+        
         int[] startCoordinate = board.parseLocation(start);
         int startY = startCoordinate[0];
         int startX = startCoordinate[1];
@@ -72,21 +73,24 @@ public class Pawn extends Piece {
         int[] endCoordinate = board.parseLocation(end);
         int endY = endCoordinate[0];
         int endX = endCoordinate[1];
+        
+        
+        String color = board.getGrid()[startY][startX].getColor();
 
         // Can move two spaces forwards if it's the first move of the pawn and it's not blocked.
-        if (getTimesMoved() == 0 && yDirection == 2 && xDirection == 0 && board.isNotBlocked(start, end)) {
+        if (getTimesMoved() == 0 && yDirection == 2 && xDirection == 0 && board.isNotBlocked(start, end) && canPieceMoveLegally(board,start,end,color)) {
             incrementTimesMoved();
             return true;
         }
 
         // Can move one space forwards
-        else if (yDirection == 1 && board.isNotBlocked(start, end) && xDirection == 0 ) {
+        else if (yDirection == 1 && board.isNotBlocked(start, end) && xDirection == 0 && canPieceMoveLegally(board,start,end,color )) {
             incrementTimesMoved();
             return true;
         }
 
         // Can kill piece one up and one right
-        else if (yDirection == 1 && xDirection == 1 && board.isBlocked(start, end) && board.getGrid()[startY][startX] != null ) {
+        else if (yDirection == 1 && xDirection == 1 && board.isBlocked(start, end) && board.getGrid()[startY][startX] != null && canPieceMoveLegally(board,start,end,color)) {
 
             if(!board.getGrid()[startY][startX].getColor().equals(board.getGrid()[endY][endX].getColor()))
             {
@@ -99,7 +103,7 @@ public class Pawn extends Piece {
         }
 
         // Can kill piece one up and one left
-        else if (yDirection == 1 && xDirection == -1 && board.isBlocked(start, end) && board.getGrid()[startY][startX] != null) {
+        else if (yDirection == 1 && xDirection == -1 && board.isBlocked(start, end) && board.getGrid()[startY][startX] != null && canPieceMoveLegally(board,start,end,color)) {
 
             if(!board.getGrid()[startY][startX].getColor().equals(board.getGrid()[endY][endX].getColor()))
             {
