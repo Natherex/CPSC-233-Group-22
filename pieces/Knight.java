@@ -58,25 +58,34 @@ public class Knight extends Piece {
         String color = board.getGrid()[startY][startX].getColor();
         // Can move two spaces forwards or backwards and one left or right
         if (Math.abs(xDirection) == 2 && Math.abs(yDirection) == 1 && canPieceMoveLegally(board,start,end,color)) {
-
-            if(!board.getGrid()[startY][startX].getColor().equals(board.getGrid()[endY][endX].getColor()))
+            if(board.getGrid()[endY][endX] ==null)
+            {
+                incrementTimesMoved();
+                return true;
+            }else if(!color.equals(board.getGrid()[endY][endX].getColor()))
             {
 	            incrementTimesMoved();
 	            board.removePiece(end);
 	            return true;
-	        }
+	        }else
+	            return false;
 
         }
 
         // Can move one space forward or backward and two left or right
         else if (Math.abs(xDirection) == 1 && Math.abs(yDirection) == 2 && canPieceMoveLegally(board,start,end,color)) {
 
-            if(!board.getGrid()[startY][startX].getColor().equals(board.getGrid()[endY][endX].getColor()))
+            if(board.getGrid()[endY][endX] ==null)
             {
-	            incrementTimesMoved();
-	            board.removePiece(end);
-	            return true;
-	        }
+                incrementTimesMoved();
+                return true;
+            }else if(!color.equals(board.getGrid()[endY][endX].getColor()))
+            {
+                incrementTimesMoved();
+                board.removePiece(end);
+                return true;
+            }else
+                return false;
         }
 
         if (valid) {
