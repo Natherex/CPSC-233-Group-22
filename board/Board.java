@@ -13,6 +13,12 @@ public class Board {
         this.grid = new Piece[height][length];
     }
 
+    public Board (Board b) {
+        this.length = b.length;
+        this.height = b.height;
+        this.grid = b.getCopyGrid();
+    }
+
     public int getLength() {
         return length;
     }

@@ -25,6 +25,17 @@ public final class ChessBoard extends Board {
     }
 
     /**
+     * Copy Constructor for the Chess Board
+     * @param board Board to Copy
+     */
+    public ChessBoard(ChessBoard board) {
+        super(board);
+        this.isFlipped = board.isFlipped;
+        this.doFlipping = board.doFlipping;
+        this.state = new GameState(board.state);
+    }
+
+    /**
      * Initializes standard chess board setup.
      */
     public void initialize() {
