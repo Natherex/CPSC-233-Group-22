@@ -99,7 +99,6 @@ public class Pawn extends Piece {
 	            board.removePiece(end);
 	            return true;
 	        }
-            return true;
         }
 
         // Can kill piece one up and one left

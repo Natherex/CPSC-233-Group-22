@@ -78,8 +78,7 @@ public class Piece {
 	 * @return Returns true if the piece can move without putting king in danger
 	 *         returns false otherwise.
 	 */
-    public boolean canPieceMoveLegally(ChessBoard board, String startLocation, String endLocation, String color)
-    {
+    public boolean canPieceMoveLegally(ChessBoard board, String startLocation, String endLocation, String color) {
         int[] totalDistance = board.distance(startLocation, endLocation);
         if (totalDistance == null)
             return false;
@@ -88,40 +87,39 @@ public class Piece {
         int yDirection = totalDistance[0];
         
         int[] startingLocation = board.parseLocation(startLocation);
-
         int xStart = startingLocation[1];
         int yStart = startingLocation[0];
+
         boolean kingFound = false;
         boolean attackerFound = false;
+
         int x;
         int y;
-      //check if king and attacker are in same row
-        if(yDirection != 0)
-        {
-        	x = xStart-1;
-        	//check left
-        	while(x>=0 && kingFound == false && attackerFound == false)
-        	{
-        		if(board.getGrid()[yStart][x] == null)
-        		{
-        			
-        		}
-        		else if(board.getGrid()[yStart][x].getName().equals("King") && board.getGrid()[yStart][x].getColor().equals(color))
-        		{
-        			kingFound = true;
-        		}else if((board.getGrid()[yStart][x].getName().equals("Queen") || board.getGrid()[yStart][x].getName().equals("Rook")) && !board.getGrid()[yStart][x].getColor().equals(color) )
-        		{
-        			attackerFound = true;
-        		}else if(!board.getGrid()[yStart][x].getName().equals(null))
-        		{
-        			break;
-        		}
+
+        // Check if king and attacker are in same row
+        if (yDirection != 0) {
+        	x = xStart - 1;
+
+        	// Check left
+        	while(x >= 0 && !kingFound && !attackerFound) {
+        		if (board.getGrid()[yStart][x] != null) {
+					if (board.getGrid()[yStart][x].getName().equals("King") &&
+						board.getGrid()[yStart][x].getColor().equals(color)) {
+						kingFound = true;
+					}
+
+					else if ((board.getGrid()[yStart][x].getName().equals("Queen") ||
+							  board.getGrid()[yStart][x].getName().equals("Rook")) &&
+							 !board.getGrid()[yStart][x].getColor().equals(color)) {
+						attackerFound = true;
+					}
+				}
         		x--;
         	}
-        	//check right
-        	x = xStart+1;
-        	while(x < 8 && (kingFound == true || attackerFound == true))
-        	{
+
+        	// Check right
+        	x = xStart + 1;
+        	while (x < 8 && (kingFound || attackerFound)) {
         		if(board.getGrid()[yStart][x] == null)
         		{
         			

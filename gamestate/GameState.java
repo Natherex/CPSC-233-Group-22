@@ -1,22 +1,27 @@
 package gamestate;
-import board.ChessBoard;
-import pieces.Piece;
 
 import board.ChessBoard;
 import java.util.Arrays;
 
-public class GameState
-{
+public class GameState {
 	private boolean castleLeft;
 	private boolean castleRight;
 	private int gameState;
 	private boolean isWhiteTurn = true;
 	private boolean isBlackTurn = false;
-	public GameState()
-	{
+
+	public GameState() {
 		castleLeft = true;
 		castleRight = true;
 		gameState = 0;
+	}
+
+	public GameState(GameState gs) {
+		this.castleLeft = gs.castleLeft;
+		this.castleRight = gs.castleRight;
+		this.gameState = gs.gameState;
+		this.isWhiteTurn = gs.isWhiteTurn;
+		this.isBlackTurn = gs.isBlackTurn;
 	}
 
 	/**
@@ -132,9 +137,8 @@ public class GameState
 	}
 
 	/**
-	 *	Checks if the Chessboard is in stalemate for the current player
+	 * Checks if the Chessboard is in stalemate for the current player
 	 * @param c Chessboard to be analyzed
-	 * @param color color of the current player
 	 * @return if the player is currently in stalemate
 	 *
 	 */
@@ -142,10 +146,10 @@ public class GameState
 	{
 		return false;
 	}
+
 	/**
 	 * Checks if the king has any valid moves
 	 * @param c Chessboard to be analyzed
-	 * @param color color of the current player
 	 * @return if the current players king can move
 	 *
 	 */
@@ -229,7 +233,7 @@ public class GameState
 	 *	Checks if the specified tile can be filled by another piece
 	 * @param c Chessboard to be analyzed
 	 * @param color color of the current player
-	 * @param coordiante location of the piece that wants to be checked
+	 * @param coordinate location of the piece that wants to be checked
 	 * @return if the king can be saved with another piece
 	 *
 	 */
