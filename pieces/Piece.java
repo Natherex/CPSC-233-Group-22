@@ -9,7 +9,7 @@ public class Piece {
     private String icon;
 
     public Piece() {
-        this.color = "w";
+        this.color = "b";
     }
 
     public Piece(String color) {
@@ -69,7 +69,16 @@ public class Piece {
     public String toString() {
         return "Piece(" + getColor() + ")";
     }
-    public boolean canPieceMoveLegally(ChessBoard board, String startLocation, String endLocation)
+
+	/**
+	 * Tests if a move will put your king in danger which is illegal
+	 * @param board chess board that is being analyzed
+	 * @param start Starting location of the piece on the chess board.
+	 * @param end Ending location of the piece on the chess board.
+	 * @return Returns true if the piece can move without putting king in danger
+	 *         returns false otherwise.
+	 */
+    public boolean canPieceMoveLegally(ChessBoard board, String startLocation, String endLocation, String color)
     {
         int[] totalDistance = board.distance(startLocation, endLocation);
         if (totalDistance == null)
@@ -91,15 +100,19 @@ public class Piece {
         {
         	x = xStart-1;
         	//check left
-        	while(x>0 && kingFound == false && attackerFound == false)
+        	while(x>=0 && kingFound == false && attackerFound == false)
         	{
-        		if(board.getGrid()[x][yStart].getName().equals("king"))
+        		if(board.getGrid()[yStart][x] == null)
+        		{
+        			
+        		}
+        		else if(board.getGrid()[yStart][x].getName().equals("King") && board.getGrid()[yStart][x].getColor().equals(color))
         		{
         			kingFound = true;
-        		}else if(board.getGrid()[x][yStart].getName().equals("queen") || board.getGrid()[x][yStart].getName().equals("rook"))
+        		}else if((board.getGrid()[yStart][x].getName().equals("Queen") || board.getGrid()[yStart][x].getName().equals("Rook")) && !board.getGrid()[yStart][x].getColor().equals(color) )
         		{
         			attackerFound = true;
-        		}else if(!board.getGrid()[x][yStart].getName().equals(null))
+        		}else if(!board.getGrid()[yStart][x].getName().equals(null))
         		{
         			break;
         		}
@@ -107,16 +120,20 @@ public class Piece {
         	}
         	//check right
         	x = xStart+1;
-        	while(x < 9 && (kingFound == true || attackerFound == true))
+        	while(x < 8 && (kingFound == true || attackerFound == true))
         	{
-        		
-        		if(board.getGrid()[x][yStart].getName().equals("king"))
+        		if(board.getGrid()[yStart][x] == null)
+        		{
+        			
+        		}
+        		else if(board.getGrid()[yStart][x].getName().equals("King"))
         		{
         			return false;
-        		}else if((board.getGrid()[x][yStart].getName().equals("queen") || board.getGrid()[x][yStart].getName().equals("rook")) && attackerFound == false)
+        		}else if((board.getGrid()[yStart][x].getName().equals("Queen") || board.getGrid()[yStart][x].getName().equals("Rook")) && attackerFound == false 
+        				&& !board.getGrid()[yStart][x].getColor().equals(color))
         		{
         			return false;
-        		}else if(!board.getGrid()[x][yStart].getName().equals(null))
+        		}else if(!board.getGrid()[yStart][x].getName().equals(null))
         		{
         			break;
         		}
@@ -130,15 +147,20 @@ public class Piece {
         {
         	y = yStart-1;
         	//check bottom
-        	while(y>0 && kingFound == false && attackerFound == false)
+        	while(y>=0 && kingFound == false && attackerFound == false)
         	{
-        		if(board.getGrid()[xStart][y].getName().equals("king"))
+        		
+        		if(board.getGrid()[y][xStart] == null)
+        		{
+        			
+        		}
+        		else if(board.getGrid()[y][xStart].getName().equals("King") && board.getGrid()[y][xStart].getColor().equals(color))
         		{
         			kingFound = true;
-        		}else if(board.getGrid()[xStart][y].getName().equals("queen") || board.getGrid()[xStart][y].getName().equals("rook"))
+        		}else if((board.getGrid()[y][xStart].getName().equals("Queen") || board.getGrid()[y][xStart].getName().equals("Rook")) && !board.getGrid()[y][xStart].getColor().equals(color))
         		{
         			attackerFound = true;
-        		}else if(!board.getGrid()[xStart][y].getName().equals(null))
+        		}else if(!board.getGrid()[y][xStart].getName().equals(null))
         		{
         			break;
         		}
@@ -146,16 +168,21 @@ public class Piece {
         	}
         	//check top
         	y = yStart+1;
-        	while(y < 9 && (kingFound == true || attackerFound == true))
+        	while(y < 8 && (kingFound == true || attackerFound == true))
         	{
         		
-        		if(board.getGrid()[xStart][y].getName().equals("king"))
+        		if(board.getGrid()[y][xStart] == null)
+        		{
+        			
+        		}
+        		else if(board.getGrid()[y][xStart].getName().equals("King") && board.getGrid()[y][xStart].getColor().equals(color))
         		{
         			return false;
-        		}else if((board.getGrid()[xStart][y].getName().equals("queen") || board.getGrid()[xStart][y].getName().equals("rook")) && attackerFound == false)
+        		}else if((board.getGrid()[y][xStart].getName().equals("Queen") || board.getGrid()[y][xStart].getName().equals("Rook")) && attackerFound == false 
+        				&& !board.getGrid()[y][xStart].getColor().equals(color))
         		{
         			return false;
-        		}else if(!board.getGrid()[xStart][y].getName().equals(null))
+        		}else if(!board.getGrid()[y][xStart].getName().equals(null))
         		{
         			break;
         		}
@@ -167,18 +194,23 @@ public class Piece {
         attackerFound = false;
         if(xDirection != yDirection)
         {
+        	System.out.println("up left");
         	x = xStart-1;
         	y = yStart-1;
         	//check bottom left
-        	while( (y>0 && x>0) && kingFound == false && attackerFound == false)
+        	while( y>=0 && x>=0 && kingFound == false && attackerFound == false)
         	{
-        		if(board.getGrid()[x][y].getName().equals("king"))
+        		if(board.getGrid()[y][x] == null)
+        		{
+        			
+        		}
+        		else if(board.getGrid()[y][x].getName().equals("King") && board.getGrid()[y][x].getColor().equals(color))
         		{
         			kingFound = true;
-        		}else if(board.getGrid()[x][y].getName().equals("queen") || board.getGrid()[x][y].getName().equals("rook"))
+        		}else if((board.getGrid()[y][x].getName().equals("Queen") || board.getGrid()[y][x].getName().equals("Bishop")) && !board.getGrid()[y][x].getColor().equals(color))
         		{
         			attackerFound = true;
-        		}else if(!board.getGrid()[x][y].getName().equals(null))
+        		}else if(!board.getGrid()[y][x].getName().equals(null))
         		{
         			break;
         		}
@@ -189,16 +221,21 @@ public class Piece {
         	//check top right
         	x = xStart+1;
         	y = yStart+1;
-        	while( (y<9 && x<9) && (kingFound == true || attackerFound == true))
+        	while( (y<8 && x<8) && (kingFound == true || attackerFound == true))
         	{
         		
-        		if(board.getGrid()[x][y].getName().equals("king"))
+        		if(board.getGrid()[y][x] == null)
+        		{
+        			
+        		}
+        		else if(board.getGrid()[y][x].getName().equals("King")&& board.getGrid()[y][x].getColor().equals(color))
         		{
         			return false;
-        		}else if((board.getGrid()[x][y].getName().equals("queen") || board.getGrid()[x][y].getName().equals("rook")) && attackerFound == false)
+        		}else if((board.getGrid()[y][x].getName().equals("Queen") || board.getGrid()[y][x].getName().equals("Bishop")) && attackerFound == false 
+        				&& !board.getGrid()[y][x].getColor().equals(color))
         		{
         			return false;
-        		}else if(!board.getGrid()[x][y].getName().equals(null))
+        		}else if(!board.getGrid()[y][x].getName().equals(null))
         		{
         			break;
         		}
@@ -214,15 +251,24 @@ public class Piece {
         	x = xStart-1;
         	y = yStart+1;
         	//check bottom
-        	while( (y<9 && x>0) && kingFound == false && attackerFound == false)
+        	while( (y<8 && x>=0) && kingFound == false && attackerFound == false)
         	{
-        		if(board.getGrid()[x][y].getName().equals("king"))
+        		if(board.getGrid()[y][x] == null)
+        		{
+        			
+        		}
+        		else if(board.getGrid()[y][x].getName().equals("King") && board.getGrid()[y][x].getColor().equals(color))
         		{
         			kingFound = true;
-        		}else if(board.getGrid()[x][y].getName().equals("queen") || board.getGrid()[x][y].getName().equals("rook"))
+        		}else if(board.getGrid()[y][x].getName().equals("Queen") || board.getGrid()[y][x].getName().equals("Bishop"))
         		{
-        			attackerFound = true;
-        		}else if(!board.getGrid()[x][y].getName().equals(null))
+        			if(!board.getGrid()[y][x].getColor().equals(color))
+        			{
+        				System.out.println(color);
+        				System.out.println(board.getGrid()[y][x].getColor());
+        				attackerFound = true;
+        			}
+        		}else if(!board.getGrid()[y][x].getName().equals(null))
         		{
         			break;
         		}
@@ -233,16 +279,22 @@ public class Piece {
         	//check top
         	x = xStart+1;
         	y = yStart-1;
-        	while( (y>0 && x<9) && (kingFound == true || attackerFound == true))
+        	while( (y>=0 && x<8) && (kingFound == true || attackerFound == true))
         	{
-        		
-        		if(board.getGrid()[x][y].getName().equals("king"))
+        		if(board.getGrid()[y][x] == null)
         		{
-        			return false;
-        		}else if((board.getGrid()[x][y].getName().equals("queen") || board.getGrid()[x][y].getName().equals("rook")) && attackerFound == false)
+        			
+        		}
+        		else if(board.getGrid()[y][x].getName().equals("King") && board.getGrid()[y][x].getColor().equals(color))
         		{
+        			System.out.println("cant move");
         			return false;
-        		}else if(!board.getGrid()[x][y].getName().equals(null))
+        		}else if(((board.getGrid()[y][x].getName().equals("Queen") || board.getGrid()[y][x].getName().equals("Bishop")) && attackerFound == false) 
+        				&& !board.getGrid()[y][x].getColor().equals(color))
+        		{
+        			System.out.println("cant move");
+        			return false;
+        		}else if(!board.getGrid()[y][x].getName().equals(null))
         		{
         			break;
         		}
