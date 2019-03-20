@@ -115,7 +115,7 @@ public final class ChessBoard extends Board {
         return new int[]{rowDistance, columnDistance};
     }
     /**
-     *	Checks if there are any pieces between the start and end location
+     * Checks if there are any pieces between the start and end location
      * @param start starting location of a piece in form row letter then column number ie. A1
      * @param end destination of said piece in form row letter then column number ie. A1
      * @return  true if there is nothing in the way
