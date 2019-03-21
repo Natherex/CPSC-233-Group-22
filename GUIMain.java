@@ -14,6 +14,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.Node;
 
 public class GUIMain extends Application {
+    public static final String SELECTION_URL = "/assets/selection.png";
     private String startLocation;
     private String endLocation;
     private ChessBoard board;
@@ -35,10 +36,13 @@ public class GUIMain extends Application {
 //            System.out.printf("Mouse clicked on cell [%d, %d]%n", row, column);
 //            System.out.println(board.unparseLocation(new int[]{row, column}));
 
-            if (startLocation == null)
+            if (startLocation == null) {
                 startLocation = board.unparseLocation(new int[]{row, column});
-            else if (endLocation == null)
+                addSelection();
+            } else if (endLocation == null) {
                 endLocation = board.unparseLocation(new int[]{row, column});
+                clearSelection();
+            }
         }
     }
 
@@ -46,7 +50,7 @@ public class GUIMain extends Application {
     public void start(Stage primaryStage) {
         board = new ChessBoard();
         board.initialize();
-        board.doFlipping(true);
+        board.doFlipping(false);
         pieceGrid = board.getGrid();
 
         // Initializes 8x8 StackPanes and adds event handler to each one.
@@ -72,10 +76,10 @@ public class GUIMain extends Application {
                 if (pieceGrid[row][column] != null) {
                     String imgLocation = pieceGrid[row][column].getIconLocation();
                     ImageView img = new ImageView(new Image(imgLocation));
-                    stackPaneGrid[row][column].getChildren().add(img);
+                    stackPaneGrid[row][column].getChildren().addAll(new ImageView(), img);
                 } else {
                     ImageView img = new ImageView();
-                    stackPaneGrid[row][column].getChildren().add(img);
+                    stackPaneGrid[row][column].getChildren().addAll(new ImageView(), img);
                 }
 
                 isCurrentlyWhiteSquare = !isCurrentlyWhiteSquare;
@@ -90,6 +94,7 @@ public class GUIMain extends Application {
             mainGroup.getRowConstraints().add(new RowConstraints(60));
         }
         mainGroup.setPrefSize(480, 480);
+
         // Adds all the StackPanes to the GridPane.
         for (int row = 0; row < 8; row++) {
             for (int column = 0; column < 8; column++) {
@@ -108,6 +113,8 @@ public class GUIMain extends Application {
             @Override
             public void handle(long now) {
                 try {
+
+                    // Checks if the two locations are the same location
                     if (startLocation != null && endLocation != null) {
                         if (startLocation.equals(endLocation)) {
                             startLocation = null;
@@ -115,12 +122,8 @@ public class GUIMain extends Application {
                         }
                     }
 
+                    // Main game loop
                     if (startLocation != null && endLocation != null) {
-                        System.out.println(startLocation);
-                        System.out.println(endLocation);
-                        System.out.println(board.isNotBlocked(startLocation, endLocation));
-
-
                         if (board.isCorrectColor(startLocation)) {
                             if (board.movePiece(startLocation, endLocation)) {
                                 board.changeTurn();
@@ -131,6 +134,7 @@ public class GUIMain extends Application {
                         startLocation = null;
                         endLocation = null;
                     }
+
                 } catch (Exception e) {
                     e.printStackTrace();
                     System.exit(1);
@@ -145,6 +149,8 @@ public class GUIMain extends Application {
      */
     private void updateWindow() {
         pieceGrid = board.getGrid();
+        System.out.println(startLocation);
+        System.out.println(endLocation);
 
         ObservableList<Node> nodes;
         for (int row = 0; row < 8; row++) {
@@ -155,14 +161,36 @@ public class GUIMain extends Application {
                 // Sets the image to null if there is no piece there.
                 if (pieceGrid[row][column] != null) {
                     String imgLocation = pieceGrid[row][column].getIconLocation();
-                    ImageView img = (ImageView)(nodes.get(0));
+                    ImageView img = (ImageView)(nodes.get(1));
                     img.setImage(new Image(imgLocation));
                 } else {
-                    ImageView img = (ImageView)(nodes.get(0));
+                    ImageView img = (ImageView)(nodes.get(1));
                     img.setImage(null);
                 }
             }
         }
+    }
+
+    private void addSelection() {
+        int[] location = board.parseLocation(startLocation);
+        int row = location[0];
+        int column = location[1];
+
+        ObservableList<Node> nodes = stackPaneGrid[row][column].getChildren();
+        Image selectionImg = new Image(SELECTION_URL);
+        ImageView currentSpot = (ImageView)(nodes.get(0));
+        currentSpot.setImage(selectionImg);
+    }
+
+    private void clearSelection()  {
+        int[] location = board.parseLocation(startLocation);
+        int row = location[0];
+        int column = location[1];
+
+        ObservableList<Node> nodes = stackPaneGrid[row][column].getChildren();
+        ImageView currentSpot = (ImageView)(nodes.get(0));
+        currentSpot.setImage(null);
+
     }
 
     public static void main(String[] args) {

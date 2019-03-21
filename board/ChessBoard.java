@@ -6,15 +6,16 @@ import pieces.*;
 import java.util.Scanner;
 
 public final class ChessBoard extends Board {
-    private boolean isFlipped = false;
-    private boolean doFlipping = true;
     private static final char[] VALID_COLUMNS = new char[]{'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'};
     private static final int[] VALID_ROWS = new int[]{1, 2, 3, 4, 5, 6, 7, 8};
     private static final char[] FLIPPED_COLUMNS = new char[]{'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A'};
     private static final int[] FLIPPED_ROWS = new int[]{8, 7, 6, 5, 4, 3, 2, 1};
-    private GameState state = new GameState();
     public static final Color BROWN = Color.rgb(150, 92, 37);
     public static final Color WHITE = Color.rgb(250, 250, 250);
+
+    private boolean isFlipped = false;
+    private boolean doFlipping = true;
+    private GameState state = new GameState();
 
     /**
      * Sets up an 8x8 chess board.
@@ -114,7 +115,7 @@ public final class ChessBoard extends Board {
         return new int[]{rowDistance, columnDistance};
     }
     /**
-     *	Checks if there are any pieces between the start and end location
+     * Checks if there are any pieces between the start and end location
      * @param start starting location of a piece in form row letter then column number ie. A1
      * @param end destination of said piece in form row letter then column number ie. A1
      * @return  true if there is nothing in the way

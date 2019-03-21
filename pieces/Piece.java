@@ -73,8 +73,8 @@ public class Piece {
 	/**
 	 * Tests if a move will put your king in danger which is illegal
 	 * @param board chess board that is being analyzed
-	 * @param start Starting location of the piece on the chess board.
-	 * @param end Ending location of the piece on the chess board.
+	 * @param startLocation Starting location of the piece on the chess board.
+	 * @param endLocation Ending location of the piece on the chess board.
 	 * @return Returns true if the piece can move without putting king in danger
 	 *         returns false otherwise.
 	 */
@@ -103,14 +103,13 @@ public class Piece {
         	// Check left
         	while(x >= 0 && !kingFound && !attackerFound) {
         		if (board.getGrid()[yStart][x] != null) {
-					if (board.getGrid()[yStart][x].getName().equals("King") &&
-						board.getGrid()[yStart][x].getColor().equals(color)) {
+					if (board.getGrid()[yStart][x].getName().equals("King")
+						&& board.getGrid()[yStart][x].getColor().equals(color)) {
 						kingFound = true;
 					}
 
-					else if ((board.getGrid()[yStart][x].getName().equals("Queen") ||
-							  board.getGrid()[yStart][x].getName().equals("Rook")) &&
-							 !board.getGrid()[yStart][x].getColor().equals(color)) {
+					else if ((board.getGrid()[yStart][x].getName().equals("Queen") || board.getGrid()[yStart][x].getName().equals("Rook"))
+							 && !board.getGrid()[yStart][x].getColor().equals(color)) {
 						attackerFound = true;
 					}
 				}
