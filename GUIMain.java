@@ -50,7 +50,7 @@ public class GUIMain extends Application {
     public void start(Stage primaryStage) {
         board = new ChessBoard();
         board.initialize();
-        board.doFlipping(true);
+        board.doFlipping(false);
         pieceGrid = board.getGrid();
 
         // Initializes 8x8 StackPanes and adds event handler to each one.
@@ -113,6 +113,7 @@ public class GUIMain extends Application {
             @Override
             public void handle(long now) {
                 try {
+
                     // Checks if the two locations are the same location
                     if (startLocation != null && endLocation != null) {
                         if (startLocation.equals(endLocation)) {
