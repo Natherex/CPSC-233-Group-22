@@ -191,7 +191,6 @@ public class Piece {
         attackerFound = false;
         if(xDirection != yDirection)
         {
-        	System.out.println("up left");
         	x = xStart-1;
         	y = yStart-1;
         	//check bottom left
