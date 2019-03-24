@@ -59,7 +59,6 @@ public class Bishop extends Piece {
         // Can only move diagonally if clear
         if (Math.abs(xDirection) == Math.abs(yDirection) && board.isNotBlocked(start, end) && board.isWayClear(start,end) && canPieceMoveLegally(board,start,end,color)) {
             incrementTimesMoved();
-            System.out.println("test1");
             return true;
         }
 

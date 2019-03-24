@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
+import gamestate.GameState;
 
 public class GUIMain extends Application {
     public static final String SELECTION_URL = "/assets/selection.png";
@@ -20,6 +21,8 @@ public class GUIMain extends Application {
     private ChessBoard board;
     private StackPane[][] stackPaneGrid;
     private Piece[][] pieceGrid;
+    private GameState state = new GameState();
+    private int[] checkersLocation = {9,5};
 
     public class MouseEventHandler implements EventHandler<MouseEvent> {
         private int row;
@@ -125,10 +128,14 @@ public class GUIMain extends Application {
                     // Main game loop
                     if (startLocation != null && endLocation != null) {
                         if (board.isCorrectColor(startLocation)) {
-                            if (board.movePiece(startLocation, endLocation)) {
+
+                            //state.updateGameState(board,checkersLocation, board.currentPlayer());
+                            if (state.kingIsSafe(board,startLocation,endLocation,board.currentPlayer()) && board.movePiece(startLocation, endLocation)) {
                                 board.changeTurn();
                                 updateWindow();
                             }
+                            //System.out.println(state.canTileBeFilled(board,state.findKing(board,board.currentPlayer()),board.oppositePlayer()));
+                            System.out.println(state.kingIsSafe(board,startLocation,endLocation,board.currentPlayer()));
                         }
 
                         startLocation = null;

@@ -118,14 +118,20 @@ public class GameState {
 	 */
 	public boolean isCheck(ChessBoard c, String color)
 	{
-		if(canTileBeFilled(c,findKing(c,color),color))
+		String oColor;
+		if (color == "w")
+			oColor ="b";
+		else
+			oColor = "w";
+
+		if(canTileBeFilled(c,findKing(c,color),oColor))
 			return true;
 
 		return false;
 	}public boolean kingIsSafe(ChessBoard c, String start, String end, String playersColor)
 	{
-		ChessBoard temp;
-		temp = c;
+		ChessBoard temp = new ChessBoard(c);
+
 		temp.forcedMove(start,end);
 		if(isCheck(temp,playersColor))
 		{
@@ -172,7 +178,7 @@ public class GameState {
 		{
 			for (int column = 0; column < c.getLength(); column++)
 			{
-				if(c.getGrid()[row][column].getName().equals("King") && c.getGrid()[row][column].getColor().equals(color))
+				if(c.getGrid()[row][column] != null && c.getGrid()[row][column].getName().equals("King") && c.getGrid()[row][column].getColor().equals(color))
 				{
 					coordinates[0] = row;
 					coordinates[1] = column;
@@ -180,7 +186,6 @@ public class GameState {
 				}
 			}
 		}
-
 		return null;
 
 	}
@@ -240,7 +245,7 @@ public class GameState {
 	public boolean canTileBeFilled(ChessBoard c, int[] coordinate, String color)
 	{
 		//check if knight can fill tile
-		if(coordinate[0]>=1 && coordinate[1]>=2)
+		if(coordinate[0]>=1 && coordinate[1]>=2 && c.getGrid()[coordinate[0]-1][coordinate[1]-2] != null)
 		{
 			if(c.getGrid()[coordinate[0]-1][coordinate[1]-2].getName().equals("Knight"))
 			{
@@ -248,7 +253,7 @@ public class GameState {
 					return true;
 			}
 		}
-		if(coordinate[0]>=2 && coordinate[1]>=1)
+		if(coordinate[0]>=2 && coordinate[1]>=1 && c.getGrid()[coordinate[0]-2][coordinate[1]-1] != null)
 		{
 			if(c.getGrid()[coordinate[0]-2][coordinate[1]-1].getName().equals("Knight"))
 			{
@@ -256,7 +261,7 @@ public class GameState {
 					return true;
 			}
 		}
-		if(coordinate[0]<7 && coordinate[1]>= 2)
+		if(coordinate[0]<7 && coordinate[1]>= 2 && c.getGrid()[coordinate[0]+1][coordinate[1]-2] != null)
 		{
 			if(c.getGrid()[coordinate[0]+1][coordinate[1]-2].getName().equals("Knight"))
 			{
@@ -264,7 +269,7 @@ public class GameState {
 					return true;
 			}
 		}
-		if(coordinate[0]<6 && coordinate[1]>= 1)
+		if(coordinate[0]<6 && coordinate[1]>= 1 && c.getGrid()[coordinate[0]+2][coordinate[1]-1] != null)
 		{
 			if(c.getGrid()[coordinate[0]+2][coordinate[1]-1].getName().equals("Knight"))
 			{
@@ -272,7 +277,7 @@ public class GameState {
 					return true;
 			}
 		}
-		if(coordinate[0]>=1 && coordinate[1] <6)
+		if(coordinate[0]>=1 && coordinate[1] <6 && c.getGrid()[coordinate[0]-1][coordinate[1]+2] != null)
 		{
 			if(c.getGrid()[coordinate[0]-1][coordinate[1]+2].getName().equals("Knight"))
 			{
@@ -280,7 +285,7 @@ public class GameState {
 					return true;
 			}
 		}
-		if(coordinate[0]>=2 && coordinate[1] <7)
+		if(coordinate[0]>=2 && coordinate[1] <7 && c.getGrid()[coordinate[0]-2][coordinate[1]+1] != null)
 		{
 			if(c.getGrid()[coordinate[0]-2][coordinate[1]+1].getName().equals("Knight"))
 			{
@@ -288,7 +293,7 @@ public class GameState {
 					return true;
 			}
 		}
-		if(coordinate[0]<7 && coordinate[1] <6)
+		if(coordinate[0]<7 && coordinate[1] <6 && c.getGrid()[coordinate[0]+1][coordinate[1]+2] != null)
 		{
 			if(c.getGrid()[coordinate[0]+1][coordinate[1]+2].getName().equals("Knight"))
 			{
@@ -296,7 +301,7 @@ public class GameState {
 					return true;
 			}
 		}
-		if(coordinate[0]<6 && coordinate[1] <7)
+		if(coordinate[0]<6 && coordinate[1] <7 && c.getGrid()[coordinate[0]+2][coordinate[1]+1] != null)
 		{
 			if(c.getGrid()[coordinate[0]+2][coordinate[1]+1].getName().equals("Knight"))
 			{
@@ -306,24 +311,32 @@ public class GameState {
 		}
 
 		//check if pawn can fill tile
-		if(c.getGrid()[coordinate[0]-1][coordinate[1]].getName().equals("Pawn"))
+		if(coordinate[0]<0 && c.getGrid()[coordinate[0]-1][coordinate[1]] != null)
 		{
-			if(c.getGrid()[coordinate[0]-1][coordinate[1]].getColor().equals(color))
-				return true;
+			if(c.getGrid()[coordinate[0]-1][coordinate[1]].getName().equals("Pawn"))
+			{
+				if(c.getGrid()[coordinate[0]-1][coordinate[1]].getColor().equals(color))
+					return true;
+			}
 		}
 		//check right
 		int i = 1;
 		boolean open = true;
-		while(coordinate[1]+i<8 && open)
+		while(coordinate[1]+i < 8 && open)
 		{
-			if(c.getGrid()[coordinate[0]][coordinate[1]+i].getName().equals("Rook") || c.getGrid()[coordinate[0]][coordinate[1]+i].getName().equals("Queen") )
+
+			if(c.getGrid()[coordinate[0]][coordinate[1]+i] != null)
 			{
-				if(c.getGrid()[coordinate[0]][coordinate[1]+i].getColor().equals(color))
-					return true;
-			}
-			if(c.getGrid()[coordinate[0]][coordinate[1]+i].getName() == null)
-			{
-				open = false;
+				if(c.getGrid()[coordinate[0]][coordinate[1]+i].getName().equals("Rook")
+						|| c.getGrid()[coordinate[0]][coordinate[1]+i].getName().equals("Queen") )
+				{
+					if(c.getGrid()[coordinate[0]][coordinate[1]+i].getColor().equals(color))
+						return true;
+					else
+						break;
+				}else
+					break;
+
 			}
 			i++;
 		}
@@ -332,14 +345,19 @@ public class GameState {
 		open = true;
 		while(coordinate[0]+i<8 && open)
 		{
-			if(c.getGrid()[coordinate[0]+i][coordinate[1]].getName().equals("Rook") || c.getGrid()[coordinate[0]+i][coordinate[1]].getName().equals("Queen") )
+
+			if(c.getGrid()[coordinate[0]+i][coordinate[1]] != null)
 			{
-				if(c.getGrid()[coordinate[0]+i][coordinate[1]].getColor().equals(color))
-					return true;
-			}
-			if(c.getGrid()[coordinate[0]+i][coordinate[1]].getName() == null)
-			{
-				open = false;
+				if(c.getGrid()[coordinate[0]+i][coordinate[1]].getName().equals("Rook")
+						|| c.getGrid()[coordinate[0]+i][coordinate[1]].getName().equals("Queen") )
+				{
+					if(c.getGrid()[coordinate[0]+i][coordinate[1]].getColor().equals(color))
+						return true;
+					else
+						break;
+				}else
+					break;
+
 			}
 			i++;
 		}
@@ -348,14 +366,17 @@ public class GameState {
 		open = true;
 		while(coordinate[1]-i>=0 && open)
 		{
-			if(c.getGrid()[coordinate[0]][coordinate[1]-i].getName().equals("Rook") || c.getGrid()[coordinate[0]][coordinate[1]-i].getName().equals("Queen") )
-			{
-				if(c.getGrid()[coordinate[0]][coordinate[1]-i].getColor().equals(color))
-					return true;
-			}
-			if(c.getGrid()[coordinate[0]][coordinate[1]-i].getName() == null)
-			{
-				open = false;
+
+			if(c.getGrid()[coordinate[0]][coordinate[1]-i] != null) {
+				if (c.getGrid()[coordinate[0]][coordinate[1] - i].getName().equals("Rook")
+						|| c.getGrid()[coordinate[0]][coordinate[1] - i].getName().equals("Queen")) {
+					if (c.getGrid()[coordinate[0]][coordinate[1] - i].getColor().equals(color))
+						return true;
+					else
+						break;
+				}else
+					break;
+
 			}
 			i++;
 		}
@@ -364,14 +385,17 @@ public class GameState {
 		open = true;
 		while(coordinate[0]-i >= 0 && open)
 		{
-			if(c.getGrid()[coordinate[0]-i][coordinate[1]].getName().equals("Rook") || c.getGrid()[coordinate[0]-i][coordinate[1]].getName().equals("Queen") )
-			{
-				if(c.getGrid()[coordinate[0]-i][coordinate[1]].getColor().equals(color))
-					return true;
-			}
-			if(c.getGrid()[coordinate[0]-i][coordinate[1]].getName() == null)
-			{
-				open = false;
+
+			if(c.getGrid()[coordinate[0]-i][coordinate[1]] != null) {
+				if (c.getGrid()[coordinate[0] - i][coordinate[1]].getName().equals("Rook")
+						|| c.getGrid()[coordinate[0] - i][coordinate[1]].getName().equals("Queen")) {
+					if (c.getGrid()[coordinate[0] - i][coordinate[1]].getColor().equals(color))
+						return true;
+					else
+						break;
+				}else
+					break;
+
 			}
 			i++;
 		}
@@ -380,14 +404,17 @@ public class GameState {
 		open = true;
 		while(coordinate[0]+i < 8 && coordinate[1]+i < 8 &&  open)
 		{
-			if(c.getGrid()[coordinate[0]+i][coordinate[1]+i].getName().equals("Bishop") || c.getGrid()[coordinate[0]+i][coordinate[1]+i].getName().equals("Queen") )
-			{
-				if(c.getGrid()[coordinate[0]+i][coordinate[1]+i].getColor().equals(color))
-					return true;
-			}
-			if(c.getGrid()[coordinate[0]+i][coordinate[1]+i].getName() == null)
-			{
-				open = false;
+
+			if(c.getGrid()[coordinate[0]+i][coordinate[1]+i] != null) {
+				if (c.getGrid()[coordinate[0] + i][coordinate[1] + i].getName().equals("Bishop")
+						|| c.getGrid()[coordinate[0] + i][coordinate[1] + i].getName().equals("Queen")) {
+					if (c.getGrid()[coordinate[0] + i][coordinate[1] + i].getColor().equals(color))
+						return true;
+					else
+						break;
+				}else
+					break;
+
 			}
 			i++;
 		}
@@ -396,46 +423,56 @@ public class GameState {
 		open = true;
 		while(coordinate[0]-i >= 0 && coordinate[1]+i < 8 &&  open)
 		{
-			if(c.getGrid()[coordinate[0]-i][coordinate[1]+i].getName().equals("Bishop") || c.getGrid()[coordinate[0]-i][coordinate[1]+i].getName().equals("Queen") )
-			{
-				if(c.getGrid()[coordinate[0]-i][coordinate[1]+i].getColor().equals(color))
-					return true;
-			}
-			if(c.getGrid()[coordinate[0]-i][coordinate[1]+i].getName() == null)
-			{
-				open = false;
+
+			if(c.getGrid()[coordinate[0]-i][coordinate[1]+i] != null) {
+				if (c.getGrid()[coordinate[0] - i][coordinate[1] + i].getName().equals("Bishop")
+						|| c.getGrid()[coordinate[0] - i][coordinate[1] + i].getName().equals("Queen")) {
+					if (c.getGrid()[coordinate[0] - i][coordinate[1] + i].getColor().equals(color))
+						return true;
+					else
+						break;
+				}else
+					break;
+
 			}
 			i++;
 		}
 		//check bottom left
 		i = 1;
 		open = true;
-		while(coordinate[0]-i >= 0 && coordinate[1]-1 >= 0 &&  open)
+		while(coordinate[0]-i >= 0 && coordinate[1]-i >= 0 &&  open)
 		{
-			if(c.getGrid()[coordinate[0]-i][coordinate[1]-i].getName().equals("Bishop") || c.getGrid()[coordinate[0]-i][coordinate[1]-i].getName().equals("Queen") )
-			{
-				if(c.getGrid()[coordinate[0]-i][coordinate[1]-i].getColor().equals(color))
-					return true;
-			}
-			if(c.getGrid()[coordinate[0]-i][coordinate[1]-i].getName() == null)
-			{
-				open = false;
+
+			if(c.getGrid()[coordinate[0]-i][coordinate[1]-i] != null) {
+				if (c.getGrid()[coordinate[0] - i][coordinate[1] - i].getName().equals("Bishop")
+						|| c.getGrid()[coordinate[0] - i][coordinate[1] - i].getName().equals("Queen")) {
+					if (c.getGrid()[coordinate[0] - i][coordinate[1] - i].getColor().equals(color))
+						return true;
+					else
+						 break;
+				}else
+					break;
+
 			}
 			i++;
 		}
 		//check bottom right
 		i = 1;
 		open = true;
-		while(coordinate[0]+i < 8 && coordinate[1]-1 >= 0 &&  open)
+		while(coordinate[0]+i < 8 && coordinate[1]-i >= 0 &&  open)
 		{
-			if(c.getGrid()[coordinate[0]+i][coordinate[1]-i].getName().equals("Bishop") || c.getGrid()[coordinate[0]+i][coordinate[1]-i].getName().equals("Queen") )
-			{
-				if(c.getGrid()[coordinate[0]+i][coordinate[1]-i].getColor().equals(color))
-					return true;
-			}
-			if(c.getGrid()[coordinate[0]+i][coordinate[1]-i].getName() == null)
-			{
-				open = false;
+
+			if(c.getGrid()[coordinate[0]+i][coordinate[1]-i] != null) {
+				if (c.getGrid()[coordinate[0] + i][coordinate[1] - i].getName().equals("Bishop") || c.getGrid()[coordinate[0] + i][coordinate[1] - i].getName().equals("Queen")) {
+					if (c.getGrid()[coordinate[0] + i][coordinate[1] - i].getColor().equals(color))
+						return true;
+					else
+						break;
+				}else
+					break;
+
+
+
 			}
 			i++;
 		}

@@ -560,6 +560,13 @@ public final class ChessBoard extends Board {
     }
 
     /**
+     * @return Returns the current player's color.
+     */
+    public String oppositePlayer() {
+        return isWhiteTurn() ? "b" : "w";
+    }
+
+    /**
      * @param location Location of the piece on the chess board.
      * @return Returns the piece at the given location.
      *         Returns null if no piece is at that location.
@@ -690,4 +697,5 @@ public final class ChessBoard extends Board {
             board.movePiece(start, end);
         }
     }
+
 }
