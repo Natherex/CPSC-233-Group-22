@@ -83,7 +83,7 @@ public class Pawn extends Piece {
         }
 
         // Can move one space forwards
-        else if (yDirection == 1 && board.isNotBlocked(start, end) && xDirection == 0 && canPieceMoveLegally(board, start, end, color )) {
+        else if (yDirection == 1 && board.isNotBlocked(start, end) && xDirection == 0 && canPieceMoveLegally(board, start, end, color)) {
             incrementTimesMoved();
             return true;
         }

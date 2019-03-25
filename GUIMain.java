@@ -112,32 +112,25 @@ public class GUIMain extends Application {
         AnimationTimer mainLoop = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                try {
-
-                    // Checks if the two locations are the same location
-                    if (startLocation != null && endLocation != null) {
-                        if (startLocation.equals(endLocation)) {
-                            startLocation = null;
-                            endLocation = null;
-                        }
-                    }
-
-                    // Main game loop
-                    if (startLocation != null && endLocation != null) {
-                        if (board.isCorrectColor(startLocation)) {
-                            if (board.movePiece(startLocation, endLocation)) {
-                                board.changeTurn();
-                                updateWindow();
-                            }
-                        }
-
+                // Checks if the two locations are the same location
+                if (startLocation != null && endLocation != null) {
+                    if (startLocation.equals(endLocation)) {
                         startLocation = null;
                         endLocation = null;
                     }
+                }
 
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    System.exit(1);
+                // Main game loop
+                if (startLocation != null && endLocation != null) {
+                    if (board.isCorrectColor(startLocation)) {
+                        if (board.movePiece(startLocation, endLocation)) {
+                            board.changeTurn();
+                            updateWindow();
+                        }
+                    }
+
+                    startLocation = null;
+                    endLocation = null;
                 }
             }
         };
