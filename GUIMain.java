@@ -22,7 +22,6 @@ public class GUIMain extends Application {
     private StackPane[][] stackPaneGrid;
     private Piece[][] pieceGrid;
     private GameState state = new GameState();
-    private int[] checkersLocation = {9,5};
 
     public class MouseEventHandler implements EventHandler<MouseEvent> {
         private int row;
@@ -132,10 +131,10 @@ public class GUIMain extends Application {
                             //state.updateGameState(board,checkersLocation, board.currentPlayer());
                             if (state.kingIsSafe(board,startLocation,endLocation,board.currentPlayer()) && board.movePiece(startLocation, endLocation)) {
                                 board.changeTurn();
+                                state.updateGameState(board,board.currentPlayer());
+                                System.out.println(state.getGameState());
                                 updateWindow();
                             }
-                            //System.out.println(state.canTileBeFilled(board,state.findKing(board,board.currentPlayer()),board.oppositePlayer()));
-                            System.out.println(state.kingIsSafe(board,startLocation,endLocation,board.currentPlayer()));
                         }
 
                         startLocation = null;
