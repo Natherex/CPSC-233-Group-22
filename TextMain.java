@@ -18,11 +18,8 @@ public class TextMain {
                 System.out.print("End Location: ");
                 end = input.nextLine();
 
-                if (board.isCorrectColor(start)) {
-                    if (board.movePiece(start, end)) {
-                        board.changeTurn();
-                    }
-                }
+                if (board.movePiece(start, end))
+                    board.changeTurn();
 
             } catch (NullPointerException e) {
                 System.out.println("Invalid Input\n");

@@ -90,60 +90,51 @@ public class GUIMain extends Application {
         }
 
         // Sets row and column constraints for each square on the grid to be 60x60.
-        GridPane mainGroup = new GridPane();
+        GridPane mainBoard = new GridPane();
         for (int i = 0; i < 8; i++) {
-            mainGroup.getColumnConstraints().add(new ColumnConstraints(60));
-            mainGroup.getRowConstraints().add(new RowConstraints(60));
+            mainBoard.getColumnConstraints().add(new ColumnConstraints(60));
+            mainBoard.getRowConstraints().add(new RowConstraints(60));
         }
-        mainGroup.setPrefSize(480, 480);
+        mainBoard.setPrefSize(480, 480);
 
         // Adds all the StackPanes to the GridPane.
         for (int row = 0; row < 8; row++) {
             for (int column = 0; column < 8; column++) {
-                mainGroup.add(stackPaneGrid[7 - row][column], column, row);
+                mainBoard.add(stackPaneGrid[7 - row][column], column, row);
             }
         }
+
+        GridPane mainGrid = new GridPane();
 
         // Creates a new scene and adds it to the stage
         primaryStage.getIcons().add(new Image("/assets/Chess_klt60.png"));
         primaryStage.setTitle("Chess");
-        primaryStage.setScene(new Scene(mainGroup, 480, 480));
+        primaryStage.setScene(new Scene(mainBoard, 480, 480));
         primaryStage.setResizable(false);
         primaryStage.show();
 
         AnimationTimer mainLoop = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                try {
-
-                    // Checks if the two locations are the same location
-                    if (startLocation != null && endLocation != null) {
-                        if (startLocation.equals(endLocation)) {
-                            startLocation = null;
-                            endLocation = null;
-                        }
-                    }
-
-                    // Main game loop
-                    if (startLocation != null && endLocation != null) {
-                        if (board.isCorrectColor(startLocation)) {
-
-                            //state.updateGameState(board,checkersLocation, board.currentPlayer());
-                            if (state.kingIsSafe(board,startLocation,endLocation,board.currentPlayer()) && board.movePiece(startLocation, endLocation)) {
-                                board.changeTurn();
-                                state.updateGameState(board,board.currentPlayer());
-                                System.out.println(state.getGameState());
-                                updateWindow();
-                            }
-                        }
-
+                // Checks if the two locations are the same location
+                if (startLocation != null && endLocation != null) {
+                    if (startLocation.equals(endLocation)) {
                         startLocation = null;
                         endLocation = null;
                     }
+                }
 
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    System.exit(1);
+                // Main game loop
+                if (startLocation != null && endLocation != null) {
+                    if (state.kingIsSafe(board, startLocation, endLocation, board.currentPlayer()) && board.movePiece(startLocation, endLocation)) {
+                        board.changeTurn();
+                        state.updateGameState(board, board.currentPlayer());
+                        System.out.println(state.getGameState());
+                        updateWindow();
+                    }
+
+                    startLocation = null;
+                    endLocation = null;
                 }
             }
         };

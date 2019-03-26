@@ -52,55 +52,48 @@ public class GameState {
 	 * @return returns an integer that corresponds with a gamestate
 	 * 			- 1 is check , 2 is checkmate, 3 is stalemate, 0 is normal
 	 */
-	public int getGameState()
-	{
+	public int getGameState() {
 		return gameState;
 	}
+
 	/**
-	 * updates the current game state
-	 * sets the gamestate to an integer that corresponds with a gamestate
+	 * Updates the current game state
+	 * Sets the gamestate to an integer that corresponds with a gamestate
 	 * 			- 1 is check , 2 is checkmate, 3 is stalemate, 0 is normal
 	 * @param c Chessboard that needs to be analyzed
-	 * @param checkersLocation location of checkers location
 	 * @param color color of the current player
 	 */
-	public void updateGameState(ChessBoard c, String color)
-	{
-		if(isCheck(c,color))
-		{
-			if(isCheckmate(c, fillersLocation, color))
-			{
+	public void updateGameState(ChessBoard c, String color) {
+		if (isCheck(c,color)) {
+			if (isCheckmate(c, fillersLocation, color)) {
 				gameState = 2;
-			}
-			else
-			{
+			} else {
 				gameState = 1;
 			}
-		}
-		else if(isStaleMate(c))
-		{
+		} else if (isStaleMate(c)) {
 			gameState = 3;
-		}else
-		{
+		} else {
 			gameState = 0;
 		}
-		if(castleLeft)
-		{
+
+		// Updates the castle left only if it's currently true since once it's false you don't need to update anymore.
+		if (castleLeft) {
 			castleLeft = isLeftCastleLegal(c);
 		}
-		if(castleRight)
-		{
+
+		// Updates the castle right only if it's currently true since once it's false you don't need to update anymore.
+		if (castleRight) {
 			castleRight = isRightCastleLegal(c);
 		}
 	}
+
 	/**
-	 *	Checks if the chessboard is currently in the state of checkmate for the current player
-	 *  Assumes king is in check and decides if it is actually a checkmate.
+	 * Checks if the chessboard is currently in the state of checkmate for the current player
+	 * Assumes king is in check and decides if it is actually a checkmate.
 	 * @param c Chessboard to be analyzed
 	 * @param checkersLocation location of the piece that has caused check
 	 * @param color color of the current player
 	 * @return true if chessboard is in checkmate
-	 *
 	 */
 	public boolean isCheckmate(ChessBoard c, int[] checkersLocation, String color)
 	{
@@ -124,11 +117,12 @@ public class GameState {
 		else
 			oColor = "w";
 
-		if(canTileBeFilled(c,findKing(c,color),oColor))
+		if (canTileBeFilled(c,findKing(c,color),oColor))
 			return true;
 
 		return false;
-	}public boolean kingIsSafe(ChessBoard c, String start, String end, String playersColor)
+	}
+	public boolean kingIsSafe(ChessBoard c, String start, String end, String playersColor)
 	{
 		ChessBoard temp = new ChessBoard(c);
 

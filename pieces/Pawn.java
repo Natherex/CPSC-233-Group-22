@@ -77,20 +77,20 @@ public class Pawn extends Piece {
         String color = board.getGrid()[startY][startX].getColor();
 
         // Can move two spaces forwards if it's the first move of the pawn and it's not blocked.
-        if (getTimesMoved() == 0 && yDirection == 2 && xDirection == 0 && board.isNotBlocked(start, end) && canPieceMoveLegally(board, start, end, color)) {
+        if (getTimesMoved() == 0 && yDirection == 2 && xDirection == 0 && board.isWayClear(start, end) && canPieceMoveLegally(board, start, end, color)) {
             incrementTimesMoved();
             return true;
         }
 
         // Can move one space forwards
-        else if (yDirection == 1 && board.isNotBlocked(start, end) && xDirection == 0 && canPieceMoveLegally(board, start, end, color )) {
+        else if (yDirection == 1 && board.isWayClear(start, end) && xDirection == 0 && canPieceMoveLegally(board, start, end, color)) {
             incrementTimesMoved();
             return true;
         }
 
         // Can kill piece one up and one right
-        else if (yDirection == 1 && xDirection == 1 && board.isBlocked(start, end) && canPieceMoveLegally(board, start, end, color)) {
-            if(!board.getGrid()[startY][startX].getColor().equals(board.getGrid()[endY][endX].getColor())) {
+        if (yDirection == 1 && xDirection == 1 && board.isWayClear(start, end) && canPieceMoveLegally(board, start, end, color)) {
+            if (!board.getGrid()[startY][startX].getColor().equals(board.getGrid()[endY][endX].getColor())) {
 	            incrementTimesMoved();
 	            board.removePiece(end);
 	            return true;
@@ -99,8 +99,8 @@ public class Pawn extends Piece {
 
         // Can kill piece one up and one left
         // && board.getGrid()[startY][startX] != null
-        else if (yDirection == 1 && xDirection == -1 && board.isBlocked(start, end) && canPieceMoveLegally(board, start, end, color)) {
-            if(!board.getGrid()[startY][startX].getColor().equals(board.getGrid()[endY][endX].getColor())) {
+        else if (yDirection == 1 && xDirection == -1 && board.isWayClear(start, end) && canPieceMoveLegally(board, start, end, color)) {
+            if (!board.getGrid()[startY][startX].getColor().equals(board.getGrid()[endY][endX].getColor())) {
 	            incrementTimesMoved();
 	            board.removePiece(end);
 	            return true;

@@ -341,14 +341,17 @@ public final class ChessBoard extends Board {
         int[] startLocation = parseLocation(start);
         int[] endLocation = parseLocation(end);
 
-        if (startLocation != null && endLocation != null) {
-            if (grid[startLocation[0]][startLocation[1]].isValidMove(this, start, end)) {
-                Piece temp = grid[startLocation[0]][startLocation[1]];
-                grid[startLocation[0]][startLocation[1]] = grid[endLocation[0]][endLocation[1]];
-                grid[endLocation[0]][endLocation[1]] = temp;
-                return true;
+        if (isCorrectColor(start)) {
+            if (startLocation != null && endLocation != null) {
+                if (grid[startLocation[0]][startLocation[1]].isValidMove(this, start, end)) {
+                    Piece temp = grid[startLocation[0]][startLocation[1]];
+                    grid[startLocation[0]][startLocation[1]] = grid[endLocation[0]][endLocation[1]];
+                    grid[endLocation[0]][endLocation[1]] = temp;
+                    return true;
+                }
             }
         }
+
         return false;
     }
     
@@ -586,6 +589,10 @@ public final class ChessBoard extends Board {
             return null;
         else
             return new Piece(grid[coordinates[0]][coordinates[1]]);
+    }
+
+    public GameState getGamestate() {
+        return new GameState(state);
     }
 
 
