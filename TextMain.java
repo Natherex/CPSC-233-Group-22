@@ -4,6 +4,7 @@ import java.util.Scanner;
 public class TextMain {
     public static void main(String[] args) {
         ChessBoard board = new ChessBoard();
+        board.doFlipping(true);
         Scanner input = new Scanner(System.in);
         String start;
         String end;
@@ -18,11 +19,8 @@ public class TextMain {
                 System.out.print("End Location: ");
                 end = input.nextLine();
 
-                if (board.isCorrectColor(start)) {
-                    if (board.movePiece(start, end)) {
-                        board.changeTurn();
-                    }
-                }
+                if (board.movePiece(start, end))
+                    board.changeTurn();
 
             } catch (NullPointerException e) {
                 System.out.println("Invalid Input\n");

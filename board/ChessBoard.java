@@ -6,10 +6,10 @@ import pieces.*;
 import java.util.Scanner;
 
 public final class ChessBoard extends Board {
-    private static final char[] VALID_COLUMNS = new char[]{'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'};
-    private static final int[] VALID_ROWS = new int[]{1, 2, 3, 4, 5, 6, 7, 8};
-    private static final char[] FLIPPED_COLUMNS = new char[]{'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A'};
-    private static final int[] FLIPPED_ROWS = new int[]{8, 7, 6, 5, 4, 3, 2, 1};
+    public static final char[] VALID_COLUMNS = new char[]{'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'};
+    public static final int[] VALID_ROWS = new int[]{1, 2, 3, 4, 5, 6, 7, 8};
+    public static final char[] FLIPPED_COLUMNS = new char[]{'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A'};
+    public static final int[] FLIPPED_ROWS = new int[]{8, 7, 6, 5, 4, 3, 2, 1};
     public static final Color BROWN = Color.rgb(150, 92, 37);
     public static final Color WHITE = Color.rgb(250, 250, 250);
 
@@ -23,6 +23,15 @@ public final class ChessBoard extends Board {
      */
     public ChessBoard() {
         super(8, 8);
+    }
+
+    /**
+     * Constructor for setting a flip value
+     * @param flip Whether or not the board is to flip around each turn.
+     */
+    public ChessBoard(Boolean flip) {
+        super(8, 8);
+        this.doFlipping = flip;
     }
 
     /**
@@ -341,14 +350,17 @@ public final class ChessBoard extends Board {
         int[] startLocation = parseLocation(start);
         int[] endLocation = parseLocation(end);
 
-        if (startLocation != null && endLocation != null) {
-            if (grid[startLocation[0]][startLocation[1]].isValidMove(this, start, end)) {
-                Piece temp = grid[startLocation[0]][startLocation[1]];
-                grid[startLocation[0]][startLocation[1]] = grid[endLocation[0]][endLocation[1]];
-                grid[endLocation[0]][endLocation[1]] = temp;
-                return true;
+        if (isCorrectColor(start)) {
+            if (startLocation != null && endLocation != null) {
+                if (grid[startLocation[0]][startLocation[1]].isValidMove(this, start, end)) {
+                    Piece temp = grid[startLocation[0]][startLocation[1]];
+                    grid[startLocation[0]][startLocation[1]] = grid[endLocation[0]][endLocation[1]];
+                    grid[endLocation[0]][endLocation[1]] = temp;
+                    return true;
+                }
             }
         }
+
         return false;
     }
     
@@ -537,6 +549,13 @@ public final class ChessBoard extends Board {
         this.doFlipping = flip;
     }
 
+    /**
+     * @return Returns whether or not flipping is turned on.
+     */
+    public boolean isBeingFlipped() {
+        return doFlipping;
+    }
+
 
     /**
      * @return Returns if it's currently white's turn.
@@ -588,11 +607,15 @@ public final class ChessBoard extends Board {
             return new Piece(grid[coordinates[0]][coordinates[1]]);
     }
 
+    public GameState getGamestate() {
+        return new GameState(state);
+    }
+
 
     /**
      * @return Returns a string representation of the current player's turn.
      */
-    private String currentTurnString() {
+    public String currentTurnString() {
         return isWhiteTurn() ? "Player 1's Turn" : "Player 2's Turn";
     }
 
