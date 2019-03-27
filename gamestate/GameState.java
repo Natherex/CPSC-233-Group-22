@@ -125,10 +125,22 @@ public class GameState {
 	public boolean kingIsSafe(ChessBoard c, String start, String end, String playersColor)
 	{
 		ChessBoard temp = new ChessBoard(c);
+		int[] startCoordinate = c.parseLocation(start);
+		int startY = startCoordinate[0];
+		int startX = startCoordinate[1];
 
-		temp.forcedMove(start,end);
+		int[] endCoordinate = c.parseLocation(end);
+		int endY = endCoordinate[0];
+		int endX = endCoordinate[1];
+
+
+		if(temp.getGrid()[endY][endX] != null && !temp.getGrid()[endY][endX].getColor().equals(playersColor))
+			temp.removePiece(end);
+		if(temp.getGrid()[endY][endX] == null)
+			temp.forcedMove(start,end);
 		if(isCheck(temp,playersColor))
 		{
+			System.out.println("false");
 			return false;
 		}else
 		{
@@ -167,8 +179,9 @@ public class GameState {
 					if(kingsLocation[1] + i < 8 && kingsLocation[1] + i >= 0)
 					{
 						temp = new int[] {kingsLocation[0]+j,kingsLocation[1]+i};
-						if((c.getGrid()[temp[0]][temp[1]] == null || c.getGrid()[temp[0]][temp[1]].getColor().equals(c.oppositePlayer()))
-								&& !canTileBeFilled(c, temp,c.oppositePlayer()))
+						//if((c.getGrid()[temp[0]][temp[1]] == null || c.getGrid()[temp[0]][temp[1]].getColor().equals(c.oppositePlayer()))
+						//		&& !canTileBeFilled(c, temp,c.oppositePlayer()))
+						if(kingIsSafe(c,c.unparseLocation(kingsLocation),c.unparseLocation(temp),color))
 							return true;
 					}
 				}

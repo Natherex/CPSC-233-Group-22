@@ -48,6 +48,8 @@ public class King extends Piece {
         String color = board.getGrid()[startY][startX].getColor();
         
         // Can move in either cardinal direction
+        System.out.println(canPieceMoveLegally(board,start,end,color));
+        System.out.println(board.isWayClear(start,end));
         if (Math.abs(xDirection) < 2 && Math.abs(yDirection) < 2 && board.isNotBlocked(start, end) && board.isWayClear(start,end) && canPieceMoveLegally(board,start,end,color)) {
             incrementTimesMoved();
             return true;
