@@ -1,4 +1,5 @@
 import javafx.geometry.Pos;
+import javafx.scene.input.KeyCode;
 import javafx.scene.text.Font;
 import javafx.scene.control.Label;
 import javafx.animation.AnimationTimer;
@@ -19,7 +20,8 @@ import pieces.Piece;
 import gamestate.GameState;
 
 public class GUIMain extends Application {
-    public static final String SELECTION_URL = "/assets/selection.png";
+    private static final String SELECTION_URL = "/assets/selection.png";
+    private boolean running;
 
     private String startLocation;
     private String endLocation;
@@ -34,7 +36,7 @@ public class GUIMain extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        board = new ChessBoard(true);
+        board = new ChessBoard(false);
         board.initialize();
         pieceGrid = board.getGrid();
 
@@ -89,16 +91,15 @@ public class GUIMain extends Application {
 
         // Create the row numbers
         numberVBox = new VBox();
-        Label[] numbers = new Label[8];
         for (int i = 0; i < 8; i++) {
-            numbers[i] = new Label(String.valueOf(ChessBoard.FLIPPED_ROWS[i]));
-            numbers[i].setFont(new Font("Arial", 20));
-            numbers[i].setTextAlignment(TextAlignment.CENTER);
-            numbers[i].setAlignment(Pos.CENTER);
-            numbers[i].setMinWidth(20);
-            numbers[i].setMaxHeight(60);
-            numbers[i].setMinHeight(60);
-            numberVBox.getChildren().add(numbers[i]);
+            Label numbers = new Label(String.valueOf(ChessBoard.FLIPPED_ROWS[i]));
+            numbers.setFont(new Font("Arial", 20));
+            numbers.setTextAlignment(TextAlignment.CENTER);
+            numbers.setAlignment(Pos.CENTER);
+            numbers.setMinWidth(20);
+            numbers.setMaxHeight(60);
+            numbers.setMinHeight(60);
+            numberVBox.getChildren().add(numbers);
         }
 
         // Create the column letters
@@ -130,9 +131,10 @@ public class GUIMain extends Application {
         mainBoardGUI.add(letterHBox, 1, 2);
 
         // Creates a new scene and adds it to the stage
+        Scene mainScene = new Scene(mainBoardGUI, 500, 530);
         primaryStage.getIcons().add(new Image("/assets/Chess_klt60.png"));
         primaryStage.setTitle("Chess");
-        primaryStage.setScene(new Scene(mainBoardGUI, 500, 530));
+        primaryStage.setScene(mainScene);
         primaryStage.setResizable(false);
         primaryStage.show();
 
@@ -163,7 +165,27 @@ public class GUIMain extends Application {
 
             }
         };
+
+        running = true;
         mainLoop.start();
+
+        // Checks to see if the game is paused
+        mainScene.setOnKeyReleased(event -> {
+            if (event.getCode() == KeyCode.ESCAPE) {
+                System.out.println("Test");
+                if (running) {
+                    playerTurnLabel.setText(board.currentTurnString() + " (PAUSED)");
+                    primaryStage.setTitle("Chess (PAUSED)");
+                    running = false;
+                    mainLoop.stop();
+                } else {
+                    playerTurnLabel.setText(board.currentTurnString());
+                    primaryStage.setTitle("Chess");
+                    running = true;
+                    mainLoop.start();
+                }
+            }
+        });
     }
 
     /**
@@ -183,13 +205,14 @@ public class GUIMain extends Application {
 //            // Testing, prints out mouse location on board.
 //            System.out.printf("Mouse clicked on cell [%d, %d]%n", row, column);
 //            System.out.println(board.unparseLocation(new int[]{row, column}));
-
-            if (startLocation == null) {
-                startLocation = board.unparseLocation(new int[]{row, column});
-                addSelection();
-            } else if (endLocation == null) {
-                endLocation = board.unparseLocation(new int[]{row, column});
-                clearSelection();
+            if (running) {
+                if (startLocation == null) {
+                    startLocation = board.unparseLocation(new int[]{row, column});
+                    addSelection();
+                } else if (endLocation == null) {
+                    endLocation = board.unparseLocation(new int[]{row, column});
+                    clearSelection();
+                }
             }
         }
     }
