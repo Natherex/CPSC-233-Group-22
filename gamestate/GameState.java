@@ -61,7 +61,6 @@ public class GameState {
 	 * sets the gamestate to an integer that corresponds with a gamestate
 	 * 			- 1 is check , 2 is checkmate, 3 is stalemate, 0 is normal
 	 * @param c Chessboard that needs to be analyzed
-	 * @param checkersLocation location of checkers location
 	 * @param color color of the current player
 	 */
 	public void updateGameState(ChessBoard c, String color)
@@ -104,7 +103,7 @@ public class GameState {
 	 */
 	public boolean isCheckmate(ChessBoard c, int[] checkersLocation, String color)
 	{
-		if(!isCheck(c,color) || canKingMove(c) || (!doubleCheck(c) && canKingBeBlocked(c, checkersLocation,color)) || (!doubleCheck(c) && canCheckerBeTaken(c, checkersLocation,color)))
+		if(!isCheck(c,color) || canKingMove(c, color) || (!doubleCheck(c) && canKingBeBlocked(c, checkersLocation,color)) || (!doubleCheck(c) && canCheckerBeTaken(c, checkersLocation,color)))
 			return false;
 		return true;
 	}
@@ -159,8 +158,27 @@ public class GameState {
 	 * @return if the current players king can move
 	 *
 	 */
-	public boolean canKingMove(ChessBoard c)
+	public boolean canKingMove(ChessBoard c , String color)
 	{
+		int[] kingsLocation = findKing(c, color);
+		int[] temp;
+
+		for(int i = -1 ; i< 2;i++)
+		{
+			for(int j = -1 ; j < 2; j++)
+			{
+				if(kingsLocation[0] + j < 8 && kingsLocation[0] + j >= 0)
+				{
+					if(kingsLocation[1] + i < 8 && kingsLocation[1] + i >= 0)
+					{
+						temp = new int[] {kingsLocation[0]+j,kingsLocation[1]+i};
+						if((c.getGrid()[temp[0]][temp[1]] == null || c.getGrid()[temp[0]][temp[1]].getColor().equals(c.oppositePlayer()))
+								&& !canTileBeFilled(c, temp,c.oppositePlayer()))
+							return true;
+					}
+				}
+			}
+		}
 		return false;
 
 	}

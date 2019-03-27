@@ -127,12 +127,11 @@ public class GUIMain extends Application {
                     // Main game loop
                     if (startLocation != null && endLocation != null) {
                         if (board.isCorrectColor(startLocation)) {
-
-                            //state.updateGameState(board,checkersLocation, board.currentPlayer());
                             if (state.kingIsSafe(board,startLocation,endLocation,board.currentPlayer()) && board.movePiece(startLocation, endLocation)) {
                                 board.changeTurn();
                                 state.updateGameState(board,board.currentPlayer());
-                                System.out.println(state.getGameState());
+
+
                                 updateWindow();
                             }
                         }
