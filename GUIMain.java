@@ -19,7 +19,7 @@ import pieces.Piece;
 import gamestate.GameState;
 
 public class GUIMain extends Application {
-    public static final String SELECTION_URL = "/assets/selection.png";
+    private static final String SELECTION_URL = "/assets/selection.png";
 
     private String startLocation;
     private String endLocation;
@@ -89,16 +89,15 @@ public class GUIMain extends Application {
 
         // Create the row numbers
         numberVBox = new VBox();
-        Label[] numbers = new Label[8];
         for (int i = 0; i < 8; i++) {
-            numbers[i] = new Label(String.valueOf(ChessBoard.FLIPPED_ROWS[i]));
-            numbers[i].setFont(new Font("Arial", 20));
-            numbers[i].setTextAlignment(TextAlignment.CENTER);
-            numbers[i].setAlignment(Pos.CENTER);
-            numbers[i].setMinWidth(20);
-            numbers[i].setMaxHeight(60);
-            numbers[i].setMinHeight(60);
-            numberVBox.getChildren().add(numbers[i]);
+            Label numbers = new Label(String.valueOf(ChessBoard.FLIPPED_ROWS[i]));
+            numbers.setFont(new Font("Arial", 20));
+            numbers.setTextAlignment(TextAlignment.CENTER);
+            numbers.setAlignment(Pos.CENTER);
+            numbers.setMinWidth(20);
+            numbers.setMaxHeight(60);
+            numbers.setMinHeight(60);
+            numberVBox.getChildren().add(numbers);
         }
 
         // Create the column letters
