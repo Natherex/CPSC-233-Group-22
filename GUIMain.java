@@ -140,7 +140,6 @@ public class GUIMain extends Application {
         AnimationTimer mainLoop = new AnimationTimer() {
             @Override
             public void handle(long now) {
-
                 // Checks if the two locations are the same location
                 if (startLocation != null && endLocation != null) {
                     if (startLocation.equals(endLocation)) {

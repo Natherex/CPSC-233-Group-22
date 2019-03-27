@@ -579,7 +579,7 @@ public final class ChessBoard extends Board {
     }
 
     /**
-     * @return Returns the current player's color.
+     * @return Returns the opposite player's color.
      */
     public String oppositePlayer() {
         return isWhiteTurn() ? "b" : "w";
