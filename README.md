@@ -5,8 +5,11 @@ A Simple Chess game made using Java.
 
 ## How to Download and Run Files
 
-- To run the game files, download all files within the repository and save them in a folder together. 
-- Run the correct file depending on your OS (Operating System)
+1. To download the game, click the dropdown menu on the top left and select "**master** as the branch.
+2. Then, click the green button at the top right of the screen labeled "**Clone or Download**".
+3. Afterwards, select the option labeled "**Download ZIP**"
+4. Open the newly download ZIP file and extract the folder to anywhere on the PC
+5. Run the correct file depending on your OS (Operating System) using the steps below:
 
 **For Windows:**
   1. If playing the text-based version:
