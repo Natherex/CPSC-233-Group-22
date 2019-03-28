@@ -19,13 +19,13 @@ A Simple Chess game made using Java.
     
 **For Linux:**
 
-   ⋅⋅⋅**If playing the text-based version:**
+   ###**If playing the text-based version:**
     1. Right click the file named "__runText.sh__" and Select "__Properties__"
     2. Select the "**Permissions**" tab
     3. Check the box labeled "**Allow executing file as a program**" and close the window
     4. Double click __Run "runGUI.sh"__ and select either **Run in Terminal** or **Run**
     
-   ⋅⋅⋅ **If playing the GUI-based version:**
+   ###**If playing the GUI-based version:**
     1. Right click the file named "__runGUI.sh__" and Select "__Properties__"
     2. Select the "**Permissions**" tab
     3. Check the box labeled "**Allow executing file as a program**" and close the window
