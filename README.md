@@ -12,20 +12,20 @@ A Simple Chess game made using Java.
 5. Run the correct file depending on your OS (Operating System) using the steps below:
 
 ## **For Windows:**
-  ### If playing the text-based version:
+  #### If Playing the Text-based Version:
       Run "runText.bat"
-  ### If playing the GUI-based version:
+  #### If Playing the GUI-based Version:
      Run "runGUI.bat"
     
 ## **For Linux:**
 
-   ### If playing the text-based version:
+   #### If Playing the Text-based Version:
     1. Right click the file named "runText.sh" and Select "Properties"
     2. Select the "Permissions" tab
     3. Check the box labeled "Allow executing file as a program" and close the window
-    4. Double click "runGUI.sh" and select either "Run in Terminal" or "Run"
+    4. Double click "runText.sh" and select either "Run in Terminal" or "Run"
     
-   ### If playing the GUI-based version:
+   #### If Playing the GUI-based Version:
     1. Right click the file named "runGUI.sh" and Select "Properties"
     2. Select the "Permissions" tab
     3. Check the box labeled "Allow executing file as a program" and close the window
