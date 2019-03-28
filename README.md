@@ -13,23 +13,23 @@ A Simple Chess game made using Java.
 
 ## **For Windows:**
   ### If playing the text-based version:
-      __Run "runText.bat"__
+      Run "runText.bat"
   ### If playing the GUI-based version:
-     __Run "runGUI.bat"__
+     Run "runGUI.bat"
     
 ## **For Linux:**
 
    ### If playing the text-based version:
-    1. Right click the file named "__runText.sh__" and Select "__Properties__"
-    2. Select the "**Permissions**" tab
-    3. Check the box labeled "**Allow executing file as a program**" and close the window
-    4. Double click __Run "runGUI.sh"__ and select either **Run in Terminal** or **Run**
+    1. Right click the file named "runText.sh" and Select "Properties"
+    2. Select the "Permissions" tab
+    3. Check the box labeled "Allow executing file as a program" and close the window
+    4. Double click "runGUI.sh" and select either "Run in Terminal" or "Run"
     
    ### If playing the GUI-based version:
-    1. Right click the file named "__runGUI.sh__" and Select "__Properties__"
-    2. Select the "**Permissions**" tab
-    3. Check the box labeled "**Allow executing file as a program**" and close the window
-    4. Double click __Run "runGUI.sh"__ and select either **Run in Terminal** or **Run**
+    1. Right click the file named "runGUI.sh" and Select "Properties"
+    2. Select the "Permissions" tab
+    3. Check the box labeled "Allow executing file as a program" and close the window
+    4. Double click "runGUI.sh" and select either "Run in Terminal" or "Run"
 
 ### How to Play (GUI-Based Version)
 
