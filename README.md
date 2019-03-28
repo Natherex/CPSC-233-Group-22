@@ -11,15 +11,15 @@ A Simple Chess game made using Java.
 4. Open the newly download ZIP file and extract the folder to anywhere on the PC
 5. Run the correct file depending on your OS (Operating System) using the steps below:
 
-**For Windows:**
-  1. If playing the text-based version:
+## **For Windows:**
+  ### If playing the text-based version:
       __Run "runText.bat"__
-  2. If playing the GUI-based version:
+  ### If playing the GUI-based version:
      __Run "runGUI.bat"__
     
-**For Linux:**
+## **For Linux:**
 
-   ### If playing the text-based version:**
+   ### If playing the text-based version:
     1. Right click the file named "__runText.sh__" and Select "__Properties__"
     2. Select the "**Permissions**" tab
     3. Check the box labeled "**Allow executing file as a program**" and close the window
