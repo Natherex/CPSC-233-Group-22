@@ -14,10 +14,10 @@ public class GameState {
 	private int[] fillersLocation;
 
 	public GameState() {
-		whiteCastleLeft = true;
-		whiteCastleRight = true;
-		blackCastleLeft = true;
-		blackCastleRight = true;
+		//whiteCastleLeft = false;
+		//whiteCastleRight = true;
+		//blackCastleLeft = true;
+		//blackCastleRight = true;
 		gameState = 0;
 	}
 
@@ -82,23 +82,11 @@ public class GameState {
 			gameState = 0;
 		}
 
-		// Updates the castle left only if it's currently true since once it's false you don't need to update anymore.
-		if (!whiteCastleLeft) {
-			whiteCastleLeft = isLeftCastleLegal(c);
-		}
-
-		// Updates the castle right only if it's currently true since once it's false you don't need to update anymore.
-		if (!whiteCastleRight) {
-			whiteCastleRight = isRightCastleLegal(c);
-		}
-
-		if (!blackCastleLeft) {
-			blackCastleLeft = isLeftCastleLegal(c);
-		}
-
-		if (!blackCastleRight) {
-			blackCastleRight = isRightCastleLegal(c);
-		}
+			//whiteCastleLeft = isWhiteLeftCastleLegal(c);
+			//whiteCastleRight = isWhiteRightCastleLegal(c);
+			//blackCastleLeft = isBlackLeftCastleLegal(c);
+			//blackCastleRight = isBlackRightCastleLegal(c);
+		
 	}
 
 	/**
@@ -563,30 +551,29 @@ public class GameState {
 		return false;
 	}
 
-	/**
-	 * 
+	/*
 
-
-	 */
-
-	public boolean isLeftCastleLegal(ChessBoard c) {
+	public boolean isWhiteLeftCastleLegal(ChessBoard c) {
 
 		//Checks if white king is still in starting spot and hasn't made any moves yet
 		if ( ((c.getGrid()[0][4]).getTimesMoved() == 0) && (((c.getGrid()[0][4]).getColor()).equals("w")) && (((c.getGrid()[0][4]).getName()).equals("King")) ) {
-
+			System.out.println("yeet");
 			//Checks if the white rook on the left is still in starting spot and hasn't made moves yet
 			if ( ((c.getGrid()[0][0]).getTimesMoved() == 0) && (((c.getGrid()[0][0]).getColor()).equals("w")) && (((c.getGrid()[0][0]).getName()).equals("Rook")) ) {
-
+				System.out.println("lmao");
 				//Checks if the space between king and left rook is clear
-				if (c.isWayClear("D1", "B1")) {
-				
+				if (c.isWayClear("E1", "A1")) {
+					System.out.println("hehexd");
 					return true;
 				}
 
 			} 
 		}
-	/*
-		else if ( (c.getGrid()[7][4].getTimesMoved() == 0) && (((c.getGrid()[7][4]).getColor()).equals("b")) && (((c.getGrid()[7][4]).getName()).equals("King")) ) {
+		return false;
+	}
+
+	public boolean isBlackLeftCastleLegal(ChessBoard c) {
+	if ( (c.getGrid()[7][4].getTimesMoved() == 0) && (((c.getGrid()[7][4]).getColor()).equals("b")) && (((c.getGrid()[7][4]).getName()).equals("King")) ) {
 
 			if ( (c.getGrid()[7][7].getTimesMoved() == 0) && (((c.getGrid()[7][7]).getColor()).equals("b")) && (((c.getGrid()[7][7]).getName()).equals("Rook")) ) {
 
@@ -596,11 +583,11 @@ public class GameState {
 				}
 			}
 		}
-	*/
+	
 		return false;
 	}
 
-	public boolean isRightCastleLegal(ChessBoard c) {
+	public boolean isWhiteRightCastleLegal(ChessBoard c) {
 
 		if ( (c.getGrid()[0][4].getTimesMoved() == 0) && ((c.getGrid()[0][4].getColor()).equals("w")) && ((c.getGrid()[0][4].getName()).equals("King")) ) {
 
@@ -612,8 +599,11 @@ public class GameState {
 				}
 			}
 		}
+		return false;
+	}
 
-		else if ( (c.getGrid()[7][4].getTimesMoved() == 0) && ((c.getGrid()[7][4].getColor()).equals("b")) && ((c.getGrid()[7][4].getName()).equals("King")) ) {
+	public boolean isBlackRightCastleLegal(ChessBoard c) {
+		if ( (c.getGrid()[7][4].getTimesMoved() == 0) && ((c.getGrid()[7][4].getColor()).equals("b")) && ((c.getGrid()[7][4].getName()).equals("King")) ) {
 
 			if ( (c.getGrid()[7][0].getTimesMoved() == 0) && ((c.getGrid()[7][0].getColor()).equals("b")) && ((c.getGrid()[7][0].getName()).equals("Rook")) ) {
 
@@ -649,5 +639,6 @@ public class GameState {
 		return this.blackCastleRight;
 
 	}
+	*/
 }
 
