@@ -1,25 +1,33 @@
 package gamestate;
 
+import pieces.*;
+
 import board.ChessBoard;
 import java.util.Arrays;
 
 public class GameState {
-	private boolean castleLeft;
-	private boolean castleRight;
+	private boolean whiteCastleLeft;
+	private boolean whiteCastleRight;
+	private boolean blackCastleLeft;
+	private boolean blackCastleRight;
 	private int gameState;
 	private boolean isWhiteTurn = true;
 	private boolean isBlackTurn = false;
 	private int[] fillersLocation;
 
 	public GameState() {
-		castleLeft = true;
-		castleRight = true;
+		//whiteCastleLeft = false;
+		//whiteCastleRight = true;
+		//blackCastleLeft = true;
+		//blackCastleRight = true;
 		gameState = 0;
 	}
 
 	public GameState(GameState gs) {
-		this.castleLeft = gs.castleLeft;
-		this.castleRight = gs.castleRight;
+		this.whiteCastleLeft = gs.whiteCastleLeft;
+		this.whiteCastleRight = gs.whiteCastleRight;
+		this.blackCastleLeft = gs.blackCastleLeft;
+		this.blackCastleRight = gs.blackCastleRight;
 		this.gameState = gs.gameState;
 		this.isWhiteTurn = gs.isWhiteTurn;
 		this.isBlackTurn = gs.isBlackTurn;
@@ -63,7 +71,7 @@ public class GameState {
 	 * @param c Chessboard that needs to be analyzed
 	 * @param color color of the current player
 	 */
-	public void updateGameState(ChessBoard c, String color) {
+	public void updateGameState(ChessBoard c, String color, String end) {
 		if (isCheck(c,color)) {
 			if (isCheckmate(c, fillersLocation, color)) {
 				gameState = 2;
@@ -75,16 +83,14 @@ public class GameState {
 		} else {
 			gameState = 0;
 		}
+		
+		promote(c, end);
 
-		// Updates the castle left only if it's currently true since once it's false you don't need to update anymore.
-		if (castleLeft) {
-			castleLeft = isLeftCastleLegal(c);
-		}
-
-		// Updates the castle right only if it's currently true since once it's false you don't need to update anymore.
-		if (castleRight) {
-			castleRight = isRightCastleLegal(c);
-		}
+			//whiteCastleLeft = isWhiteLeftCastleLegal(c);
+			//whiteCastleRight = isWhiteRightCastleLegal(c);
+			//blackCastleLeft = isBlackLeftCastleLegal(c);
+			//blackCastleRight = isBlackRightCastleLegal(c);
+		
 	}
 
 	/**
@@ -619,29 +625,83 @@ public class GameState {
 	{
 		return false;
 	}
-	public boolean isLeftCastleLegal(ChessBoard c)
-	{
-		if(c.getGrid()[0][0].getTimesMoved() == 0 && c.getGrid()[0][4].getTimesMoved() == 0)
-		{
-			if(c.getGrid()[0][0].getName().equals("rook") && c.getGrid()[0][1].getName() == null && c.getGrid()[0][2].getName() == null && c.getGrid()[0][3].getName() == null && c.getGrid()[0][4].getName().equals("king"))
-			{
-				if(c.getGrid()[0][0].getColor() == c.getGrid()[0][4].getColor())
-				{
-				return true;
+
+	public void promote(ChessBoard board, String end) {
+        
+		
+        	int[] endLocation = board.parseLocation(end);
+        	int xSpot = endLocation[1];
+        	int ySpot = endLocation[0];
+
+		if (ySpot == 7 && board.getGrid()[ySpot][xSpot].getName().equals("Pawn")) {					
+
+			board.getGrid()[ySpot][xSpot] = new Queen("w");
+		}
+
+		if (ySpot == 0 && board.getGrid()[ySpot][xSpot].getName().equals("Pawn")) {
+
+			board.getGrid()[ySpot][xSpot] = new Queen("b");
+		}
+	}
+		/*
+        //Piece[][] grid = board.getGrid();
+        
+        //if pawn is white and reaches the 8th rank, promote
+        if ((board.getGrid()[ySpot][xSpot].getColor().equals("w") ) && (board.getGrid()[ySpot][xSpot].getName().equals("Pawn")) && (end.equals("A8") || end.equals("B8") || end.equals("C8") || end.equals("D8") || end.equals("E8") || end.equals("F8") || end.equals("G8") || end.equals("H8")) ){
+            board.getGrid()[ySpot][xSpot] = new Queen("w");
+        }
+        
+        //if pawn is black and reaches the 1st rank, promote
+        else if ((board.getGrid()[ySpot][xSpot].getColor().equals("b")) && (board.getGrid()[ySpot][xSpot].getName().equals("Pawn")) && (end.equals("A1") || end.equals("B1") || end.equals("C1") || end.equals("D1") || end.equals("E1") || end.equals("F1") || end.equals("G1") || end.equals("H1"))){
+            board.getGrid()[ySpot][xSpot] = new Queen("b");          
+        }
+    }
+	*/
+
+	/*
+
+	public boolean isWhiteLeftCastleLegal(ChessBoard c) {
+
+		//Checks if white king is still in starting spot and hasn't made any moves yet
+		if ( ((c.getGrid()[0][4]).getTimesMoved() == 0) && (((c.getGrid()[0][4]).getColor()).equals("w")) && (((c.getGrid()[0][4]).getName()).equals("King")) ) {
+			System.out.println("yeet");
+			//Checks if the white rook on the left is still in starting spot and hasn't made moves yet
+			if ( ((c.getGrid()[0][0]).getTimesMoved() == 0) && (((c.getGrid()[0][0]).getColor()).equals("w")) && (((c.getGrid()[0][0]).getName()).equals("Rook")) ) {
+				System.out.println("lmao");
+				//Checks if the space between king and left rook is clear
+				if (c.isWayClear("E1", "A1")) {
+					System.out.println("hehexd");
+					return true;
 				}
-				
-			}
+
+			} 
 		}
 		return false;
 	}
-	public boolean isRightCastleLegal(ChessBoard c)
-	{
-		if(c.getGrid()[0][7].getTimesMoved() == 0 && c.getGrid()[0][4].getTimesMoved() == 0)
-		{
-			if(c.getGrid()[0][7].getName().equals("rook") && c.getGrid()[0][6].getName() == null && c.getGrid()[0][5].getName() == null && c.getGrid()[0][4].getName().equals("king"))
-			{
-				if(c.getGrid()[0][7].getColor() == c.getGrid()[0][4].getColor())
-				{
+
+	public boolean isBlackLeftCastleLegal(ChessBoard c) {
+	if ( (c.getGrid()[7][4].getTimesMoved() == 0) && (((c.getGrid()[7][4]).getColor()).equals("b")) && (((c.getGrid()[7][4]).getName()).equals("King")) ) {
+
+			if ( (c.getGrid()[7][7].getTimesMoved() == 0) && (((c.getGrid()[7][7]).getColor()).equals("b")) && (((c.getGrid()[7][7]).getName()).equals("Rook")) ) {
+
+				if (c.isWayClear("F8", "G8")) {
+
+					return true;
+				}
+			}
+		}
+	
+		return false;
+	}
+
+	public boolean isWhiteRightCastleLegal(ChessBoard c) {
+
+		if ( (c.getGrid()[0][4].getTimesMoved() == 0) && ((c.getGrid()[0][4].getColor()).equals("w")) && ((c.getGrid()[0][4].getName()).equals("King")) ) {
+
+			if ( (c.getGrid()[0][7].getTimesMoved() == 0) && ((c.getGrid()[0][7].getColor()).equals("w")) && ((c.getGrid()[0][7].getName()).equals("Rook") )) {
+
+				if (c.isWayClear("F1", "G1")) {
+
 					return true;
 				}
 			}
@@ -649,4 +709,43 @@ public class GameState {
 		return false;
 	}
 
+	public boolean isBlackRightCastleLegal(ChessBoard c) {
+		if ( (c.getGrid()[7][4].getTimesMoved() == 0) && ((c.getGrid()[7][4].getColor()).equals("b")) && ((c.getGrid()[7][4].getName()).equals("King")) ) {
+
+			if ( (c.getGrid()[7][0].getTimesMoved() == 0) && ((c.getGrid()[7][0].getColor()).equals("b")) && ((c.getGrid()[7][0].getName()).equals("Rook")) ) {
+
+				if (c.isWayClear("D8", "B8")) {
+
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	public boolean getWhiteCastleLeft() {
+
+		return this.whiteCastleLeft;
+
+	}
+
+	public boolean getWhiteCastleRight() {
+
+		return this.whiteCastleRight;
+
+	}
+
+	public boolean getBlackCastleLeft() {
+
+		return this.blackCastleLeft;
+
+	}
+	
+	public boolean getBlackCastleRight() {
+
+		return this.blackCastleRight;
+
+	}
+	*/
 }
+

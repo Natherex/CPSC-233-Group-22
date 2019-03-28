@@ -154,7 +154,7 @@ public class GUIMain extends Application {
                 if (startLocation != null && endLocation != null) {
                     if (state.kingIsSafe(board, startLocation, endLocation, board.currentPlayer()) && board.movePiece(startLocation, endLocation)) {
                         board.changeTurn();
-                        state.updateGameState(board, board.currentPlayer());
+                        state.updateGameState(board, board.currentPlayer(), endLocation);
                         System.out.println(state.getGameState());
                         updateWindow();
                     }

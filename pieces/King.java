@@ -107,8 +107,35 @@ public class King extends Piece {
 	            return true;
 	        }
         }
+        
+        //White can castle left if spaces are clear king and rook have not moved yet
+        else if  ( (start.equals("E1") && end.equals("C1")) && canPieceMoveLegally(board,start,end,color) && getTimesMoved() == 0 && board.getGrid()[0][0].getTimesMoved() == 0 && board.isWayClear("E1", "A1")) {
+            incrementTimesMoved();
+            board.forcedMove("A1", "D1");
+            return true;
+        }
+ 
+        //Black can castle left if spaces are clear and king and rook have not moved yet
+        else if ( (start.equals("E8") && end.equals("G8")) && canPieceMoveLegally(board,start,end,color) && getTimesMoved() == 0 && board.getGrid()[7][7].getTimesMoved() == 0 && board.isWayClear("H8", "E8")) {
+            incrementTimesMoved();
+            board.forcedMove("H8", "F8");
+            return true;
+        }
 
-    
+        //White can castle right if spaces are clear and king and rook have not moved yet
+        else if ( (start.equals("E1") && end.equals("G1")) && canPieceMoveLegally(board,start,end,color) && getTimesMoved() == 0 && board.getGrid()[0][7].getTimesMoved() == 0 && board.isWayClear("E1", "H1")) {
+            incrementTimesMoved();
+            board.forcedMove("H1", "F1");
+            return true;
+        }
+
+        //Black can castle right if spaces are clear and king and rook have not moved yet
+        else if ( (start.equals("E8") && end.equals("C8")) && canPieceMoveLegally(board,start,end,color) && getTimesMoved() == 0 && board.getGrid()[7][0].getTimesMoved() == 0 && board.isWayClear("A8", "E8")) {
+            incrementTimesMoved();
+            board.forcedMove("A8", "D8");
+            return true;
+        }
+
         return false;
     
     }
