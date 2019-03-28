@@ -1,5 +1,7 @@
 package gamestate;
 
+import pieces.*;
+
 import board.ChessBoard;
 import java.util.Arrays;
 
@@ -69,7 +71,7 @@ public class GameState {
 	 * @param c Chessboard that needs to be analyzed
 	 * @param color color of the current player
 	 */
-	public void updateGameState(ChessBoard c, String color) {
+	public void updateGameState(ChessBoard c, String color, String end) {
 		if (isCheck(c,color)) {
 			if (isCheckmate(c, fillersLocation, color)) {
 				gameState = 2;
@@ -81,6 +83,8 @@ public class GameState {
 		} else {
 			gameState = 0;
 		}
+		
+		promote(c, end);
 
 			//whiteCastleLeft = isWhiteLeftCastleLegal(c);
 			//whiteCastleRight = isWhiteRightCastleLegal(c);
@@ -550,6 +554,38 @@ public class GameState {
 	{
 		return false;
 	}
+
+	public void promote(ChessBoard board, String end) {
+        
+		
+        	int[] endLocation = board.parseLocation(end);
+        	int xSpot = endLocation[1];
+        	int ySpot = endLocation[0];
+
+		if (ySpot == 7 && board.getGrid()[ySpot][xSpot].getName().equals("Pawn")) {					
+
+			board.getGrid()[ySpot][xSpot] = new Queen("w");
+		}
+
+		if (ySpot == 0 && board.getGrid()[ySpot][xSpot].getName().equals("Pawn")) {
+
+			board.getGrid()[ySpot][xSpot] = new Queen("b");
+		}
+	}
+		/*
+        //Piece[][] grid = board.getGrid();
+        
+        //if pawn is white and reaches the 8th rank, promote
+        if ((board.getGrid()[ySpot][xSpot].getColor().equals("w") ) && (board.getGrid()[ySpot][xSpot].getName().equals("Pawn")) && (end.equals("A8") || end.equals("B8") || end.equals("C8") || end.equals("D8") || end.equals("E8") || end.equals("F8") || end.equals("G8") || end.equals("H8")) ){
+            board.getGrid()[ySpot][xSpot] = new Queen("w");
+        }
+        
+        //if pawn is black and reaches the 1st rank, promote
+        else if ((board.getGrid()[ySpot][xSpot].getColor().equals("b")) && (board.getGrid()[ySpot][xSpot].getName().equals("Pawn")) && (end.equals("A1") || end.equals("B1") || end.equals("C1") || end.equals("D1") || end.equals("E1") || end.equals("F1") || end.equals("G1") || end.equals("H1"))){
+            board.getGrid()[ySpot][xSpot] = new Queen("b");          
+        }
+    }
+	*/
 
 	/*
 
