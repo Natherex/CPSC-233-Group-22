@@ -56,14 +56,15 @@ public class Queen extends Piece {
         String color = board.getGrid()[startY][startX].getColor();
         
         // Can move in either cardinal direction
-        if ((Math.abs(xDirection) ==  Math.abs(yDirection)) && board.isNotBlocked(start, end) && board.isWayClear(start,end) && canPieceMoveLegally(board,start,end,color)) {
-            incrementTimesMoved();
-            return true;
+        if ((Math.abs(xDirection) ==  Math.abs(yDirection)) && board.isNotBlocked(start, end) && board.isWayClear(start,end) && canPieceMoveLegally(board,start,end,color) && board.getGrid()[endY][endX] ==null) {
+                incrementTimesMoved();
+                return true;
+
         
         }
         
         // Can kill in all cardinal directions
-        else if ((Math.abs(xDirection) == Math.abs(yDirection)) && board.isBlocked(start, end) && board.isWayClear(start,end) && canPieceMoveLegally(board,start,end,color)) {
+        else if ((Math.abs(xDirection) == Math.abs(yDirection))  && board.isWayClear(start,end) && canPieceMoveLegally(board,start,end,color)) {
 
             if(!board.getGrid()[startY][startX].getColor().equals(board.getGrid()[endY][endX].getColor()))
             {
@@ -75,14 +76,15 @@ public class Queen extends Piece {
         }
 
         // Can move on diagonals
-        else if ((Math.abs(xDirection) == Math.abs(yDirection)) && board.isNotBlocked(start, end) && board.isWayClear(start,end) && canPieceMoveLegally(board,start,end,color)) {
-            incrementTimesMoved();
-            return true;
+        if ((Math.abs(xDirection) == Math.abs(yDirection)) && board.isNotBlocked(start, end) && board.isWayClear(start,end) && canPieceMoveLegally(board,start,end,color)&& board.getGrid()[endY][endX] ==null) {
+                incrementTimesMoved();
+                return true;
+
           
         }
         
         // Can kill pieces on diagonals
-        else if ((Math.abs(xDirection) == Math.abs(yDirection)) && board.isBlocked(start, end) && board.isWayClear(start,end) && canPieceMoveLegally(board,start,end,color)) {
+        else if ((Math.abs(xDirection) == Math.abs(yDirection)) && board.isWayClear(start,end) && canPieceMoveLegally(board,start,end,color)) {
 
             if(!board.getGrid()[startY][startX].getColor().equals(board.getGrid()[endY][endX].getColor()))
             {
@@ -94,13 +96,14 @@ public class Queen extends Piece {
         }
 
         // Can move up/down/left/right
-        else if (board.isNotBlocked(start, end) && (xDirection == 0 || yDirection == 0) && board.isWayClear(start,end) && canPieceMoveLegally(board,start,end,color)) {
-            incrementTimesMoved();
-            return true;
+        if (board.isNotBlocked(start, end) && (xDirection == 0 || yDirection == 0) && board.isWayClear(start,end) && canPieceMoveLegally(board,start,end,color)&& board.getGrid()[endY][endX] ==null) {
+
+                incrementTimesMoved();
+                return true;
         }
 
         // Can kill up/down/left/right
-        else if (board.isBlocked(start, end) && (xDirection == 0 || yDirection == 0) && board.isWayClear(start,end) && canPieceMoveLegally(board,start,end,color)) {
+        else if ((xDirection == 0 || yDirection == 0) && board.isWayClear(start,end) && canPieceMoveLegally(board,start,end,color)) {
 
             if(!board.getGrid()[startY][startX].getColor().equals(board.getGrid()[endY][endX].getColor()))
             {

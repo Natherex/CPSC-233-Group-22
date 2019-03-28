@@ -57,12 +57,17 @@ public class Bishop extends Piece {
         String color = board.getGrid()[startY][startX].getColor();
         
         // Can only move diagonally if clear
-        if (Math.abs(xDirection) == Math.abs(yDirection) && board.isNotBlocked(start, end) && board.isWayClear(start,end) && canPieceMoveLegally(board,start,end,color)) {
-            incrementTimesMoved();
-            return true;
+        System.out.println(board.isNotBlocked(start, end));
+        System.out.println(canPieceMoveLegally(board,start,end,color));
+        System.out.println(board.isWayClear(start, end));
+        if (Math.abs(xDirection) == Math.abs(yDirection) && board.isNotBlocked(start, end) && board.isWayClear(start,end) && canPieceMoveLegally(board,start,end,color)&& board.getGrid()[endY][endX] ==null) {
+
+                incrementTimesMoved();
+                return true;
+
         }
 
-        else if (Math.abs(xDirection) == Math.abs(yDirection) && board.isBlocked(start, end) && board.isWayClear(start,end) && canPieceMoveLegally(board,start,end,color)) {
+        else if (Math.abs(xDirection) == Math.abs(yDirection) && board.isWayClear(start,end) && canPieceMoveLegally(board,start,end,color)) {
             if(!board.getGrid()[startY][startX].getColor().equals(board.getGrid()[endY][endX].getColor())) {
 	            incrementTimesMoved();
 	            board.removePiece(end);

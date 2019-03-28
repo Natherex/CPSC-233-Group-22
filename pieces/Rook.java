@@ -56,13 +56,14 @@ public class Rook extends Piece {
         String color = c.getGrid()[startY][startX].getColor();
 
         // Can move up/down/left/right
-        if (c.isNotBlocked(start, end) && (xDirection == 0 || yDirection == 0) && c.isWayClear(start,end) && canPieceMoveLegally(c,start,end,color)) {
-            incrementTimesMoved();
-            return true;
+        if (c.isNotBlocked(start, end) && (xDirection == 0 || yDirection == 0) && c.isWayClear(start,end) && canPieceMoveLegally(c,start,end,color) && c.getGrid()[endY][endX] ==null) {
+                incrementTimesMoved();
+                return true;
+
         }
 
         // Can kill up/down/left/right
-        else if (c.isBlocked(start, end) && (xDirection == 0 || yDirection == 0) && c.isWayClear(start,end) && canPieceMoveLegally(c,start,end,color)) {
+        else if ((xDirection == 0 || yDirection == 0) && c.isWayClear(start,end) && canPieceMoveLegally(c,start,end,color)) {
 
             if(!c.getGrid()[startY][startX].getColor().equals(c.getGrid()[endY][endX].getColor()))
             {

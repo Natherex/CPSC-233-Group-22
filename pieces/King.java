@@ -50,14 +50,15 @@ public class King extends Piece {
         // Can move in either cardinal direction
         System.out.println(canPieceMoveLegally(board,start,end,color));
         System.out.println(board.isWayClear(start,end));
-        if (Math.abs(xDirection) < 2 && Math.abs(yDirection) < 2 && board.isNotBlocked(start, end) && board.isWayClear(start,end) && canPieceMoveLegally(board,start,end,color)) {
-            incrementTimesMoved();
-            return true;
+        if (Math.abs(xDirection) < 2 && Math.abs(yDirection) < 2 && board.isNotBlocked(start, end) && board.isWayClear(start,end) && canPieceMoveLegally(board,start,end,color) && board.getGrid()[endY][endX] ==null) {
+                incrementTimesMoved();
+                return true;
+
         
         }
         
         // Can kill in all cardinal directions
-        else if (Math.abs(xDirection) < 2 && Math.abs(yDirection) < 2 && board.isBlocked(start, end) && board.isWayClear(start,end) && canPieceMoveLegally(board,start,end,color)) {
+        else if (Math.abs(xDirection) < 2 && Math.abs(yDirection) < 2 && board.isWayClear(start,end) && canPieceMoveLegally(board,start,end,color)) {
 
             if(!board.getGrid()[startY][startX].getColor().equals(board.getGrid()[endY][endX].getColor()))
             {
@@ -69,14 +70,15 @@ public class King extends Piece {
         }
 
         // Can move one space on diagonals
-        else if (Math.abs(xDirection) < 2 && Math.abs(yDirection) < 2 && board.isNotBlocked(start, end) && board.isWayClear(start,end) && canPieceMoveLegally(board,start,end,color)) {
-            incrementTimesMoved();
-            return true;
+        if (Math.abs(xDirection) < 2 && Math.abs(yDirection) < 2 && board.isNotBlocked(start, end) && board.isWayClear(start,end) && canPieceMoveLegally(board,start,end,color) && board.getGrid()[endY][endX] ==null) {
+
+                incrementTimesMoved();
+                return true;
           
         }
         
         // Can kill one piece on diagonals
-        else if (Math.abs(xDirection) < 2 && Math.abs(yDirection) < 2 && board.isBlocked(start, end) && board.isWayClear(start,end) && canPieceMoveLegally(board,start,end,color)) {
+        else if (Math.abs(xDirection) < 2 && Math.abs(yDirection) < 2 && board.isWayClear(start,end) && canPieceMoveLegally(board,start,end,color)) {
 
             if(!board.getGrid()[startY][startX].getColor().equals(board.getGrid()[endY][endX].getColor()))
             {
@@ -88,13 +90,14 @@ public class King extends Piece {
         }
 
         // Can move one space up/down/left/right
-        else if (board.isNotBlocked(start, end) && (xDirection == 1 || yDirection == 1) && board.isWayClear(start,end) && canPieceMoveLegally(board,start,end,color)) {
-            incrementTimesMoved();
-            return true;
+        if (board.isNotBlocked(start, end) && ( (xDirection == 1 && yDirection ==0) || (yDirection == 1 && xDirection == 0)) && board.isWayClear(start,end) && canPieceMoveLegally(board,start,end,color) && board.getGrid()[endY][endX] ==null) {
+
+                incrementTimesMoved();
+                return true;
         }
 
         // Can kill one piece up/down/left/right
-        else if (board.isBlocked(start, end) && (xDirection == 1 || yDirection == 1) && board.isWayClear(start,end) && canPieceMoveLegally(board,start,end,color)) {
+        else if (( (xDirection == 1 && yDirection ==0) || (yDirection == 1 && xDirection == 0)) && board.isWayClear(start,end) && canPieceMoveLegally(board,start,end,color)) {
 
             if(!board.getGrid()[startY][startX].getColor().equals(board.getGrid()[endY][endX].getColor()))
             {
