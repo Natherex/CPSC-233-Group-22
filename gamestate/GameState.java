@@ -631,6 +631,7 @@ public class GameState {
 		if (ySpot == 0 && board.getGrid()[ySpot][xSpot].getName().equals("Pawn")) {
 
 			board.getGrid()[ySpot][xSpot] = new Queen("b");
-
+		}
+	}
 }
 
