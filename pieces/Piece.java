@@ -7,6 +7,7 @@ public class Piece {
     private String name;
     private int timesMoved = 0;
     private String icon;
+    private int value;
 
     public Piece() {
         this.color = "b";
@@ -34,7 +35,15 @@ public class Piece {
         this.icon = p.getIconLocation();
     }
 
-    protected void setIconLocation(String location) {
+	public int getValue() {
+		return value;
+	}
+
+	public void setValue(int value) {
+		this.value = value;
+	}
+
+	protected void setIconLocation(String location) {
         this.icon = location;
     }
 

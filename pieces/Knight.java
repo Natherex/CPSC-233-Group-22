@@ -7,11 +7,13 @@ public class Knight extends Piece {
     public Knight() {
         super("w", "Knight");
         setIconLocation();
+        super.setValue(3);
     }
 
     public Knight(String color) {
         super(color, "Knight");
         setIconLocation();
+        super.setValue(3);
     }
 
     /**
@@ -64,8 +66,13 @@ public class Knight extends Piece {
                 return true;
             }else if(!color.equals(board.getGrid()[endY][endX].getColor()))
             {
+                if(color == "w")
+                    board.getGamestate().incrementWScore(board.removePiece(end));
+                else
+                {
+                    board.getGamestate().incrementBScore(board.removePiece(end));
+                }
 	            incrementTimesMoved();
-	            board.removePiece(end);
 	            return true;
 	        }else
 	            return false;
@@ -81,8 +88,13 @@ public class Knight extends Piece {
                 return true;
             }else if(!color.equals(board.getGrid()[endY][endX].getColor()))
             {
+                if(color == "w")
+                    board.getGamestate().incrementWScore(board.removePiece(end));
+                else
+                {
+                    board.getGamestate().incrementBScore(board.removePiece(end));
+                }
                 incrementTimesMoved();
-                board.removePiece(end);
                 return true;
             }else
                 return false;
