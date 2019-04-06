@@ -17,7 +17,6 @@ import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import board.ChessBoard;
 import pieces.Piece;
-import gamestate.GameState;
 
 public class GUIMain extends Application {
     private static final String SELECTION_URL = "/assets/selection.png";
@@ -26,7 +25,6 @@ public class GUIMain extends Application {
     private String startLocation;
     private String endLocation;
     private ChessBoard board;
-    private GameState state = new GameState();
 
     private StackPane[][] stackPaneGrid;
     private Piece[][] pieceGrid;
@@ -152,11 +150,12 @@ public class GUIMain extends Application {
 
                 // Main game logic
                 if (startLocation != null && endLocation != null) {
-                    if (state.kingIsSafe(board, startLocation, endLocation, board.currentPlayer()) && board.movePiece(startLocation, endLocation)) {
+                    if (board.getGamestate().kingIsSafe(board, startLocation, endLocation, board.currentPlayer()) && board.movePiece(startLocation, endLocation)) {
                         board.changeTurn();
-                        state.updateGameState(board, board.currentPlayer(), endLocation);
-                        System.out.println(state.getGameState());
+                        board.getGamestate().updateGameState(board, board.currentPlayer(), endLocation);
+                        System.out.println(board.getGamestate().getGameState());
                         updateWindow();
+
                     }
 
                     startLocation = null;
