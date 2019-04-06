@@ -608,7 +608,7 @@ public final class ChessBoard extends Board {
     }
 
     public GameState getGamestate() {
-        return new GameState(state);
+        return state;
     }
 
 
