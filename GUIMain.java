@@ -154,6 +154,8 @@ public class GUIMain extends Application {
                         board.changeTurn();
                         board.getGamestate().updateGameState(board, board.currentPlayer(), endLocation);
                         System.out.println(board.getGamestate().getGameState());
+                        System.out.println(board.getGamestate().getwScore());
+                        System.out.println(board.getGamestate().getbScore());
                         updateWindow();
 
                     }

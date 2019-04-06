@@ -10,6 +10,8 @@ public class GameState {
 	private boolean isWhiteTurn = true;
 	private boolean isBlackTurn = false;
 	private int[] fillersLocation;
+	private int wScore = 0;
+	private int bScore = 0;
 
 	public GameState() {
 		gameState = 0;
@@ -59,9 +61,38 @@ public class GameState {
 	 * @param c Chessboard that needs to be analyzed
 	 * @param color color of the current player
 	 */
+
+	public int getwScore() {
+		return wScore;
+	}
+
+	public void setwScore(int wScore) {
+		this.wScore = wScore;
+	}
+	public void incrementWScore(int value)
+	{
+		wScore +=value;
+	}
+
+	public int getbScore() {
+		return bScore;
+	}
+
+	public void setbScore(int bScore) {
+		this.bScore = bScore;
+	}
+	public void incrementBScore(int value)
+	{
+		bScore +=value;
+	}
+
 	public void updateGameState(ChessBoard c, String color, String end) {
 		if (isCheck(c,color)) {
 			if (isCheckmate(c, fillersLocation, color)) {
+				if(color == "w")
+					bScore+=99;
+				else
+					wScore +=99;
 				gameState = 2;
 			} else {
 				gameState = 1;

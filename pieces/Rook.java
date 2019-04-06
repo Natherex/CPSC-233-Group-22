@@ -6,11 +6,13 @@ public class Rook extends Piece {
     public Rook() {
         super("w", "Rook");
         setIconLocation();
+        super.setValue(5);
     }
 
     public Rook(String color) {
         super(color, "Rook");
         setIconLocation();
+        super.setValue(5);
     }
 
     /**
@@ -67,9 +69,14 @@ public class Rook extends Piece {
 
             if(!c.getGrid()[startY][startX].getColor().equals(c.getGrid()[endY][endX].getColor()))
             {
-	            incrementTimesMoved();
-	            c.removePiece(end);
-	            return true;
+                if(color == "w")
+                    c.getGamestate().incrementWScore(c.removePiece(end));
+                else
+                {
+                    c.getGamestate().incrementBScore(c.removePiece(end));
+                }
+                incrementTimesMoved();
+                return true;
 	        }
         }
 
