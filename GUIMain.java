@@ -246,6 +246,7 @@ public class GUIMain extends Application {
                     clearSelection();
                 }
             }
+            System.out.println(board.getGamestate().getGameState());
         }
     }
 
@@ -308,7 +309,6 @@ public class GUIMain extends Application {
                 Label lbl = (Label) (nodes.get(i));
                 lbl.setText(Character.toString(ChessBoard.VALID_COLUMNS[i]));
             }
-
         }
     }
 

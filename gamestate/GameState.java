@@ -116,7 +116,10 @@ public class GameState {
      * @return true if chessboard is in checkmate
      */
     public boolean isCheckmate(ChessBoard c, int[] checkersLocation, String color) {
-        if (!isCheck(c,color) || canKingMove(c, color) || (!doubleCheck(c) && canKingBeBlocked(c, checkersLocation,color)) || (!doubleCheck(c) && canCheckerBeTaken(c, checkersLocation,color)))
+        if (!isCheck(c,color) ||
+                canKingMove(c, color) ||
+                (!doubleCheck(c) && canKingBeBlocked(c, checkersLocation,color)) ||
+                (!doubleCheck(c) && canCheckerBeTaken(c, checkersLocation,color)))
             return false;
         return true;
     }
@@ -130,15 +133,16 @@ public class GameState {
      */
     public boolean isCheck(ChessBoard c, String color) {
         String oColor;
-        if (color == "w")
+        if (color.equals("w"))
             oColor ="b";
         else
             oColor = "w";
-        int[] kingsLocation = findKing(c,color);
+
+        int[] kingsLocation = findKing(c, color);
         //checks if the king would be put in check if it makes this move by seeing if any pieces can fill the kings current location
         // THere is one special case where it is actually a pawn that can fill the tile but cannot actually attack
         // that tile and so this does not threaten the king.
-        if (canTileBeFilled(c,kingsLocation,oColor) && (!c.getGrid()[fillersLocation[0]][fillersLocation[1]].getName().equals("Pawn") || kingsLocation[1] != fillersLocation[1]) )
+        if (canTileBeFilled(c, kingsLocation, oColor) && (!c.getGrid()[fillersLocation[0]][fillersLocation[1]].getName().equals("Pawn") || kingsLocation[1] != fillersLocation[1]) )
             return true;
 
         return false;
@@ -159,7 +163,7 @@ public class GameState {
         if (temp.getGrid()[endY][endX] == null)
             temp.forcedMove(start,end);
 
-        if (isCheck(temp,playersColor)) {
+        if (isCheck(temp, playersColor)) {
             return false;
         } else {
             return true;
@@ -382,7 +386,7 @@ public class GameState {
         }
 
         // Checks if a black pawn can fill the tile.
-        if (color.equals("b")) {
+        else if (color.equals("b")) {
             if (coordinate[0] < 7 && c.getGrid()[coordinate[0] + 1][coordinate[1]] != null) {
                 if (c.getGrid()[coordinate[0] + 1][coordinate[1]].getName().equals("Pawn")) {
                     if (c.getGrid()[coordinate[0] + 1][coordinate[1]].getColor().equals(color)) {
@@ -574,8 +578,10 @@ public class GameState {
                             c.getGrid()[coordinate[0] + j][coordinate[1] + i].getName().equals("King") &&
                             (i != 0 || j != 0)) {
                             temp = new int[]{coordinate[0] + j, coordinate[1] + i};
-                            if (kingIsSafe(c, c.unparseLocation(temp), c.unparseLocation(coordinate), color))
+                            if (kingIsSafe(c, c.unparseLocation(temp), c.unparseLocation(coordinate), color)) {
+                                fillersLocation = new int[]{coordinate[0] - i, coordinate[1] - i};
                                 return true;
+                            }
                         }
                     }
                 }
