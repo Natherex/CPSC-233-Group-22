@@ -1,3 +1,4 @@
+import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
@@ -18,6 +19,7 @@ import javafx.scene.text.TextAlignment;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import board.ChessBoard;
+import javafx.stage.WindowEvent;
 import pieces.Piece;
 
 public class GUIMain extends Application {
@@ -142,7 +144,7 @@ public class GUIMain extends Application {
         AnimationTimer mainLoop = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                // Checks if the two locations are the same location
+                // Checks if the two locations are the same location to avoid NullPointerExceptions
                 if (startLocation != null && endLocation != null) {
                     if (startLocation.equals(endLocation)) {
                         startLocation = null;
@@ -165,6 +167,28 @@ public class GUIMain extends Application {
                     startLocation = null;
                     endLocation = null;
                 }
+
+                // Checks if the game is over: 2 - Checkmate, 3 - Stalemate
+                if (board.getGamestate().getGameState() == 2 || board.getGamestate().getGameState() == 3) {
+                    running = false;
+
+                    // Opens the play again windows if not already opened.
+                    if (playAgainState == 0) {
+                        playAgainState = 1;
+                        createPlayAgainWindow();
+                    }
+
+                    else if (playAgainState == 2) {
+
+                    }
+
+                    // If user does not want to play again, the game closes.
+                    else if (playAgainState == 3){
+                        primaryStage.close();
+                    }
+                }
+
+
 
             }
         };
@@ -304,11 +328,28 @@ public class GUIMain extends Application {
         currentSpot.setImage(null);
     }
 
-    private Boolean playAgain() {
+    /**
+     * Play again state variable for the play again window.
+     * 0 - Not yet selected
+     * 1 - In process of selecting
+     * 2 - Play again
+     * 3 - Do not play again
+     * @see #createPlayAgainWindow()
+     */
+    private int playAgainState = 0;
+
+    /**
+     * Creates a window which prompts the user if they want to play again.
+     * Stores intermediate values in {@link #playAgainState}.
+     * @return Returns the true/false after prompting the user if they want to play again.
+     */
+    private void createPlayAgainWindow() {
+        Stage playAgainStage = new Stage();
+
         VBox mainWindow = new VBox();
         Font font = new Font("Arial", 20);
 
-        Label winMessage = new Label(board.isWhiteTurn() ? "White side wins!" : "Black side wins!");
+        Label winMessage = new Label(board.isBlackTurn() ? "White side wins!" : "Black side wins!");
         winMessage.setFont(font);
         winMessage.setAlignment(Pos.CENTER);
         winMessage.setTextAlignment(TextAlignment.CENTER);
@@ -318,7 +359,30 @@ public class GUIMain extends Application {
         playAgainMessage.setAlignment(Pos.CENTER);
         playAgainMessage.setTextAlignment(TextAlignment.CENTER);
 
-        return false;
+        Button yesButton = new Button("Yes");
+        yesButton.setOnAction(event -> {
+            playAgainState = 2;
+            playAgainStage.close();
+        });
+
+        Button noButton = new Button("No");
+        noButton.setOnAction(event -> {
+            playAgainState = 3;
+            playAgainStage.close();
+        });
+
+        HBox buttonBox = new HBox();
+        buttonBox.getChildren().addAll(yesButton, noButton);
+
+        mainWindow.getChildren().addAll(winMessage, playAgainMessage, buttonBox);
+
+        playAgainStage.setOnCloseRequest(event -> playAgainState = 3);
+        playAgainStage.getIcons().add(new Image("/assets/Chess_klt60.png"));
+        playAgainStage.setTitle("Play Again?");
+        playAgainStage.setScene(new Scene(mainWindow, 400, 200));
+        playAgainStage.setResizable(false);
+        playAgainStage.show();
+
     }
 
     public static void main(String[] args) {
