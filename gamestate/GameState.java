@@ -579,7 +579,7 @@ public class GameState {
                             (i != 0 || j != 0)) {
                             temp = new int[]{coordinate[0] + j, coordinate[1] + i};
                             if (kingIsSafe(c, c.unparseLocation(temp), c.unparseLocation(coordinate), color)) {
-                                fillersLocation = new int[]{coordinate[0] - i, coordinate[1] - i};
+                                fillersLocation = temp;
                                 return true;
                             }
                         }

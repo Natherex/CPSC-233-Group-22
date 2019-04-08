@@ -108,13 +108,11 @@ public class King extends Piece {
 
         // Can kill one piece up/down/left/right
         else if (((xDirection == 1 && yDirection == 0) || (yDirection == 1 && xDirection == 0)) && board.isWayClear(start, end) && canPieceMoveLegally(board, start, end, color)) {
-
             if (!board.getGrid()[startY][startX].getColor().equals(board.getGrid()[endY][endX].getColor())) {
                 if (color == "w")
                     board.getGamestate().incrementWScore(board.removePiece(end));
-                else {
+                else
                     board.getGamestate().incrementBScore(board.removePiece(end));
-                }
                 incrementTimesMoved();
                 return true;
             }
