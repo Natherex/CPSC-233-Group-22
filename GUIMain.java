@@ -11,7 +11,6 @@ import javafx.geometry.Insets;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-// import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -21,6 +20,7 @@ import javafx.scene.Node;
 import board.ChessBoard;
 import javafx.stage.WindowEvent;
 import pieces.Piece;
+import gamestate.GameState;
 
 public class GUIMain extends Application {
     private static final String SELECTION_URL = "/assets/selection.png";
@@ -161,7 +161,6 @@ public class GUIMain extends Application {
                         System.out.println(board.getGamestate().getwScore());
                         System.out.println(board.getGamestate().getbScore());
                         updateWindow();
-
                     }
 
                     startLocation = null;
@@ -178,8 +177,12 @@ public class GUIMain extends Application {
                         createPlayAgainWindow();
                     }
 
+                    // Resets the board if the user wants to play again.
                     else if (playAgainState == 2) {
-
+                        playAgainState = 0;
+                        board.resetBoard();
+                        updateWindow();
+                        running = true;
                     }
 
                     // If user does not want to play again, the game closes.
@@ -187,32 +190,30 @@ public class GUIMain extends Application {
                         primaryStage.close();
                     }
                 }
-
-
-
             }
         };
 
         running = true;
         mainLoop.start();
+        // createPlayAgainWindow();
 
         // Checks to see if the game is paused
-        mainScene.setOnKeyReleased(event -> {
-            if (event.getCode() == KeyCode.ESCAPE) {
-                System.out.println("Test");
-                if (running) {
-                    playerTurnLabel.setText(board.currentTurnString() + " (PAUSED)");
-                    primaryStage.setTitle("Chess (PAUSED)");
-                    running = false;
-                    mainLoop.stop();
-                } else {
-                    playerTurnLabel.setText(board.currentTurnString());
-                    primaryStage.setTitle("Chess");
-                    running = true;
-                    mainLoop.start();
-                }
-            }
-        });
+//        mainScene.setOnKeyReleased(event -> {
+//            if (event.getCode() == KeyCode.ESCAPE) {
+//                System.out.println("Test");
+//                if (running) {
+//                    playerTurnLabel.setText(board.currentTurnString() + " (PAUSED)");
+//                    primaryStage.setTitle("Chess (PAUSED)");
+//                    running = false;
+//                    mainLoop.stop();
+//                } else {
+//                    playerTurnLabel.setText(board.currentTurnString());
+//                    primaryStage.setTitle("Chess");
+//                    running = true;
+//                    mainLoop.start();
+//                }
+//            }
+//        });
     }
 
     /**
@@ -364,25 +365,28 @@ public class GUIMain extends Application {
             playAgainState = 2;
             playAgainStage.close();
         });
+        yesButton.setMinSize(100, 10);
 
         Button noButton = new Button("No");
         noButton.setOnAction(event -> {
             playAgainState = 3;
             playAgainStage.close();
         });
+        noButton.setMinSize(100, 10);
 
         HBox buttonBox = new HBox();
         buttonBox.getChildren().addAll(yesButton, noButton);
+        buttonBox.setAlignment(Pos.BOTTOM_CENTER);
 
         mainWindow.getChildren().addAll(winMessage, playAgainMessage, buttonBox);
+        mainWindow.setAlignment(Pos.CENTER);
 
         playAgainStage.setOnCloseRequest(event -> playAgainState = 3);
-        playAgainStage.getIcons().add(new Image("/assets/Chess_klt60.png"));
+        playAgainStage.getIcons().add(new Image("/assets/Chess_qlt60.png"));
         playAgainStage.setTitle("Play Again?");
-        playAgainStage.setScene(new Scene(mainWindow, 400, 200));
+        playAgainStage.setScene(new Scene(mainWindow, 200, 100));
         playAgainStage.setResizable(false);
         playAgainStage.show();
-
     }
 
     public static void main(String[] args) {

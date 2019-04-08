@@ -614,12 +614,23 @@ public class ChessBoard extends Board {
         return state;
     }
 
+    public void resetBoard() {
+        for (int row = 0; row < 8; row++) {
+            for (int column = 0; column < 8; column++) {
+                grid[row][column] = null;
+            }
+        }
+
+        state = new GameState();
+        initialize();
+    }
+
 
     /**
      * @return Returns a string representation of the current player's turn.
      */
     public String currentTurnString() {
-        return isWhiteTurn() ? "Player 1's Turn" : "Player 2's Turn";
+        return isWhiteTurn() ? "White's Turn" : "Black's Turn";
     }
 
     /**

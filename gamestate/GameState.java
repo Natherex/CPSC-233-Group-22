@@ -69,6 +69,7 @@ public class GameState {
     public void setwScore(int wScore) {
         this.wScore = wScore;
     }
+
     public void incrementWScore(int value)
     {
         wScore +=value;
@@ -81,6 +82,7 @@ public class GameState {
     public void setbScore(int bScore) {
         this.bScore = bScore;
     }
+
     public void incrementBScore(int value)
     {
         bScore +=value;
