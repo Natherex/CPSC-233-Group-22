@@ -365,7 +365,7 @@ public class ChessBoard extends Board {
     /**
      * Moves piece and given location to another location. This method forces a movement and does not care
      * if the movement is valid or not.
-     * DO NOT USE FOR REAL MOVES ONLY USED FOR THEORETICAL MOVES
+     * DO NOT USE FOR REAL MOVES, ONLY USED FOR THEORETICAL MOVES.
      * @param start Starting location of the piece on the chess board.
      * @param end Ending location of the piece on the chess board.
      * 

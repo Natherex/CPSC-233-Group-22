@@ -3,8 +3,7 @@ import java.util.Scanner;
 
 public class TextMain {
     public static void main(String[] args) {
-        ChessBoard board = new ChessBoard();
-        board.doFlipping(true);
+        ChessBoard board = new ChessBoard(true);
         Scanner input = new Scanner(System.in);
         String start;
         String end;

@@ -18,7 +18,6 @@ import javafx.scene.text.TextAlignment;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import board.ChessBoard;
-import javafx.stage.WindowEvent;
 import pieces.Piece;
 import gamestate.GameState;
 
@@ -35,6 +34,13 @@ public class GUIMain extends Application {
     private Label playerTurnLabel;
     private VBox numberVBox;
     private HBox letterHBox;
+    private Label whiteScore;
+    private Label blackScore;
+
+    @Override
+    public void init() {
+
+    }
 
     @Override
     public void start(Stage primaryStage) {
@@ -132,8 +138,31 @@ public class GUIMain extends Application {
         mainBoardGUI.add(mainBoard, 1, 1);
         mainBoardGUI.add(letterHBox, 1, 2);
 
+        // Creates the score panel
+        whiteScore = new Label("White's Score: " + Integer.toString(board.getGamestate().getwScore()));
+        whiteScore.setTextAlignment(TextAlignment.LEFT);
+        whiteScore.setFont(new Font("Times New Roman", 20));
+        whiteScore.setAlignment(Pos.CENTER_LEFT);
+        whiteScore.setMinSize(250, 25);
+        whiteScore.setPadding(new Insets(0, 0, 0, 5));
+
+        blackScore = new Label("Black's Score: " + Integer.toString(board.getGamestate().getbScore()));
+        blackScore.setTextAlignment(TextAlignment.RIGHT);
+        blackScore.setFont(new Font("Times new Roman", 20));
+        blackScore.setAlignment(Pos.CENTER_RIGHT);
+        blackScore.setMinSize(250, 25);
+        blackScore.setPadding(new Insets(0, 5, 0, 0));
+
+        HBox scorePanel = new HBox();
+        scorePanel.getChildren().addAll(whiteScore, blackScore);
+
+        // Adds all the components to a main window frame
+        BorderPane mainWindow = new BorderPane();
+        mainWindow.setCenter(mainBoardGUI);
+        mainWindow.setBottom(scorePanel);
+
         // Creates a new scene and adds it to the stage
-        Scene mainScene = new Scene(mainBoardGUI, 500, 530);
+        Scene mainScene = new Scene(mainWindow, 500, 555);
         primaryStage.getIcons().add(new Image("/assets/Chess_klt60.png"));
         primaryStage.setTitle("Chess");
         primaryStage.setScene(mainScene);
@@ -157,9 +186,6 @@ public class GUIMain extends Application {
                     if (board.getGamestate().kingIsSafe(board, startLocation, endLocation, board.currentPlayer()) && board.movePiece(startLocation, endLocation)) {
                         board.changeTurn();
                         board.getGamestate().updateGameState(board, board.currentPlayer(), endLocation);
-                        System.out.println(board.getGamestate().getGameState());
-                        System.out.println(board.getGamestate().getwScore());
-                        System.out.println(board.getGamestate().getbScore());
                         updateWindow();
                     }
 
@@ -186,7 +212,7 @@ public class GUIMain extends Application {
                     }
 
                     // If user does not want to play again, the game closes.
-                    else if (playAgainState == 3){
+                    else if (playAgainState == 3) {
                         primaryStage.close();
                     }
                 }
@@ -195,25 +221,6 @@ public class GUIMain extends Application {
 
         running = true;
         mainLoop.start();
-        // createPlayAgainWindow();
-
-        // Checks to see if the game is paused
-//        mainScene.setOnKeyReleased(event -> {
-//            if (event.getCode() == KeyCode.ESCAPE) {
-//                System.out.println("Test");
-//                if (running) {
-//                    playerTurnLabel.setText(board.currentTurnString() + " (PAUSED)");
-//                    primaryStage.setTitle("Chess (PAUSED)");
-//                    running = false;
-//                    mainLoop.stop();
-//                } else {
-//                    playerTurnLabel.setText(board.currentTurnString());
-//                    primaryStage.setTitle("Chess");
-//                    running = true;
-//                    mainLoop.start();
-//                }
-//            }
-//        });
     }
 
     /**
@@ -230,9 +237,6 @@ public class GUIMain extends Application {
 
         @Override
         public void handle(MouseEvent event) {
-//            // Testing, prints out mouse location on board.
-//            System.out.printf("Mouse clicked on cell [%d, %d]%n", row, column);
-//            System.out.println(board.unparseLocation(new int[]{row, column}));
             if (running) {
                 if (startLocation == null) {
                     startLocation = board.unparseLocation(new int[]{row, column});
@@ -250,13 +254,11 @@ public class GUIMain extends Application {
      */
     private void updateWindow() {
         pieceGrid = board.getGrid();
-        System.out.println(startLocation);
-        System.out.println(endLocation);
 
         // Updates all the chess board locations
         ObservableList<Node> nodes;
         for (int row = 0; row < 8; row++) {
-            for (int column = 0; column < 8; column ++) {
+            for (int column = 0; column < 8; column++) {
                 nodes = stackPaneGrid[row][column].getChildren();
 
                 // Sets the image at the current location to the piece at that location.
@@ -272,42 +274,47 @@ public class GUIMain extends Application {
             }
         }
 
-        // Updates the current turn string
+        // Updates the current turn string as well as the score
         playerTurnLabel.setText(board.currentTurnString());
+        whiteScore.setText("White's Score: " + Integer.toString(board.getGamestate().getwScore()));
+        blackScore.setText("Black's Score: " + Integer.toString(board.getGamestate().getbScore()));
 
         // Updates the rows numbers and column letters if the board is being flipped
         if (board.isBeingFlipped() && board.isBlackTurn()) {
             // Update rows
             nodes = numberVBox.getChildren();
             for (int i = 0; i < 8; i++) {
-                Label lbl = (Label)(nodes.get(i));
+                Label lbl = (Label) (nodes.get(i));
                 lbl.setText(String.valueOf(ChessBoard.VALID_ROWS[i]));
             }
 
             // Update columns
             nodes = letterHBox.getChildren();
             for (int i = 0; i < 8; i++) {
-                Label lbl = (Label)(nodes.get(i));
+                Label lbl = (Label) (nodes.get(i));
                 lbl.setText(Character.toString(ChessBoard.FLIPPED_COLUMNS[i]));
             }
         } else {
             // Update rows
             nodes = numberVBox.getChildren();
             for (int i = 0; i < 8; i++) {
-                Label lbl = (Label)(nodes.get(i));
+                Label lbl = (Label) (nodes.get(i));
                 lbl.setText(String.valueOf(ChessBoard.FLIPPED_ROWS[i]));
             }
 
             // Update columns
             nodes = letterHBox.getChildren();
             for (int i = 0; i < 8; i++) {
-                Label lbl = (Label)(nodes.get(i));
+                Label lbl = (Label) (nodes.get(i));
                 lbl.setText(Character.toString(ChessBoard.VALID_COLUMNS[i]));
             }
 
         }
     }
 
+    /**
+     * Adds the selection marker onto the board.
+     */
     private void addSelection() {
         int[] location = board.parseLocation(startLocation);
         int row = location[0];
@@ -315,17 +322,20 @@ public class GUIMain extends Application {
 
         ObservableList<Node> nodes = stackPaneGrid[row][column].getChildren();
         Image selectionImg = new Image(SELECTION_URL);
-        ImageView currentSpot = (ImageView)(nodes.get(0));
+        ImageView currentSpot = (ImageView) (nodes.get(0));
         currentSpot.setImage(selectionImg);
     }
 
-    private void clearSelection()  {
+    /**
+     * Clears the selection marker from the board.
+     */
+    private void clearSelection() {
         int[] location = board.parseLocation(startLocation);
         int row = location[0];
         int column = location[1];
 
         ObservableList<Node> nodes = stackPaneGrid[row][column].getChildren();
-        ImageView currentSpot = (ImageView)(nodes.get(0));
+        ImageView currentSpot = (ImageView) (nodes.get(0));
         currentSpot.setImage(null);
     }
 
@@ -335,6 +345,7 @@ public class GUIMain extends Application {
      * 1 - In process of selecting
      * 2 - Play again
      * 3 - Do not play again
+     *
      * @see #createPlayAgainWindow()
      */
     private int playAgainState = 0;
@@ -342,6 +353,7 @@ public class GUIMain extends Application {
     /**
      * Creates a window which prompts the user if they want to play again.
      * Stores intermediate values in {@link #playAgainState}.
+     *
      * @return Returns the true/false after prompting the user if they want to play again.
      */
     private void createPlayAgainWindow() {
