@@ -7,11 +7,13 @@ public class Queen extends Piece {
     public Queen() {
         super("w", "Queen");
         setIconLocation();
+        super.setValue(9);
     }
 
     public Queen(String color) {
         super(color, "Queen");
         setIconLocation();
+        super.setValue(9);
     }
 
     /**
@@ -68,10 +70,14 @@ public class Queen extends Piece {
 
             if(!board.getGrid()[startY][startX].getColor().equals(board.getGrid()[endY][endX].getColor()))
             {
-            	System.out.println("test 2");
-	            incrementTimesMoved();
-	            board.removePiece(end);
-	            return true;
+                if(color == "w")
+                    board.getGamestate().incrementWScore(board.removePiece(end));
+                else
+                {
+                    board.getGamestate().incrementBScore(board.removePiece(end));
+                }
+                incrementTimesMoved();
+                return true;
 	        }
         }
 
@@ -88,10 +94,14 @@ public class Queen extends Piece {
 
             if(!board.getGrid()[startY][startX].getColor().equals(board.getGrid()[endY][endX].getColor()))
             {
-            	System.out.println("test 2");
-	            incrementTimesMoved();
-	            board.removePiece(end);
-	            return true;
+                if(color == "w")
+                    board.getGamestate().incrementWScore(board.removePiece(end));
+                else
+                {
+                    board.getGamestate().incrementBScore(board.removePiece(end));
+                }
+                incrementTimesMoved();
+                return true;
 	        }
         }
 
@@ -107,10 +117,14 @@ public class Queen extends Piece {
 
             if(!board.getGrid()[startY][startX].getColor().equals(board.getGrid()[endY][endX].getColor()))
             {
-            	System.out.println("test 2");
-	            incrementTimesMoved();
-	            board.removePiece(end);
-	            return true;
+                if(color == "w")
+                    board.getGamestate().incrementWScore(board.removePiece(end));
+                else
+                {
+                    board.getGamestate().incrementBScore(board.removePiece(end));
+                }
+                incrementTimesMoved();
+                return true;
 	        }
         }
 

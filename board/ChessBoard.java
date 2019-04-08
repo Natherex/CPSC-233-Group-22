@@ -396,10 +396,15 @@ public class ChessBoard extends Board {
      * Removes chess piece at given location.
      * @param location Location of the piece on the chess board to remove.
      */
-    public void removePiece(String location) {
+    public int removePiece(String location) {
         int[] coordinates = parseLocation(location);
+        int value = 0;
         if (grid[coordinates[0]][coordinates[1]] != null)
+        {
+            value = grid[coordinates[0]][coordinates[1]].getValue();
             grid[coordinates[0]][coordinates[1]] = null;
+        }
+        return value;
     }
 
     /**
@@ -606,7 +611,7 @@ public class ChessBoard extends Board {
     }
 
     public GameState getGamestate() {
-        return new GameState(state);
+        return state;
     }
 
 

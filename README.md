@@ -13,7 +13,7 @@ A Simple Chess game made using Java.
 
 ## **For Windows:**
   #### If Playing the Text-based Version:
-      Run "runText.bat"
+     Run "runText.bat"
   #### If Playing the GUI-based Version:
      Run "runGUI.bat"
     

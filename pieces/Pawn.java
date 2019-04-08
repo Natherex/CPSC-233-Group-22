@@ -6,11 +6,13 @@ public class Pawn extends Piece {
     public Pawn() {
         super("w", "Pawn");
         setIconLocation();
+        super.setValue(1);
     }
 
     public Pawn(String color) {
         super(color, "Pawn");
         setIconLocation();
+        super.setValue(1);
     }
 
     /**
@@ -91,9 +93,14 @@ public class Pawn extends Piece {
         // Can kill piece one up and one right
         if (yDirection == 1 && xDirection == 1 && board.isWayClear(start, end) && canPieceMoveLegally(board, start, end, color) && board.getGrid()[endY][endX] !=null) {
             if (!board.getGrid()[startY][startX].getColor().equals(board.getGrid()[endY][endX].getColor())) {
-	            incrementTimesMoved();
-	            board.removePiece(end);
-	            return true;
+                if(color == "w")
+                    board.getGamestate().incrementWScore(board.removePiece(end));
+                else
+                {
+                    board.getGamestate().incrementBScore(board.removePiece(end));
+                }
+                incrementTimesMoved();
+                return true;
 	        }
         }
 
@@ -101,9 +108,14 @@ public class Pawn extends Piece {
         // && board.getGrid()[startY][startX] != null
         else if (yDirection == 1 && xDirection == -1 && board.isWayClear(start, end) && canPieceMoveLegally(board, start, end, color) && board.getGrid()[endY][endX] !=null) {
             if (!board.getGrid()[startY][startX].getColor().equals(board.getGrid()[endY][endX].getColor())) {
-	            incrementTimesMoved();
-	            board.removePiece(end);
-	            return true;
+                if(color == "w")
+                    board.getGamestate().incrementWScore(board.removePiece(end));
+                else
+                {
+                    board.getGamestate().incrementBScore(board.removePiece(end));
+                }
+                incrementTimesMoved();
+                return true;
 	        }
         }
 
