@@ -5,7 +5,7 @@ import javafx.scene.paint.Color;
 import pieces.*;
 import java.util.Scanner;
 
-public final class ChessBoard extends Board {
+public class ChessBoard extends Board {
     public static final char[] VALID_COLUMNS = new char[]{'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'};
     public static final int[] VALID_ROWS = new int[]{1, 2, 3, 4, 5, 6, 7, 8};
     public static final char[] FLIPPED_COLUMNS = new char[]{'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A'};
@@ -70,8 +70,6 @@ public final class ChessBoard extends Board {
         grid[7][7] = new Rook("b");
         for (int i = 0; i < 8; i++)
             grid[6][i] = new Pawn("b");
-
-        // System.out.println("Completed Initialization.");
     }
 
     /**
@@ -367,7 +365,7 @@ public final class ChessBoard extends Board {
     /**
      * Moves piece and given location to another location. This method forces a movement and does not care
      * if the movement is valid or not.
-     * DO NOT USE FOR REAL MOVES ONLY USED FOR THEORETICAL MOVES
+     * DO NOT USE FOR REAL MOVES, ONLY USED FOR THEORETICAL MOVES.
      * @param start Starting location of the piece on the chess board.
      * @param end Ending location of the piece on the chess board.
      * 
@@ -616,12 +614,23 @@ public final class ChessBoard extends Board {
         return state;
     }
 
+    public void resetBoard() {
+        for (int row = 0; row < 8; row++) {
+            for (int column = 0; column < 8; column++) {
+                grid[row][column] = null;
+            }
+        }
+
+        state = new GameState();
+        initialize();
+    }
+
 
     /**
      * @return Returns a string representation of the current player's turn.
      */
     public String currentTurnString() {
-        return isWhiteTurn() ? "Player 1's Turn" : "Player 2's Turn";
+        return isWhiteTurn() ? "White's Turn" : "Black's Turn";
     }
 
     /**
