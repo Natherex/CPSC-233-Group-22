@@ -1,4 +1,5 @@
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
 import javafx.scene.text.Font;
 import javafx.scene.control.Label;
@@ -9,6 +10,7 @@ import javafx.geometry.Insets;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+// import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -191,7 +193,7 @@ public class GUIMain extends Application {
     /**
      * Inner class to handle the mouse click events.
      */
-    public class MouseEventHandler implements EventHandler<MouseEvent> {
+    private class MouseEventHandler implements EventHandler<MouseEvent> {
         private int row;
         private int column;
 
@@ -299,7 +301,23 @@ public class GUIMain extends Application {
         ObservableList<Node> nodes = stackPaneGrid[row][column].getChildren();
         ImageView currentSpot = (ImageView)(nodes.get(0));
         currentSpot.setImage(null);
+    }
 
+    private Boolean playAgain() {
+        VBox mainWindow = new VBox();
+        Font font = new Font("Arial", 20);
+
+        Label winMessage = new Label(board.isWhiteTurn() ? "White side wins!" : "Black side wins!");
+        winMessage.setFont(font);
+        winMessage.setAlignment(Pos.CENTER);
+        winMessage.setTextAlignment(TextAlignment.CENTER);
+
+        Label playAgainMessage = new Label("Play Again?");
+        playAgainMessage.setFont(font);
+        playAgainMessage.setAlignment(Pos.CENTER);
+        playAgainMessage.setTextAlignment(TextAlignment.CENTER);
+
+        return false;
     }
 
     public static void main(String[] args) {

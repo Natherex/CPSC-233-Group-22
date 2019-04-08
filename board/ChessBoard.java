@@ -5,7 +5,7 @@ import javafx.scene.paint.Color;
 import pieces.*;
 import java.util.Scanner;
 
-public final class ChessBoard extends Board {
+public class ChessBoard extends Board {
     public static final char[] VALID_COLUMNS = new char[]{'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'};
     public static final int[] VALID_ROWS = new int[]{1, 2, 3, 4, 5, 6, 7, 8};
     public static final char[] FLIPPED_COLUMNS = new char[]{'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A'};
@@ -70,8 +70,6 @@ public final class ChessBoard extends Board {
         grid[7][7] = new Rook("b");
         for (int i = 0; i < 8; i++)
             grid[6][i] = new Pawn("b");
-
-        // System.out.println("Completed Initialization.");
     }
 
     /**
