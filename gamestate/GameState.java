@@ -18,9 +18,16 @@ public class GameState {
     }
 
     public GameState(GameState gs) {
-        this.gameState = gs.gameState;
-        this.isWhiteTurn = gs.isWhiteTurn;
-        this.isBlackTurn = gs.isBlackTurn;
+        this.isWhiteTurn = gs.isWhiteTurn();
+        this.isBlackTurn = gs.isBlackTurn();
+        this.gameState = gs.getGameState();
+        this.wScore = gs.getwScore();
+        this.bScore = gs.getbScore();
+        this.fillersLocation =  getFillersLocation();
+    }
+
+    public int[] getFillersLocation() {
+        return fillersLocation;
     }
 
     /**

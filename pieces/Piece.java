@@ -75,6 +75,13 @@ public class Piece {
         return false;
     }
 
+    public boolean isValidMove(ChessBoard board, int[] startLocation, int[] endLocation)
+    {
+        String sStartLocation = board.unparseLocation(startLocation);
+        String sEndLocation = board.unparseLocation(endLocation);
+        return isValidMove(board, sStartLocation, sEndLocation);
+    }
+
     public String toString() {
         return "Piece(" + getColor() + ")";
     }
