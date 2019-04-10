@@ -16,6 +16,10 @@ public class Queen extends Piece {
         super.setValue(9);
     }
 
+    public Queen(Piece p) {
+        super(p);
+    }
+
     /**
      * Sets the icon's picture location to the appropriate picture.
      */

@@ -16,6 +16,10 @@ public class Knight extends Piece {
         super.setValue(3);
     }
 
+    public Knight(Piece p) {
+        super(p);
+    }
+
     /**
      * Sets the icon's picture location to the appropriate picture.
      */
