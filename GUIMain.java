@@ -358,20 +358,21 @@ public class GUIMain extends Application {
      */
     private void createPlayAgainWindow() {
         Stage playAgainStage = new Stage();
-
-        VBox mainWindow = new VBox();
         Font font = new Font("Arial", 20);
 
+        // Creates the win message.
         Label winMessage = new Label(board.isBlackTurn() ? "White side wins!" : "Black side wins!");
         winMessage.setFont(font);
         winMessage.setAlignment(Pos.CENTER);
         winMessage.setTextAlignment(TextAlignment.CENTER);
 
+        // Creates the play again message.
         Label playAgainMessage = new Label("Play Again?");
         playAgainMessage.setFont(font);
         playAgainMessage.setAlignment(Pos.CENTER);
         playAgainMessage.setTextAlignment(TextAlignment.CENTER);
 
+        // Creates the buttons.
         Button yesButton = new Button("Yes");
         yesButton.setOnAction(event -> {
             playAgainState = 2;
@@ -386,10 +387,13 @@ public class GUIMain extends Application {
         });
         noButton.setMinSize(100, 10);
 
+        // Adds the buttons to a group.
         HBox buttonBox = new HBox();
         buttonBox.getChildren().addAll(yesButton, noButton);
         buttonBox.setAlignment(Pos.BOTTOM_CENTER);
 
+        // Adds all components to a main group.
+        VBox mainWindow = new VBox();
         mainWindow.getChildren().addAll(winMessage, playAgainMessage, buttonBox);
         mainWindow.setAlignment(Pos.CENTER);
 

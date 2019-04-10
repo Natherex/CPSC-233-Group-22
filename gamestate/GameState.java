@@ -98,7 +98,7 @@ public class GameState {
         if (isCheck(c,color)) {
             if (isCheckmate(c, fillersLocation, color)) {
                 if (color == "w")
-                    bScore+=99;
+                    bScore += 99;
                 else
                     wScore +=99;
                 gameState = 2;
@@ -132,7 +132,7 @@ public class GameState {
     }
 
     /**
-     *	Checks if the chessboard is currently in the state of check for the current player
+     * Checks if the chessboard is currently in the state of check for the current player
      * @param c Chessboard to be analyzed
      * @param color color of the current player
      * @return if the player is currently in check
@@ -146,11 +146,13 @@ public class GameState {
             oColor = "w";
 
         int[] kingsLocation = findKing(c, color);
-        //checks if the king would be put in check if it makes this move by seeing if any pieces can fill the kings current location
-        // THere is one special case where it is actually a pawn that can fill the tile but cannot actually attack
+
+        // Checks if the king would be put in check if it makes this move by seeing if any pieces can fill the kings current location
+        // There is one special case where it is actually a pawn that can fill the tile but cannot actually attack
         // that tile and so this does not threaten the king.
-        if (canTileBeFilled(c, kingsLocation, oColor) && (!c.getGrid()[fillersLocation[0]][fillersLocation[1]].getName().equals("Pawn") || kingsLocation[1] != fillersLocation[1]) )
+        if (canTileBeFilled(c, kingsLocation, oColor) && (!c.getGrid()[fillersLocation[0]][fillersLocation[1]].getName().equals("Pawn") || kingsLocation[1] != fillersLocation[1]))
             return true;
+
 
         return false;
     }
@@ -197,7 +199,7 @@ public class GameState {
         int[] kingsLocation = findKing(c, color);
         int[] temp;
 
-        for (int i = -1 ; i< 2;i++) {
+        for (int i = -1 ; i < 2; i++) {
             for (int j = -1 ; j < 2; j++) {
                 if (kingsLocation[0] + j < 8 && kingsLocation[0] + j >= 0) {
                     if (kingsLocation[1] + i < 8 && kingsLocation[1] + i >= 0) {

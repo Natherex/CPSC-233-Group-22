@@ -368,7 +368,6 @@ public class ChessBoard extends Board {
      * DO NOT USE FOR REAL MOVES, ONLY USED FOR THEORETICAL MOVES.
      * @param start Starting location of the piece on the chess board.
      * @param end Ending location of the piece on the chess board.
-     * 
      */
     public void forcedMove(String start, String end) {
         int[] startLocation = parseLocation(start);
