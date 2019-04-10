@@ -33,6 +33,7 @@ public class Piece {
         this.timesMoved = p.getTimesMoved();
         this.name = p.getName();
         this.icon = p.getIconLocation();
+        this.value = p.getValue();
     }
 
     public int getValue() {

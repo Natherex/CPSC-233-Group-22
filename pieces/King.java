@@ -48,6 +48,14 @@ public class King extends Piece {
 
         String color = board.getGrid()[startY][startX].getColor();
 
+        // Cannot move beside the other king
+        if (inRangeOfOtherKing(board, getColor(), end))
+            return false;
+
+        // Cannot move in a position diagonol from a pawn since the pawn can kill the king.
+        if (willDieFromPawn(board, getColor(), end))
+            return false;
+
         // Can move in all cardinal direction
         if (Math.abs(xDirection) < 2 && Math.abs(yDirection) < 2 &&
                 board.isNotBlocked(start, end) &&
@@ -85,9 +93,9 @@ public class King extends Piece {
 
         // Can kill one piece on diagonals
         else if (Math.abs(xDirection) < 2 &&
-                    Math.abs(yDirection) < 2 &&
-                    board.isWayClear(start, end) &&
-                    canPieceMoveLegally(board, start, end, color)) {
+                Math.abs(yDirection) < 2 &&
+                board.isWayClear(start, end) &&
+                canPieceMoveLegally(board, start, end, color)) {
 
             if (!board.getGrid()[startY][startX].getColor().equals(board.getGrid()[endY][endX].getColor())) {
                 if (color == "w")
@@ -147,6 +155,89 @@ public class King extends Piece {
         }
 
         return false;
+    }
 
+    /**
+     * Intermediate function for use for {@link #isValidMove(ChessBoard, String, String)}.
+     * @param board         Current chess board being used.
+     * @param currentColor  Current player's turn's color.
+     * @param endLocation   The end location of the move being made.
+     * @return              Returns whether or not making that move will put the king beside the other king - which would
+     *                      be an invalid move.
+     */
+    private Boolean inRangeOfOtherKing(ChessBoard board, String currentColor, String endLocation) {
+        if (currentColor.equals("w")) {
+            int[] blackKingGridLocation = board.getGamestate().findKing(board, "b");
+            String blackKingLocation = board.unparseLocation(blackKingGridLocation);
+
+            int[] distance = board.distance(endLocation, blackKingLocation);
+            int rowDistance = Math.abs(distance[0]);
+            int columnDistance = Math.abs(distance[1]);
+
+            return rowDistance < 2 && columnDistance < 2;
+        } else {
+            int[] whiteKingGridLocation = board.getGamestate().findKing(board, "w");
+            String whiteKingLocation = board.unparseLocation(whiteKingGridLocation);
+
+            int[] distance = board.distance(endLocation, whiteKingLocation);
+            int rowDistance = Math.abs(distance[0]);
+            int columnDistance = Math.abs(distance[1]);
+
+            return rowDistance < 2 && columnDistance < 2;
+        }
+    }
+
+    /**
+     * Intermediate function for use for {@link #isValidMove(ChessBoard, String, String)}.
+     * @param board         Current chess board being used.
+     * @param currentColor  Current player's turn's color.
+     * @param endLocation   The end location of the move being made.
+     * @return              Returns whether or not the king will die from a pawn with the given move.
+     */
+    private Boolean willDieFromPawn(ChessBoard board, String currentColor, String endLocation) {
+        Piece[][] boardGrid = board.getGrid();
+        int[] start = board.parseLocation(endLocation);
+        int row = start[0];
+        int column = start[1];
+
+        if (board.isWhiteTurn() || (board.isBlackTurn() && board.isBeingFlipped())) {
+            try {
+                Piece adjacentPiece = boardGrid[row + 1][column - 1];
+                if (adjacentPiece != null) {
+                    if (!adjacentPiece.getColor().equals(currentColor) && adjacentPiece.getName().equals("Pawn"))
+                        return true;
+                }
+            } catch (ArrayIndexOutOfBoundsException e) {
+            }
+
+            try {
+                Piece adjacentPiece = boardGrid[row + 1][column + 1];
+                if (adjacentPiece != null) {
+                    if (!adjacentPiece.getColor().equals(currentColor) && adjacentPiece.getName().equals("Pawn"))
+                        return true;
+                }
+            } catch (ArrayIndexOutOfBoundsException e) {
+            }
+        } else  {
+            try {
+                Piece adjacentPiece = boardGrid[row - 1][column - 1];
+                if (adjacentPiece != null) {
+                    if (!adjacentPiece.getColor().equals(currentColor) && adjacentPiece.getName().equals("Pawn"))
+                        return true;
+                }
+            } catch (ArrayIndexOutOfBoundsException e) {
+            }
+
+            try {
+                Piece adjacentPiece = boardGrid[row - 1][column + 1];
+                if (adjacentPiece != null) {
+                    if (!adjacentPiece.getColor().equals(currentColor) && adjacentPiece.getName().equals("Pawn"))
+                        return true;
+                }
+            } catch (ArrayIndexOutOfBoundsException e) {
+            }
+        }
+
+        return false;
     }
 }
