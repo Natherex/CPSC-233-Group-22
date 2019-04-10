@@ -11,6 +11,7 @@ import javafx.geometry.Insets;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.media.*;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -35,6 +36,7 @@ public class GUIMain extends Application {
     private HBox letterHBox;
     private Label whiteScore;
     private Label blackScore;
+	private MediaPlayer mediaplayer;
 
     @Override
     public void init() {
@@ -217,6 +219,13 @@ public class GUIMain extends Application {
                 }
             }
         };
+		
+		// Create a background music.
+		Media musicFile = new Media("file:///C:/Users/ljzaj/OneDrive/Desktop/music.m4a");
+		mediaplayer = new MediaPlayer(musicFile);
+		mediaplayer.setVolume(0.1);
+		mediaplayer.setCycleCount(MediaPlayer.INDEFINITE);
+		mediaplayer.setAutoPlay(true);
 
         running = true;
         mainLoop.start();
