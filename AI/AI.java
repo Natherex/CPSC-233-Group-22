@@ -63,15 +63,8 @@ public class AI {
                         if(board.getGrid()[startY][startX] != null)
                         {
                             ChessBoard temp = new ChessBoard(board);
-                            System.out.println(temp.unparseLocation(startCoordinate));
-                            System.out.println(temp.getGrid()[startY][startX].getName());
-                            System.out.println(temp.getPiece(startCoordinate).getColor());
-                            System.out.println("temp:" +temp.getGrid()[startY][startX].isValidMove(temp,startCoordinate,endCoordinate));
-                            System.out.println("Actual:" + board.getGrid()[startY][startX].isValidMove(board,startCoordinate,endCoordinate));
                             if(temp.getGamestate().kingIsSafe(temp,temp.unparseLocation(startCoordinate),temp.unparseLocation(endCoordinate),temp.currentPlayer()) && temp.movePiece(temp.unparseLocation(startCoordinate),temp.unparseLocation(endCoordinate)))
                             {
-
-                                System.out.println("hi");
                                 temp.changeTurn();
                                 temp.getGamestate().updateGameState(temp, temp.currentPlayer(), temp.unparseLocation(endCoordinate));
                                 blacksScore = blacksScore - temp.getGamestate().getbScore();

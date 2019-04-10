@@ -21,6 +21,10 @@ public class GameState {
 		this.gameState = gs.gameState;
 		this.isWhiteTurn = gs.isWhiteTurn;
 		this.isBlackTurn = gs.isBlackTurn;
+		this.wScore = gs.getwScore();
+		this.bScore = gs.getbScore();
+		if(fillersLocation != null)
+			fillersLocation = Arrays.copyOf(gs.fillersLocation,gs.fillersLocation.length);
 	}
 	/**
 	 *  Changes the current colors turn
@@ -669,8 +673,11 @@ public class GameState {
 					{
 						if(c.getGrid()[coordinate[0] + j][coordinate[1] + i] != null && c.getGrid()[coordinate[0] + j][coordinate[1] + i].getName().equals("King") && ( i!=0 || j !=0) ) {
 							temp = new int[]{coordinate[0] + j, coordinate[1] + i};
-							if (kingIsSafe(c, c.unparseLocation(temp), c.unparseLocation(coordinate), color))
+							if (kingIsSafe(c, c.unparseLocation(temp), c.unparseLocation(coordinate), color)){
+								fillersLocation = temp;
 								return true;
+							}
+
 						}
 					}
 				}
