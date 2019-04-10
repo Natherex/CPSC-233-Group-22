@@ -216,8 +216,6 @@ public class GameState {
 							if (copyBoard.getGrid()[coordinate[0]][coordinate[1]].getColor().equals(color)) {
 								if (copyBoard.getGrid()[coordinate[0]][coordinate[1]].isValidMove(copyBoard, someStart, someEnd)) {
 									isAble++;
-									System.out.println(someStart);
-									System.out.println(someEnd);
 									copyBoard = new ChessBoard(c);
 
 								}
@@ -228,7 +226,6 @@ public class GameState {
 			}
 		}
 
-		System.out.println(isAble);
 		if (isAble != 0)
 			return false;
 		else
