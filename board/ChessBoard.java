@@ -36,13 +36,21 @@ public class ChessBoard extends Board {
 
     /**
      * Copy Constructor for the Chess Board
-     * @param board Board to Copy
+     * @param board Board to copy
      */
     public ChessBoard(ChessBoard board) {
-        super(board);
+        super(8, 8);
         this.isFlipped = board.isFlipped;
         this.doFlipping = board.doFlipping;
         this.state = new GameState(board.state);
+
+        Piece[][] oldPieceGrid = board.getGrid();
+        for (int row = 0; row < 8; row++) {
+            for (int column = 0; column < 8; column++) {
+                if (oldPieceGrid[row][column] != null)
+                    grid[row][column] = new Piece(oldPieceGrid[row][column]);
+            }
+        }
     }
 
     /**

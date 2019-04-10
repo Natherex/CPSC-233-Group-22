@@ -19,7 +19,6 @@ import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import board.ChessBoard;
 import pieces.Piece;
-import gamestate.GameState;
 
 public class GUIMain extends Application {
     private static final String SELECTION_URL = "/assets/selection.png";
