@@ -583,6 +583,7 @@ public class GameState {
                             if (kingIsSafe(c, c.unparseLocation(temp), c.unparseLocation(coordinate), color)) {
                                 fillersLocation = temp;
                                 return true;
+                                //test
                             }
                         }
                     }
