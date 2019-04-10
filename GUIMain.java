@@ -38,7 +38,7 @@ public class GUIMain extends Application {
 
     @Override
     public void init() {
-
+        Stage mainMenu = new Stage();
     }
 
     @Override
@@ -245,7 +245,6 @@ public class GUIMain extends Application {
                     clearSelection();
                 }
             }
-            System.out.println(board.getGamestate().getGameState());
         }
     }
 
