@@ -15,6 +15,10 @@ public class Pawn extends Piece {
         super.setValue(1);
     }
 
+    public Pawn(Piece p) {
+        super(p);
+    }
+
     /**
      * Sets the icon's picture location to the appropriate picture.
      */

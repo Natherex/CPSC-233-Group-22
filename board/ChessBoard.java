@@ -47,8 +47,22 @@ public class ChessBoard extends Board {
         Piece[][] oldPieceGrid = board.getGrid();
         for (int row = 0; row < 8; row++) {
             for (int column = 0; column < 8; column++) {
-                if (oldPieceGrid[row][column] != null)
-                    grid[row][column] = new Piece(oldPieceGrid[row][column]);
+                if (oldPieceGrid[row][column] != null) {
+                    String name = oldPieceGrid[row][column].getName();
+                    Piece currentPiece = oldPieceGrid[row][column];
+                    if (name.equals("Rook"))
+                        grid[row][column] = new Rook(currentPiece);
+                    else if (name.equals("Knight"))
+                        grid[row][column] = new Knight(currentPiece);
+                    else if (name.equals("Bishop"))
+                        grid[row][column] = new Bishop(currentPiece);
+                    else if (name.equals("Queen"))
+                        grid[row][column] = new Queen(currentPiece);
+                    else if (name.equals("King"))
+                        grid[row][column] = new King(currentPiece);
+                    else if (name.equals("Pawn"))
+                        grid[row][column] = new Pawn(currentPiece);
+                }
             }
         }
     }

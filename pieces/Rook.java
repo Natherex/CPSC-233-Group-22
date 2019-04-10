@@ -15,6 +15,10 @@ public class Rook extends Piece {
         super.setValue(5);
     }
 
+    public Rook(Piece p) {
+        super(p);
+    }
+
     /**
      * Sets the icon's picture location to the appropriate picture.
      */

@@ -16,6 +16,10 @@ public class King extends Piece {
         super.setValue(99);
     }
 
+    public King(Piece p) {
+        super(p);
+    }
+
     /**
      * Sets the icon's picture location to the appropriate picture.
      */
@@ -52,7 +56,7 @@ public class King extends Piece {
         if (inRangeOfOtherKing(board, getColor(), end))
             return false;
 
-        // Cannot move in a position diagonol from a pawn since the pawn can kill the king.
+        // Cannot move in a position diagonal from a pawn since the pawn can kill the king.
         if (willDieFromPawn(board, getColor(), end))
             return false;
 
