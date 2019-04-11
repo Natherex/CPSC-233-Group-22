@@ -1,7 +1,5 @@
-import javafx.event.ActionEvent;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.input.KeyCode;
 import javafx.scene.text.Font;
 import javafx.scene.control.Label;
 import javafx.animation.AnimationTimer;
@@ -38,7 +36,7 @@ public class GUIMain extends Application {
 
     @Override
     public void init() {
-        Stage mainMenu = new Stage();
+        // Stage mainMenu = new Stage();
     }
 
     @Override
@@ -351,15 +349,18 @@ public class GUIMain extends Application {
     /**
      * Creates a window which prompts the user if they want to play again.
      * Stores intermediate values in {@link #playAgainState}.
-     *
-     * @return Returns the true/false after prompting the user if they want to play again.
      */
     private void createPlayAgainWindow() {
         Stage playAgainStage = new Stage();
         Font font = new Font("Arial", 20);
+        int currentGamestate = board.getGamestate().getGameState();
 
         // Creates the win message.
-        Label winMessage = new Label(board.isBlackTurn() ? "White side wins!" : "Black side wins!");
+        Label winMessage = new Label();
+        if (currentGamestate == 2)
+            winMessage.setText(board.isBlackTurn() ? "White side wins!" : "Black side wins!");
+        else if (currentGamestate == 3)
+            winMessage.setText("Stalemate!");
         winMessage.setFont(font);
         winMessage.setAlignment(Pos.CENTER);
         winMessage.setTextAlignment(TextAlignment.CENTER);
@@ -397,7 +398,7 @@ public class GUIMain extends Application {
 
         playAgainStage.setOnCloseRequest(event -> playAgainState = 3);
         playAgainStage.getIcons().add(new Image("/assets/Chess_qlt60.png"));
-        playAgainStage.setTitle("Play Again?");
+        // playAgainStage.setTitle("Play Again?");
         playAgainStage.setScene(new Scene(mainWindow, 200, 100));
         playAgainStage.setResizable(false);
         playAgainStage.show();
