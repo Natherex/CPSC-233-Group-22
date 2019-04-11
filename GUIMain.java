@@ -1,5 +1,6 @@
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.control.Label;
 import javafx.animation.AnimationTimer;
@@ -17,14 +18,17 @@ import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import board.ChessBoard;
 import pieces.Piece;
+import AI.AI;
 
-public class GUIMain extends Application {
+public final class GUIMain extends Application {
     private static final String SELECTION_URL = "/assets/selection.png";
     private boolean running;
 
     private String startLocation;
     private String endLocation;
     private ChessBoard board;
+    private AI computerOne;
+    private AI computerTwo;
 
     private StackPane[][] stackPaneGrid;
     private Piece[][] pieceGrid;
@@ -34,13 +38,101 @@ public class GUIMain extends Application {
     private Label whiteScore;
     private Label blackScore;
 
-    @Override
-    public void init() {
-        // Stage mainMenu = new Stage();
+    private enum gamemode {
+        WHITE_VS_BLACK, WHITE_VS_COMPUTER, COMPUTER_VS_BLACK, COMPUTER_VS_COMPUTER
+    }
+
+    private gamemode currentMode;
+
+    /**
+     * Creates the main menu screen and sets the current mode.
+     */
+    private void mainMenu() {
+        Stage mainMenu = new Stage();
+
+        // Creates the title
+        ImageView whiteKing = new ImageView(new Image("/assets/Chess_klt60.png"));
+        ImageView blackKing = new ImageView(new Image("/assets/Chess_kdt60.png"));
+        Label title = new Label("Chess");
+        title.setFont(new Font("Ink Free", 60));
+        title.setTextAlignment(TextAlignment.CENTER);
+        title.setAlignment(Pos.TOP_CENTER);
+        title.setTextFill(Color.web("#3ea527"));
+
+        HBox titleBox = new HBox();
+        titleBox.getChildren().addAll(whiteKing, title, blackKing);
+        titleBox.setAlignment(Pos.CENTER);
+
+        // Creates the buttons
+        Font buttonFont = new Font("Times New Roman", 20);
+
+        Button optionOne = new Button("White vs. Black");
+        optionOne.setMinSize(235, 85);
+        optionOne.setFont(buttonFont);
+        optionOne.setOnAction(event -> {
+            currentMode = gamemode.WHITE_VS_BLACK;
+            mainMenu.close();
+        });
+
+        Button optionTwo = new Button("White vs. Computer");
+        optionTwo.setMinSize(235, 85);
+        optionTwo.setFont(buttonFont);
+        optionTwo.setOnAction(event -> {
+            currentMode = gamemode.WHITE_VS_COMPUTER;
+            computerOne = new AI();
+            mainMenu.close();
+        });
+
+        Button optionThree = new Button("Computer vs. Black");
+        optionThree.setMinSize(235, 85);
+        optionThree.setFont(buttonFont);
+        optionThree.setOnAction(event -> {
+            currentMode = gamemode.COMPUTER_VS_BLACK;
+            computerOne = new AI();
+            mainMenu.close();
+        });
+
+        Button optionFour = new Button("Computer vs. Computer");
+        optionFour.setMinSize(235, 85);
+        optionFour.setFont(buttonFont);
+        optionFour.setOnAction(event -> {
+            currentMode = gamemode.COMPUTER_VS_COMPUTER;
+            computerOne = new AI();
+            computerTwo = new AI();
+            mainMenu.close();
+        });
+
+        VBox buttonBox = new VBox();
+        buttonBox.getChildren().addAll(optionOne, optionTwo, optionThree, optionFour);
+        buttonBox.setSpacing(20);
+        buttonBox.setPadding(new Insets(15, 0, 20, 0));
+        buttonBox.setAlignment(Pos.CENTER);
+
+        // Creates the main window group.
+        BorderPane mainWindow = new BorderPane();
+        mainWindow.setTop(titleBox);
+        mainWindow.setBottom(buttonBox);
+        String backgroundImageLocation = "/assets/background-brown-carpentry-326311.jpg";
+        BackgroundImage backgroundImage = new BackgroundImage(
+                new Image(backgroundImageLocation),
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundRepeat.NO_REPEAT,
+                BackgroundPosition.DEFAULT,
+                BackgroundSize.DEFAULT);
+        mainWindow.setBackground(new Background(backgroundImage));
+
+        // Adds all components to the actual window.
+        mainMenu.setOnCloseRequest(event -> System.exit(0));
+        mainMenu.getIcons().add(new Image("/assets/Chess_klt60.png"));
+        mainMenu.setTitle("Chess");
+        mainMenu.setScene(new Scene(mainWindow, 300, 550));
+        mainMenu.showAndWait();
     }
 
     @Override
     public void start(Stage primaryStage) {
+        mainMenu();
+
         board = new ChessBoard(false);
         board.initialize();
         pieceGrid = board.getGrid();
@@ -179,16 +271,111 @@ public class GUIMain extends Application {
                 }
 
                 // Main game logic
-                if (startLocation != null && endLocation != null) {
-                    if (board.getGamestate().kingIsSafe(board, startLocation, endLocation, board.currentPlayer()) && board.movePiece(startLocation, endLocation)) {
-                        board.changeTurn();
-                        board.getGamestate().updateGameState(board, board.currentPlayer(), endLocation);
-                        updateWindow();
-                    }
+                switch (currentMode) {
+                    // Player vs. Player logic
+                    case WHITE_VS_BLACK:
+                        if (startLocation != null && endLocation != null) {
+                            if (board.getGamestate().kingIsSafe(board, startLocation, endLocation, board.currentPlayer()) && board.movePiece(startLocation, endLocation)) {
+                                board.changeTurn();
+                                board.getGamestate().updateGameState(board, board.currentPlayer(), endLocation);
+                                updateWindow();
+                            }
 
-                    startLocation = null;
-                    endLocation = null;
+                            startLocation = null;
+                            endLocation = null;
+                        }
+                        break;
+
+                    // Player vs. Computer logic
+                    case WHITE_VS_COMPUTER:
+                        if (board.isWhiteTurn() && startLocation != null && endLocation != null) {
+                            if (board.getGamestate().kingIsSafe(board, startLocation, endLocation, board.currentPlayer()) && board.movePiece(startLocation, endLocation)) {
+                                board.changeTurn();
+                                board.getGamestate().updateGameState(board, board.currentPlayer(), endLocation);
+                                updateWindow();
+                            }
+
+                            startLocation = null;
+                            endLocation = null;
+                        }
+
+                        else if (board.isBlackTurn()) {
+                            computerOne.AIsMove(board, board.currentPlayer(), 1);
+                            startLocation = computerOne.getStartLocation();
+                            endLocation = computerOne.getEndLocation();
+
+                            if (board.getGamestate().kingIsSafe(board, startLocation, endLocation, board.currentPlayer()) && board.movePiece(startLocation, endLocation)) {
+                                board.changeTurn();
+                                board.getGamestate().updateGameState(board, board.currentPlayer(), endLocation);
+                                updateWindow();
+                            }
+
+                            startLocation = null;
+                            endLocation = null;
+                        }
+                        break;
+
+                    // Computer vs. Player logic
+                    case COMPUTER_VS_BLACK:
+                        if (board.isWhiteTurn()) {
+                            computerOne.AIsMove(board, board.currentPlayer(), 1);
+                            startLocation = computerOne.getStartLocation();
+                            endLocation = computerOne.getEndLocation();
+
+                            if (board.getGamestate().kingIsSafe(board, startLocation, endLocation, board.currentPlayer()) && board.movePiece(startLocation, endLocation)) {
+                                board.changeTurn();
+                                board.getGamestate().updateGameState(board, board.currentPlayer(), endLocation);
+                                updateWindow();
+                            }
+
+                            startLocation = null;
+                            endLocation = null;
+                        }
+
+                        else if (board.isBlackTurn() && startLocation != null && endLocation != null) {
+                            if (board.getGamestate().kingIsSafe(board, startLocation, endLocation, board.currentPlayer()) && board.movePiece(startLocation, endLocation)) {
+                                board.changeTurn();
+                                board.getGamestate().updateGameState(board, board.currentPlayer(), endLocation);
+                                updateWindow();
+                            }
+
+                            startLocation = null;
+                            endLocation = null;
+                        }
+                        break;
+
+                    case COMPUTER_VS_COMPUTER:
+                        if (board.isWhiteTurn()) {
+                            computerOne.AIsMove(board, board.currentPlayer(), 1);
+                            startLocation = computerOne.getStartLocation();
+                            endLocation = computerOne.getEndLocation();
+
+                            if (board.getGamestate().kingIsSafe(board, startLocation, endLocation, board.currentPlayer()) && board.movePiece(startLocation, endLocation)) {
+                                board.changeTurn();
+                                board.getGamestate().updateGameState(board, board.currentPlayer(), endLocation);
+                                updateWindow();
+                            }
+
+                            startLocation = null;
+                            endLocation = null;
+                        }
+
+                        else if (board.isBlackTurn()) {
+                            computerTwo.AIsMove(board, board.currentPlayer(), 1);
+                            startLocation = computerTwo.getStartLocation();
+                            endLocation = computerTwo.getEndLocation();
+
+                            if (board.getGamestate().kingIsSafe(board, startLocation, endLocation, board.currentPlayer()) && board.movePiece(startLocation, endLocation)) {
+                                board.changeTurn();
+                                board.getGamestate().updateGameState(board, board.currentPlayer(), endLocation);
+                                updateWindow();
+                            }
+
+                            startLocation = null;
+                            endLocation = null;
+                        }
                 }
+
 
                 // Checks if the game is over: 2 - Checkmate, 3 - Stalemate
                 if (board.getGamestate().getGameState() == 2 || board.getGamestate().getGameState() == 3) {
