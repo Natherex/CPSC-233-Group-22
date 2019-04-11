@@ -50,18 +50,26 @@ public class ChessBoard extends Board {
                 if (oldPieceGrid[row][column] != null) {
                     String name = oldPieceGrid[row][column].getName();
                     Piece currentPiece = oldPieceGrid[row][column];
-                    if (name.equals("Rook"))
-                        grid[row][column] = new Rook(currentPiece);
-                    else if (name.equals("Knight"))
-                        grid[row][column] = new Knight(currentPiece);
-                    else if (name.equals("Bishop"))
-                        grid[row][column] = new Bishop(currentPiece);
-                    else if (name.equals("Queen"))
-                        grid[row][column] = new Queen(currentPiece);
-                    else if (name.equals("King"))
-                        grid[row][column] = new King(currentPiece);
-                    else if (name.equals("Pawn"))
-                        grid[row][column] = new Pawn(currentPiece);
+                    switch (name) {
+                        case "Rook":
+                            grid[row][column] = new Rook(currentPiece);
+                            break;
+                        case "Knight":
+                            grid[row][column] = new Knight(currentPiece);
+                            break;
+                        case "Bishop":
+                            grid[row][column] = new Bishop(currentPiece);
+                            break;
+                        case "Queen":
+                            grid[row][column] = new Queen(currentPiece);
+                            break;
+                        case "King":
+                            grid[row][column] = new King(currentPiece);
+                            break;
+                        case "Pawn":
+                            grid[row][column] = new Pawn(currentPiece);
+                            break;
+                    }
                 }
             }
         }

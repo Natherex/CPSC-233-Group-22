@@ -297,9 +297,7 @@ public final class GUIMain extends Application {
 
                             startLocation = null;
                             endLocation = null;
-                        }
-
-                        else if (board.isBlackTurn()) {
+                        } else if (board.isBlackTurn()) {
                             computerOne.AIsMove(board, board.currentPlayer(), 1);
                             startLocation = computerOne.getStartLocation();
                             endLocation = computerOne.getEndLocation();
@@ -318,7 +316,7 @@ public final class GUIMain extends Application {
                     // Computer vs. Player logic
                     case COMPUTER_VS_BLACK:
                         if (board.isWhiteTurn()) {
-                            computerOne.AIsMove(board, board.currentPlayer(), 1);
+                            computerOne.AIsMove(board, board.currentPlayer(), 2);
                             startLocation = computerOne.getStartLocation();
                             endLocation = computerOne.getEndLocation();
 
@@ -330,9 +328,7 @@ public final class GUIMain extends Application {
 
                             startLocation = null;
                             endLocation = null;
-                        }
-
-                        else if (board.isBlackTurn() && startLocation != null && endLocation != null) {
+                        } else if (board.isBlackTurn() && startLocation != null && endLocation != null) {
                             if (board.getGamestate().kingIsSafe(board, startLocation, endLocation, board.currentPlayer()) && board.movePiece(startLocation, endLocation)) {
                                 board.changeTurn();
                                 board.getGamestate().updateGameState(board, board.currentPlayer(), endLocation);
@@ -344,9 +340,10 @@ public final class GUIMain extends Application {
                         }
                         break;
 
+                    // Computer vs. Computer
                     case COMPUTER_VS_COMPUTER:
                         if (board.isWhiteTurn()) {
-                            computerOne.AIsMove(board, board.currentPlayer(), 1);
+                            computerOne.AIsMove(board, board.currentPlayer(), 2);
                             startLocation = computerOne.getStartLocation();
                             endLocation = computerOne.getEndLocation();
 
@@ -358,9 +355,7 @@ public final class GUIMain extends Application {
 
                             startLocation = null;
                             endLocation = null;
-                        }
-
-                        else if (board.isBlackTurn()) {
+                        } else if (board.isBlackTurn()) {
                             computerTwo.AIsMove(board, board.currentPlayer(), 1);
                             startLocation = computerTwo.getStartLocation();
                             endLocation = computerTwo.getEndLocation();
@@ -449,10 +444,10 @@ public final class GUIMain extends Application {
                 // Sets the image to null if there is no piece there.
                 if (pieceGrid[row][column] != null) {
                     String imgLocation = pieceGrid[row][column].getIconLocation();
-                    ImageView img = (ImageView)(nodes.get(1));
+                    ImageView img = (ImageView) (nodes.get(1));
                     img.setImage(new Image(imgLocation));
                 } else {
-                    ImageView img = (ImageView)(nodes.get(1));
+                    ImageView img = (ImageView) (nodes.get(1));
                     img.setImage(null);
                 }
             }
