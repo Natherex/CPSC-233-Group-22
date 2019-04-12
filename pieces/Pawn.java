@@ -33,8 +33,8 @@ public class Pawn extends Piece {
      * Promotes pawn to piece of choice when on the
      * furthest rank from its side
      *
-     * @param board the ChessBoard object
-     * @param end   the end location of the pawn
+     * @param board The chess board object
+     * @param end   The end location of the pawn
      */
     public void promote(ChessBoard board, String end) {
 
