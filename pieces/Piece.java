@@ -238,6 +238,8 @@ public class Piece {
                     kingFound = true;
                 } else if (board.getGrid()[y][x].getName().equals("Queen") || board.getGrid()[y][x].getName().equals("Bishop")) {
                     if (!board.getGrid()[y][x].getColor().equals(color)) {
+                        System.out.println(color);
+                        System.out.println(board.getGrid()[y][x].getColor());
                         attackerFound = true;
                     }
                 } else if (!board.getGrid()[y][x].getName().equals(null)) {
