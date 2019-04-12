@@ -53,15 +53,62 @@ public class King extends Piece {
         String color = board.getGrid()[startY][startX].getColor();
 
         // Cannot move beside the other king
-        if (inRangeOfOtherKing(board, getColor(), end))
+        if (inRangeOfOtherKing(board, getColor(), end)) {
             return false;
+        }
 
         // Cannot move in a position diagonal from a pawn since the pawn can kill the king.
-        if (willDieFromPawn(board, getColor(), end))
+        if (willDieFromPawn(board, getColor(), end)) {
             return false;
+        }
 
-        if (!board.getGamestate().kingIsSafe(board, start, end, color))
+        if (!board.getGamestate().kingIsSafe(board, start, end, color)) {
             return false;
+        }
+
+        // Castling Logic
+        if (board.getGrid()[startY][startX] != null) {
+
+            // White can castle left if spaces are clear king and rook have not moved yet
+            if (board.getGrid()[0][0] != null && start.equals("E1") && end.equals("C1") && canPieceMoveLegally(board, start, end, color) && getTimesMoved() == 0 && board.getGrid()[0][0].getTimesMoved() == 0 && board.isWayClear("E1", "A1")) {
+                int[] rookLocation = board.parseLocation("A1");
+                if (board.getGrid()[rookLocation[0]][rookLocation[1]].getName().equals("Rook")) {
+                    incrementTimesMoved();
+                    board.forcedMove("A1", "D1");
+                    return true;
+                }
+            }
+
+            // Black can castle left if spaces are clear and king and rook have not moved yet
+            else if (board.getGrid()[7][7] != null && start.equals("E8") && end.equals("G8") && canPieceMoveLegally(board, start, end, color) && getTimesMoved() == 0 && board.getGrid()[7][7].getTimesMoved() == 0 && board.isWayClear("H8", "E8")) {
+                int[] rookLocation = board.parseLocation("H8");
+                if (board.getGrid()[rookLocation[0]][rookLocation[1]].getName().equals("Rook")) {
+                    incrementTimesMoved();
+                    board.forcedMove("H8", "F8");
+                    return true;
+                }
+            }
+
+            // White can castle right if spaces are clear and king and rook have not moved yet
+            else if (board.getGrid()[0][7] != null && start.equals("E1") && end.equals("G1") && canPieceMoveLegally(board, start, end, color) && getTimesMoved() == 0 && board.getGrid()[0][7].getTimesMoved() == 0 && board.isWayClear("E1", "H1")) {
+                int[] rookLocation = board.parseLocation("H1");
+                if (board.getGrid()[rookLocation[0]][rookLocation[1]].getName().equals("Rook")) {
+                    incrementTimesMoved();
+                    board.forcedMove("H1", "F1");
+                    return true;
+                }
+            }
+
+            // Black can castle right if spaces are clear and king and rook have not moved yet
+            else if (board.getGrid()[7][0] != null && start.equals("E8") && end.equals("C8") && canPieceMoveLegally(board, start, end, color) && getTimesMoved() == 0 && board.getGrid()[7][0].getTimesMoved() == 0 && board.isWayClear("A8", "E8")) {
+                int[] rookLocation = board.parseLocation("A8");
+                if (board.getGrid()[rookLocation[0]][rookLocation[1]].getName().equals("Rook")) {
+                    incrementTimesMoved();
+                    board.forcedMove("A8", "D8");
+                    return true;
+                }
+            }
+        }
 
         // Can move in all cardinal direction
         if (Math.abs(xDirection) < 2 && Math.abs(yDirection) < 2 &&
@@ -133,38 +180,6 @@ public class King extends Piece {
             }
         }
 
-
-        if (board.getGrid()[startY][startX] != null) {
-
-            // White can castle left if spaces are clear king and rook have not moved yet
-            if (board.getGrid()[startY][startX].getName().equals("Rook") &&  (start.equals("E1") && end.equals("C1")) && canPieceMoveLegally(board, start, end, color) && getTimesMoved() == 0 && board.getGrid()[0][0].getTimesMoved() == 0 && board.isWayClear("E1", "A1")) {
-                incrementTimesMoved();
-                board.forcedMove("A1", "D1");
-                return true;
-            }
-
-            // Black can castle left if spaces are clear and king and rook have not moved yet
-            else if (board.getGrid()[startY][startX].getName().equals("Rook") && (start.equals("E8") && end.equals("G8")) && canPieceMoveLegally(board, start, end, color) && getTimesMoved() == 0 && board.getGrid()[7][7].getTimesMoved() == 0 && board.isWayClear("H8", "E8")) {
-                incrementTimesMoved();
-                board.forcedMove("H8", "F8");
-                return true;
-            }
-
-            // White can castle right if spaces are clear and king and rook have not moved yet
-            else if (board.getGrid()[startY][startX].getName().equals("Rook") &&  (start.equals("E1") && end.equals("G1")) && canPieceMoveLegally(board, start, end, color) && getTimesMoved() == 0 && board.getGrid()[0][7].getTimesMoved() == 0 && board.isWayClear("E1", "H1")) {
-                incrementTimesMoved();
-                board.forcedMove("H1", "F1");
-                return true;
-            }
-
-            // Black can castle right if spaces are clear and king and rook have not moved yet
-            else if (board.getGrid()[startY][startX].getName().equals("Rook") && (start.equals("E8") && end.equals("C8")) && canPieceMoveLegally(board, start, end, color) && getTimesMoved() == 0 && board.getGrid()[7][0].getTimesMoved() == 0 && board.isWayClear("A8", "E8")) {
-                incrementTimesMoved();
-                board.forcedMove("A8", "D8");
-                return true;
-            }
-        }
-
         return false;
     }
 
@@ -184,7 +199,6 @@ public class King extends Piece {
             int[] distance = board.distance(endLocation, blackKingLocation);
             int rowDistance = Math.abs(distance[0]);
             int columnDistance = Math.abs(distance[1]);
-
             return rowDistance < 2 && columnDistance < 2;
         } else {
             int[] whiteKingGridLocation = board.getGamestate().findKing(board, "w");

@@ -106,7 +106,7 @@ public final class GUIMain extends Application {
         });
 
         VBox buttonBox = new VBox();
-        buttonBox.getChildren().addAll(optionOne, optionTwo, optionThree, optionFour);
+        buttonBox.getChildren().addAll(optionOne, optionTwo, optionThree);
         buttonBox.setSpacing(20);
         buttonBox.setPadding(new Insets(15, 0, 20, 0));
         buttonBox.setAlignment(Pos.CENTER);
@@ -128,7 +128,7 @@ public final class GUIMain extends Application {
         mainMenu.setOnCloseRequest(event -> System.exit(0));
         mainMenu.getIcons().add(new Image("/assets/Chess_klt60.png"));
         mainMenu.setTitle("Chess");
-        mainMenu.setScene(new Scene(mainWindow, 300, 550));
+        mainMenu.setScene(new Scene(mainWindow, 300, 445)); // +105px for the height if adding the Computer vs. Computer option back.
         mainMenu.showAndWait();
     }
 
