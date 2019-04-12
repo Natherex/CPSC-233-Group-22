@@ -46,14 +46,12 @@ public class Pawn extends Piece {
         // If pawn is white and reaches the 8th rank, promote
         if ((getColor().equals("w")) && endLocation[0] == 8) {
             board.removePiece(end);
-            board.getGamestate().incrementWScore(8);
             grid[ySpot][xSpot] = new Queen("w");
         }
 
         // if pawn is black and reaches the 1st rank, promote
         else if ((getColor().equals("w")) && endLocation[0] == 1) {
             board.removePiece(end);
-            board.getGamestate().incrementBScore(8);
             grid[ySpot][xSpot] = new Queen("b");
         }
     }

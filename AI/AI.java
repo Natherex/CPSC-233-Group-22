@@ -1,6 +1,6 @@
 package AI;
 import board.ChessBoard;
-import java.math.*;
+
 import java.util.stream.StreamSupport;
 
 public class AI {
@@ -27,29 +27,29 @@ public class AI {
      *          int[2] yCoordinate of endLocation
      *          int[3] xCoordinate of endLocation
      */
-    public int AIsMove(ChessBoard board,String color, int depth)
+    public int[] AIsMove(ChessBoard board,String color, int depth)
     {
 
-        int AIMove = 0;
+        int[] AIMove = {-1,-1,-1,-1,0,0};
         AIMove = bestMove(board,AIMove,color,depth);
 
         startLocation = board.unparseLocation(bestStart);
         endLocation = board.unparseLocation(bestEnd);
-        System.out.println(startLocation);
-        System.out.println(endLocation);
         return AIMove;
 
     }
-    private int bestMove(ChessBoard board, int totalScore, String color, int depth)
+    private int[] bestMove(ChessBoard board, int[] AIMove, String color, int depth)
     {
         int[] startCoordinate;
         int[] endCoordinate;
-        int bestMove = 0;
-        int previousBest = 0;
-        int scoreChange = 0;
-        boolean isPreviousBest = false;
-        if(depth <= 0 )
-            return totalScore;
+        int blacksScore = board.getGamestate().getbScore();
+        int whitesScore = board.getGamestate().getwScore();
+        int previousWScore = AIMove[4];
+        int previousBScore = AIMove[5];
+        int[] bestMove;
+        int[] previousBest= {-1,-1,-1,-1,0,0};
+        if(depth <= 0)
+            return AIMove;
         for(int startX=0;startX<8;startX++)
         {
             for(int startY=0; startY<8; startY++)
@@ -63,61 +63,41 @@ public class AI {
                         if(board.getGrid()[startY][startX] != null)
                         {
                             ChessBoard temp = new ChessBoard(board);
-                            if(temp.getGamestate().kingIsSafe(temp,temp.unparseLocation(startCoordinate),temp.unparseLocation(endCoordinate),temp.currentPlayer()) && temp.movePiece(temp.unparseLocation(startCoordinate),temp.unparseLocation(endCoordinate))) {
+                            if(temp.getGamestate().kingIsSafe(temp,temp.unparseLocation(startCoordinate),temp.unparseLocation(endCoordinate),temp.currentPlayer()) && temp.movePiece(temp.unparseLocation(startCoordinate),temp.unparseLocation(endCoordinate)))
+                            {
                                 temp.changeTurn();
                                 temp.getGamestate().updateGameState(temp, temp.currentPlayer(), temp.unparseLocation(endCoordinate));
-
-                                if(board.currentPlayer() =="b") {
-                                    scoreChange = temp.getGamestate().getbScore() - board.getGamestate().getbScore();
-                                    if (color == "b")
-                                        bestMove = bestMove(temp, totalScore + scoreChange, color, depth - 1);
-                                    else
-                                        bestMove = bestMove(temp, totalScore - scoreChange, color, depth - 1);
+                                blacksScore = blacksScore - temp.getGamestate().getbScore();
+                                whitesScore = whitesScore - temp.getGamestate().getwScore();
+                                AIMove[0] = startY;
+                                AIMove[1] = startX;
+                                AIMove[2] = endY;
+                                AIMove[3] = endX;
+                                AIMove[4] = whitesScore + previousWScore;
+                                AIMove[5] = blacksScore + previousBScore;
+                                if(previousBest[0] == -1)
+                                {
+                                    previousBest = AIMove;
                                 }
-                                else {
-                                    scoreChange = temp.getGamestate().getwScore() - board.getGamestate().getwScore();
-                                    if (color == "w")
-                                        bestMove = bestMove(temp, totalScore + scoreChange, color, depth - 1);
-                                    else
-                                        bestMove = bestMove(temp, totalScore - scoreChange, color, depth - 1);
-                                }
-
-                                if (!isPreviousBest) {
-                                    if(board.currentPlayer() == color)
+                                bestMove = bestMove(temp,AIMove,color,depth-1);
+                                if(color =="w")
+                                {
+                                    if(bestMove[4]+bestMove[5]>= previousBest[4]+previousBest[5] && bestMove[4]>= previousBest[4] && bestMove[5]<100)
                                     {
+                                        previousBest = bestMove;
                                         bestStart = startCoordinate;
                                         bestEnd = endCoordinate;
                                     }
-                                    previousBest =bestMove;
-                                    isPreviousBest = true;
                                 }
-                                if(bestMove == previousBest && Math.random() < 0.5) {
-                                    if (board.currentPlayer() == color) {
-                                        if (bestMove >= previousBest) {
-                                            bestStart = startCoordinate;
-                                            bestEnd = endCoordinate;
-                                            previousBest = bestMove;
-                                        }
-                                    } else {
-                                        if (bestMove <= previousBest) {
-                                            previousBest = bestMove;
-                                        }
-                                    }
-                                }else
+                                else if(color == "b")
                                 {
-                                    if (board.currentPlayer() == color) {
-                                        if (bestMove > previousBest) {
-                                            bestStart = startCoordinate;
-                                            bestEnd = endCoordinate;
-                                            previousBest = bestMove;
-                                        }
-                                    } else {
-                                        if (bestMove < previousBest) {
-                                            previousBest = bestMove;
-                                        }
+                                    if(bestMove[4]+bestMove[5]>= previousBest[4]+previousBest[5] && bestMove[5]>= previousBest[5] && bestMove[4]<100)
+                                    {
+                                        previousBest = bestMove;
+                                        bestStart = startCoordinate;
+                                        bestEnd = endCoordinate;
                                     }
                                 }
-
                             }
                         }
                     }
@@ -128,4 +108,3 @@ public class AI {
         return previousBest;
     }
 }
-
