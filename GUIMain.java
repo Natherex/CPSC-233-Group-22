@@ -38,6 +38,9 @@ public final class GUIMain extends Application {
     private Label whiteScore;
     private Label blackScore;
 
+    /**
+     * Enumerable for the different gamemodes.
+     */
     private enum gamemode {
         WHITE_VS_BLACK, WHITE_VS_COMPUTER, COMPUTER_VS_BLACK, COMPUTER_VS_COMPUTER
     }
@@ -57,7 +60,7 @@ public final class GUIMain extends Application {
         title.setFont(new Font("Ink Free", 60));
         title.setTextAlignment(TextAlignment.CENTER);
         title.setAlignment(Pos.TOP_CENTER);
-        title.setTextFill(Color.web("#3ea527"));
+        title.setTextFill(Color.web("#ffffff"));
 
         HBox titleBox = new HBox();
         titleBox.getChildren().addAll(whiteKing, title, blackKing);
