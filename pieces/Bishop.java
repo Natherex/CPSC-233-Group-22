@@ -7,11 +7,13 @@ public class Bishop extends Piece {
     public Bishop() {
         super("b", "Bishop");
         setIconLocation();
+        super.setValue(3);
     }
 
     public Bishop(String color) {
         super(color, "Bishop");
         setIconLocation();
+        super.setValue(3);
     }
 
     public Bishop(Piece p) {
@@ -60,7 +62,7 @@ public class Bishop extends Piece {
 
         String color = board.getGrid()[startY][startX].getColor();
 
-        // Can only move diagonally if clear
+        // Can only move diagonally if clearSystem.out
         if (Math.abs(xDirection) == Math.abs(yDirection) && board.isNotBlocked(start, end) && board.isWayClear(start, end) && canPieceMoveLegally(board, start, end, color) && board.getGrid()[endY][endX] == null) {
             incrementTimesMoved();
             return true;
@@ -68,7 +70,12 @@ public class Bishop extends Piece {
         } else if (Math.abs(xDirection) == Math.abs(yDirection) && board.isWayClear(start, end) && canPieceMoveLegally(board, start, end, color)) {
             if (!board.getGrid()[startY][startX].getColor().equals(board.getGrid()[endY][endX].getColor())) {
                 incrementTimesMoved();
-                board.removePiece(end);
+                if(color == "w")
+                    board.getGamestate().incrementWScore(board.removePiece(end));
+                else
+                {
+                    board.getGamestate().incrementBScore(board.removePiece(end));
+                }
                 return true;
             }
 
