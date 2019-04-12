@@ -509,7 +509,7 @@ public class ChessBoard extends Board {
             number = VALID_ROWS[coordinates[0]];
         }
 
-        return Character.toString(letter) + Integer.toString(number);
+        return Character.toString(letter) + number;
     }
 
     /**
@@ -518,7 +518,7 @@ public class ChessBoard extends Board {
      * @return Returns true or false depending on whether or not the chess board location is a valid location or not.
      */
     public static boolean isValidLocation(String location) {
-        if (location.length() != 2)
+        if (location == null || location.length() != 2)
             return false;
 
         char column = location.charAt(0);
@@ -541,14 +541,11 @@ public class ChessBoard extends Board {
      * @return Returns true or false depending on whether or not the chess board location is a valid location or not.
      */
     public static boolean isValidLocation(int[] coordinates) {
-        if (coordinates.length != 2)
+        if (coordinates == null ||coordinates.length != 2)
             return false;
         else if (coordinates[0] < 0 || coordinates[0] > 7)
             return false;
-        else if (coordinates[1] < 0 || coordinates[1] > 7)
-            return false;
-        else
-            return true;
+        else return coordinates[1] >= 0 && coordinates[1] <= 7;
     }
 
     public boolean isOppositeColor(String start, String end) {

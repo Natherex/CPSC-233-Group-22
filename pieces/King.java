@@ -180,7 +180,8 @@ public class King extends Piece {
         if (currentColor.equals("w")) {
             int[] blackKingGridLocation = board.getGamestate().findKing(board, "b");
             String blackKingLocation = board.unparseLocation(blackKingGridLocation);
-
+            if(blackKingLocation == null)
+                return false;
             int[] distance = board.distance(endLocation, blackKingLocation);
             int rowDistance = Math.abs(distance[0]);
             int columnDistance = Math.abs(distance[1]);

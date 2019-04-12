@@ -231,14 +231,14 @@ public final class GUIMain extends Application {
         mainBoardGUI.add(letterHBox, 1, 2);
 
         // Creates the score panel
-        whiteScore = new Label("White's Score: " + Integer.toString(board.getGamestate().getwScore()));
+        whiteScore = new Label("White's Score: " + board.getGamestate().getwScore());
         whiteScore.setTextAlignment(TextAlignment.LEFT);
         whiteScore.setFont(new Font("Times New Roman", 20));
         whiteScore.setAlignment(Pos.CENTER_LEFT);
         whiteScore.setMinSize(250, 25);
         whiteScore.setPadding(new Insets(0, 0, 0, 5));
 
-        blackScore = new Label("Black's Score: " + Integer.toString(board.getGamestate().getbScore()));
+        blackScore = new Label("Black's Score: " + board.getGamestate().getbScore());
         blackScore.setTextAlignment(TextAlignment.RIGHT);
         blackScore.setFont(new Font("Times new Roman", 20));
         blackScore.setAlignment(Pos.CENTER_RIGHT);
@@ -458,8 +458,8 @@ public final class GUIMain extends Application {
 
         // Updates the current turn string as well as the score
         playerTurnLabel.setText(board.currentTurnString());
-        whiteScore.setText("White's Score: " + Integer.toString(board.getGamestate().getwScore()));
-        blackScore.setText("Black's Score: " + Integer.toString(board.getGamestate().getbScore()));
+        whiteScore.setText("White's Score: " + board.getGamestate().getwScore());
+        blackScore.setText("Black's Score: " + board.getGamestate().getbScore());
 
         // Updates the rows numbers and column letters if the board is being flipped
         if (board.isBeingFlipped() && board.isBlackTurn()) {
