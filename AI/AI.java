@@ -46,6 +46,7 @@ public class AI {
         int previousBest = 0;
         int scoreChange = 0;
         boolean isPreviousBest = false;
+        boolean checkMate = false;
         if(depth <= 0 )
             return totalScore;
         for(int startX=0;startX<8;startX++)
@@ -61,7 +62,7 @@ public class AI {
                         if(board.getGrid()[startY][startX] != null)
                         {
                             ChessBoard temp = new ChessBoard(board);
-                            if(temp.getGamestate().kingIsSafe(temp,temp.unparseLocation(startCoordinate),temp.unparseLocation(endCoordinate),temp.currentPlayer()) && temp.movePiece(temp.unparseLocation(startCoordinate),temp.unparseLocation(endCoordinate))) {
+                            if(temp.unparseLocation(startCoordinate) != null && temp.unparseLocation(endCoordinate) != null && temp.getGamestate().kingIsSafe(temp,temp.unparseLocation(startCoordinate),temp.unparseLocation(endCoordinate),temp.currentPlayer()) && temp.movePiece(temp.unparseLocation(startCoordinate),temp.unparseLocation(endCoordinate))) {
                                 temp.changeTurn();
                                 temp.getGamestate().updateGameState(temp, temp.currentPlayer(), temp.unparseLocation(endCoordinate));
 
@@ -89,7 +90,16 @@ public class AI {
                                     previousBest =bestMove;
                                     isPreviousBest = true;
                                 }
-                                if(bestMove == previousBest && Math.random() < 0.1) {
+                                if (bestMove > 50) {
+                                    bestStart = startCoordinate;
+                                    bestEnd = endCoordinate;
+                                    return 999;
+                                }
+                                if (bestMove < -50) {
+                                    return -999;
+                                }
+
+                                if(bestMove == previousBest && Math.random() < 0.2) {
                                     if (board.currentPlayer() == color) {
                                         if (bestMove >= previousBest) {
                                             bestStart = startCoordinate;
@@ -114,6 +124,7 @@ public class AI {
                                             previousBest = bestMove;
                                         }
                                     }
+
                                 }
                             }
                         }
