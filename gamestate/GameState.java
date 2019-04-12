@@ -333,8 +333,7 @@ public class GameState {
      * @return if the king can be saved with another piece
      */
     public boolean canTileBeFilled(ChessBoard c, int[] coordinate, String color) {
-        if(coordinate == null || color == null)
-        {
+        if (coordinate == null || color == null) {
             return false;
         }
         //check if knight can fill tile
@@ -643,10 +642,11 @@ public class GameState {
         return false;
     }
 
-    /*
+    /**
      * Checks if a pawn is able to promote
-     * @param board the ChessBoard object
-     * @param end the end location of the pawn
+     *
+     * @param board Current board
+     * @param end   Ending location of the piece
      */
     public void promote(ChessBoard board, String end) {
 

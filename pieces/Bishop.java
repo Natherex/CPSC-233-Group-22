@@ -70,10 +70,9 @@ public class Bishop extends Piece {
         } else if (Math.abs(xDirection) == Math.abs(yDirection) && board.isWayClear(start, end) && canPieceMoveLegally(board, start, end, color)) {
             if (!board.getGrid()[startY][startX].getColor().equals(board.getGrid()[endY][endX].getColor())) {
                 incrementTimesMoved();
-                if(color == "w")
+                if (color == "w")
                     board.getGamestate().incrementWScore(board.removePiece(end));
-                else
-                {
+                else {
                     board.getGamestate().incrementBScore(board.removePiece(end));
                 }
                 return true;

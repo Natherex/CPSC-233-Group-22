@@ -3,7 +3,7 @@ package pieces;
 import board.ChessBoard;
 
 public class Knight extends Piece {
-    
+
     public Knight() {
         super("w", "Knight");
         setIconLocation();
@@ -36,22 +36,23 @@ public class Knight extends Piece {
 
     /**
      * Tests if move is a valid move on a given chess board.
+     *
      * @param board Needs a chess board that the pawn is on.
      * @param start Starting location of the piece on the chess board.
-     * @param end Ending location of the piece on the chess board.
+     * @param end   Ending location of the piece on the chess board.
      * @return Returns true if the piece can make the move given,
-     *         returns false otherwise.
+     * returns false otherwise.
      */
     public boolean isValidMove(ChessBoard board, String start, String end) {
-    	int[] totalDistance = board.distance(start, end);
-    	boolean valid = false;
+        int[] totalDistance = board.distance(start, end);
+        boolean valid = false;
 
         if (totalDistance == null)
             return false;
 
         int xDirection = totalDistance[1];
         int yDirection = totalDistance[0];
-        
+
         int[] startCoordinate = board.parseLocation(start);
         int startY = startCoordinate[0];
         int startX = startCoordinate[1];
@@ -59,54 +60,48 @@ public class Knight extends Piece {
         int[] endCoordinate = board.parseLocation(end);
         int endY = endCoordinate[0];
         int endX = endCoordinate[1];
-        
-        
+
+
         String color = board.getGrid()[startY][startX].getColor();
         // Can move two spaces forwards or backwards and one left or right
-        if (Math.abs(xDirection) == 2 && Math.abs(yDirection) == 1 && canPieceMoveLegally(board,start,end,color)) {
-            if(board.getGrid()[endY][endX] ==null)
-            {
+        if (Math.abs(xDirection) == 2 && Math.abs(yDirection) == 1 && canPieceMoveLegally(board, start, end, color)) {
+            if (board.getGrid()[endY][endX] == null) {
                 incrementTimesMoved();
                 return true;
-            }else if(!color.equals(board.getGrid()[endY][endX].getColor()))
-            {
-                if(color == "w")
+            } else if (!color.equals(board.getGrid()[endY][endX].getColor())) {
+                if (color == "w")
                     board.getGamestate().incrementWScore(board.removePiece(end));
-                else
-                {
+                else {
                     board.getGamestate().incrementBScore(board.removePiece(end));
                 }
-	            incrementTimesMoved();
-	            return true;
-	        }else
-	            return false;
+                incrementTimesMoved();
+                return true;
+            } else
+                return false;
 
         }
 
         // Can move one space forward or backward and two left or right
-        else if (Math.abs(xDirection) == 1 && Math.abs(yDirection) == 2 && canPieceMoveLegally(board,start,end,color)) {
+        else if (Math.abs(xDirection) == 1 && Math.abs(yDirection) == 2 && canPieceMoveLegally(board, start, end, color)) {
 
-            if(board.getGrid()[endY][endX] ==null)
-            {
+            if (board.getGrid()[endY][endX] == null) {
                 incrementTimesMoved();
                 return true;
-            }else if(!color.equals(board.getGrid()[endY][endX].getColor()))
-            {
-                if(color == "w")
+            } else if (!color.equals(board.getGrid()[endY][endX].getColor())) {
+                if (color == "w")
                     board.getGamestate().incrementWScore(board.removePiece(end));
-                else
-                {
+                else {
                     board.getGamestate().incrementBScore(board.removePiece(end));
                 }
                 incrementTimesMoved();
                 return true;
-            }else
+            } else
                 return false;
         }
 
         if (valid) {
-        	incrementTimesMoved();
-        	return true;
+            incrementTimesMoved();
+            return true;
         }
 
         return false;

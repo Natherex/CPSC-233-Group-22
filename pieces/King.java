@@ -184,18 +184,19 @@ public class King extends Piece {
     }
 
     /**
-     * Intermediate function for use for {@link #isValidMove(ChessBoard, String, String)}.
-     * @param board         Current chess board being used.
-     * @param currentColor  Current player's turn's color.
-     * @param endLocation   The end location of the move being made.
-     * @return              Returns whether or not making that move will put the king beside the other king - which would
-     *                      be an invalid move.
+     * Intermediate function for use in {@link #isValidMove(ChessBoard, String, String)}.
+     *
+     * @param board        Current chess board being used.
+     * @param currentColor Current player's turn's color.
+     * @param endLocation  The end location of the move being made.
+     * @return Returns whether or not making that move will put the king beside the other king - which would
+     * be an invalid move.
      */
     private Boolean inRangeOfOtherKing(ChessBoard board, String currentColor, String endLocation) {
         if (currentColor.equals("w")) {
             int[] blackKingGridLocation = board.getGamestate().findKing(board, "b");
             String blackKingLocation = board.unparseLocation(blackKingGridLocation);
-            if(blackKingLocation == null)
+            if (blackKingLocation == null)
                 return false;
             int[] distance = board.distance(endLocation, blackKingLocation);
             int rowDistance = Math.abs(distance[0]);
@@ -214,11 +215,12 @@ public class King extends Piece {
     }
 
     /**
-     * Intermediate function for use for {@link #isValidMove(ChessBoard, String, String)}.
-     * @param board         Current chess board being used.
-     * @param currentColor  Current player's turn's color.
-     * @param endLocation   The end location of the move being made.
-     * @return              Returns whether or not the king will die from a pawn with the given move.
+     * Intermediate function for use in {@link #isValidMove(ChessBoard, String, String)}.
+     *
+     * @param board        Current chess board being used.
+     * @param currentColor Current player's turn's color.
+     * @param endLocation  The end location of the move being made.
+     * @return Returns whether or not the king will die from a pawn with the given move.
      */
     private Boolean willDieFromPawn(ChessBoard board, String currentColor, String endLocation) {
         Piece[][] boardGrid = board.getGrid();
@@ -244,7 +246,7 @@ public class King extends Piece {
                 }
             } catch (ArrayIndexOutOfBoundsException e) {
             }
-        } else  {
+        } else {
             try {
                 Piece adjacentPiece = boardGrid[row - 1][column - 1];
                 if (adjacentPiece != null) {
