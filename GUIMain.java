@@ -301,7 +301,7 @@ public final class GUIMain extends Application {
                             startLocation = null;
                             endLocation = null;
                         } else if (board.isBlackTurn()) {
-                            computerOne.AIsMove(board, board.currentPlayer(), 1);
+                            computerOne.AIsMove(board, board.currentPlayer(), 2);
                             startLocation = computerOne.getStartLocation();
                             endLocation = computerOne.getEndLocation();
 
@@ -359,7 +359,7 @@ public final class GUIMain extends Application {
                             startLocation = null;
                             endLocation = null;
                         } else if (board.isBlackTurn()) {
-                            computerTwo.AIsMove(board, board.currentPlayer(), 1);
+                            computerTwo.AIsMove(board, board.currentPlayer(), 2);
                             startLocation = computerTwo.getStartLocation();
                             endLocation = computerTwo.getEndLocation();
 

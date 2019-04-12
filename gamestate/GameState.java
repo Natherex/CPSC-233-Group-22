@@ -103,7 +103,12 @@ public class GameState {
                     wScore += 99;
                 gameState = 2;
             } else {
+                if (color == "w")
+                    bScore += 1;
+                else
+                    wScore += 1;
                 gameState = 1;
+
             }
         } else if (isStaleMate(c, color)) {
             gameState = 3;
@@ -609,25 +614,25 @@ public class GameState {
                 i++;
             }
             i++;
-        }
-        // check king
-        int[] temp;
-        for (int i = -1; i < 2; i++) {
-            for (int j = -1; j < 2; j++) {
-                if (coordinate[0] + j < 8 && coordinate[0] + j >= 0) {
-                    if (coordinate[1] + i < 8 && coordinate[1] + i >= 0) {
-                        if (c.getGrid()[coordinate[0] + j][coordinate[1] + i] != null && c.getGrid()[coordinate[0] + j][coordinate[1] + i].getName().equals("King") && (i != 0 || j != 0)) {
-                            temp = new int[]{coordinate[0] + j, coordinate[1] + i};
-                            if (kingIsSafe(c, c.unparseLocation(temp), c.unparseLocation(coordinate), color)) {
-                                fillersLocation = temp;
-                                return true;
+
+            // check king
+            int[] temp;
+            for (i = -1; i < 2; i++) {
+                for (int j = -1; j < 2; j++) {
+                    if (coordinate[0] + j < 8 && coordinate[0] + j >= 0) {
+                        if (coordinate[1] + i < 8 && coordinate[1] + i >= 0) {
+                            if (c.getGrid()[coordinate[0] + j][coordinate[1] + i] != null && c.getGrid()[coordinate[0] + j][coordinate[1] + i].getName().equals("King") && (i != 0 || j != 0)) {
+                                temp = new int[]{coordinate[0] + j, coordinate[1] + i};
+                                if (kingIsSafe(c, c.unparseLocation(temp), c.unparseLocation(coordinate), color)) {
+                                    fillersLocation = temp;
+                                    return true;
+                                }
                             }
                         }
                     }
                 }
             }
         }
-
         return false;
 
 

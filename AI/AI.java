@@ -35,8 +35,6 @@ public class AI {
 
         startLocation = board.unparseLocation(bestStart);
         endLocation = board.unparseLocation(bestEnd);
-        System.out.println(startLocation);
-        System.out.println(endLocation);
         return AIMove;
 
     }
@@ -91,7 +89,7 @@ public class AI {
                                     previousBest =bestMove;
                                     isPreviousBest = true;
                                 }
-                                if(bestMove == previousBest && Math.random() < 0.5) {
+                                if(bestMove == previousBest && Math.random() < 0.1) {
                                     if (board.currentPlayer() == color) {
                                         if (bestMove >= previousBest) {
                                             bestStart = startCoordinate;
