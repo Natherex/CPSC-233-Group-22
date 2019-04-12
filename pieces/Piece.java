@@ -2,6 +2,9 @@ package pieces;
 
 import board.*;
 
+/**
+ * Generalized piece object for creating other pieces.
+ */
 public class Piece {
     private String color;
     private String name;
@@ -76,8 +79,7 @@ public class Piece {
         return false;
     }
 
-    public boolean isValidMove(ChessBoard board, int[] startLocation, int[] endLocation)
-    {
+    public boolean isValidMove(ChessBoard board, int[] startLocation, int[] endLocation) {
         String sStartLocation = board.unparseLocation(startLocation);
         String sEndLocation = board.unparseLocation(endLocation);
         return isValidMove(board, sStartLocation, sEndLocation);
