@@ -98,9 +98,9 @@ public class GameState {
         if (isCheck(c, color)) {
             if (isCheckmate(c, fillersLocation, color)) {
                 if (color == "w")
-                    bScore += 99;
+                    bScore += 999;
                 else
-                    wScore += 99;
+                    wScore += 999;
                 gameState = 2;
             } else {
                 if (color == "w")

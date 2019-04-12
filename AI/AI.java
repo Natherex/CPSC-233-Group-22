@@ -69,16 +69,16 @@ public class AI {
                                 if(board.currentPlayer() =="b") {
                                     scoreChange = temp.getGamestate().getbScore() - board.getGamestate().getbScore();
                                     if (color == "b")
-                                        bestMove = bestMove(temp, totalScore + scoreChange, color, depth - 1);
+                                        bestMove = scoreChange + bestMove(temp, 0, color, depth - 1);
                                     else
-                                        bestMove = bestMove(temp, totalScore - scoreChange, color, depth - 1);
+                                        bestMove = 0 - scoreChange +bestMove(temp, 0, color, depth - 1);
                                 }
                                 else {
                                     scoreChange = temp.getGamestate().getwScore() - board.getGamestate().getwScore();
                                     if (color == "w")
-                                        bestMove = bestMove(temp, totalScore + scoreChange, color, depth - 1);
+                                        bestMove = scoreChange+ bestMove(temp, 0 , color, depth - 1);
                                     else
-                                        bestMove = bestMove(temp, totalScore - scoreChange, color, depth - 1);
+                                        bestMove = 0- scoreChange +bestMove(temp, 0, color, depth - 1);
                                 }
 
                                 if (!isPreviousBest) {
@@ -89,14 +89,6 @@ public class AI {
                                     }
                                     previousBest =bestMove;
                                     isPreviousBest = true;
-                                }
-                                if (bestMove > 50) {
-                                    bestStart = startCoordinate;
-                                    bestEnd = endCoordinate;
-                                    return 999;
-                                }
-                                if (bestMove < -50) {
-                                    return -999;
                                 }
 
                                 if(bestMove == previousBest && Math.random() < 0.2) {
