@@ -402,62 +402,6 @@ public class GameState {
                 }
             }
         }
-        //check if white pawn can fill tile
-        if (color.equals("w")) {
-            //check if pawn can fill tile
-            if (coordinate[0] > 0 && c.getGrid()[coordinate[0] - 1][coordinate[1]] != null) {
-                if (c.getGrid()[coordinate[0] - 1][coordinate[1]].getName().equals("Pawn")) {
-                    if (c.getGrid()[coordinate[0] - 1][coordinate[1]].getColor().equals(color)) {
-                        fillersLocation = new int[]{coordinate[0] - 1, coordinate[1]};
-                        return true;
-                    }
-                }
-            }
-            if (coordinate[0] > 0 && coordinate[1] > 0 && c.getGrid()[coordinate[0] - 1][coordinate[1] - 1] != null) {
-                if (c.getGrid()[coordinate[0] - 1][coordinate[1] - 1].getName().equals("Pawn")) {
-                    if (c.getGrid()[coordinate[0] - 1][coordinate[1] - 1].getColor().equals(color)) {
-                        fillersLocation = new int[]{coordinate[0] - 1, coordinate[1] - 1};
-                        return true;
-                    }
-                }
-            }
-            if (coordinate[0] > 0 && coordinate[1] < 7 && c.getGrid()[coordinate[0] - 1][coordinate[1] + 1] != null) {
-                if (c.getGrid()[coordinate[0] - 1][coordinate[1] + 1].getName().equals("Pawn")) {
-                    if (c.getGrid()[coordinate[0] - 1][coordinate[1] + 1].getColor().equals(color)) {
-                        fillersLocation = new int[]{coordinate[0] - 1, coordinate[1] + 1};
-                        return true;
-                    }
-                }
-            }
-        }
-        //check if black pawn can fill tile
-        if (color.equals("b")) {
-
-            if (coordinate[0] < 7 && c.getGrid()[coordinate[0] + 1][coordinate[1]] != null) {
-                if (c.getGrid()[coordinate[0] + 1][coordinate[1]].getName().equals("Pawn")) {
-                    if (c.getGrid()[coordinate[0] + 1][coordinate[1]].getColor().equals(color)) {
-                        fillersLocation = new int[]{coordinate[0] + 1, coordinate[1]};
-                        return true;
-                    }
-                }
-            }
-            if (coordinate[0] < 7 && coordinate[1] > 0 && c.getGrid()[coordinate[0] + 1][coordinate[1] - 1] != null) {
-                if (c.getGrid()[coordinate[0] + 1][coordinate[1] - 1].getName().equals("Pawn")) {
-                    if (c.getGrid()[coordinate[0] + 1][coordinate[1] - 1].getColor().equals(color)) {
-                        fillersLocation = new int[]{coordinate[0] + 1, coordinate[1] - 1};
-                        return true;
-                    }
-                }
-            }
-            if (coordinate[0] < 7 && coordinate[1] < 7 && c.getGrid()[coordinate[0] + 1][coordinate[1] + 1] != null) {
-                if (c.getGrid()[coordinate[0] + 1][coordinate[1] + 1].getName().equals("Pawn")) {
-                    if (c.getGrid()[coordinate[0] + 1][coordinate[1] + 1].getColor().equals(color)) {
-                        fillersLocation = new int[]{coordinate[0] + 1, coordinate[1] + 1};
-                        return true;
-                    }
-                }
-            }
-        }
 
         //check right
         int i = 1;
@@ -630,6 +574,62 @@ public class GameState {
             }
         }
 
+        //check if white pawn can fill tile
+        if (color.equals("w")) {
+            //check if pawn can fill tile
+            if (coordinate[0] > 0 && c.getGrid()[coordinate[0] - 1][coordinate[1]] != null) {
+                if (c.getGrid()[coordinate[0] - 1][coordinate[1]].getName().equals("Pawn")) {
+                    if (c.getGrid()[coordinate[0] - 1][coordinate[1]].getColor().equals(color)) {
+                        fillersLocation = new int[]{coordinate[0] - 1, coordinate[1]};
+                        return true;
+                    }
+                }
+            }
+            if (coordinate[0] > 0 && coordinate[1] > 0 && c.getGrid()[coordinate[0] - 1][coordinate[1] - 1] != null) {
+                if (c.getGrid()[coordinate[0] - 1][coordinate[1] - 1].getName().equals("Pawn")) {
+                    if (c.getGrid()[coordinate[0] - 1][coordinate[1] - 1].getColor().equals(color)) {
+                        fillersLocation = new int[]{coordinate[0] - 1, coordinate[1] - 1};
+                        return true;
+                    }
+                }
+            }
+            if (coordinate[0] > 0 && coordinate[1] < 7 && c.getGrid()[coordinate[0] - 1][coordinate[1] + 1] != null) {
+                if (c.getGrid()[coordinate[0] - 1][coordinate[1] + 1].getName().equals("Pawn")) {
+                    if (c.getGrid()[coordinate[0] - 1][coordinate[1] + 1].getColor().equals(color)) {
+                        fillersLocation = new int[]{coordinate[0] - 1, coordinate[1] + 1};
+                        return true;
+                    }
+                }
+            }
+        }
+        //check if black pawn can fill tile
+        if (color.equals("b")) {
+
+            if (coordinate[0] < 7 && c.getGrid()[coordinate[0] + 1][coordinate[1]] != null) {
+                if (c.getGrid()[coordinate[0] + 1][coordinate[1]].getName().equals("Pawn")) {
+                    if (c.getGrid()[coordinate[0] + 1][coordinate[1]].getColor().equals(color)) {
+                        fillersLocation = new int[]{coordinate[0] + 1, coordinate[1]};
+                        return true;
+                    }
+                }
+            }
+            if (coordinate[0] < 7 && coordinate[1] > 0 && c.getGrid()[coordinate[0] + 1][coordinate[1] - 1] != null) {
+                if (c.getGrid()[coordinate[0] + 1][coordinate[1] - 1].getName().equals("Pawn")) {
+                    if (c.getGrid()[coordinate[0] + 1][coordinate[1] - 1].getColor().equals(color)) {
+                        fillersLocation = new int[]{coordinate[0] + 1, coordinate[1] - 1};
+                        return true;
+                    }
+                }
+            }
+            if (coordinate[0] < 7 && coordinate[1] < 7 && c.getGrid()[coordinate[0] + 1][coordinate[1] + 1] != null) {
+                if (c.getGrid()[coordinate[0] + 1][coordinate[1] + 1].getName().equals("Pawn")) {
+                    if (c.getGrid()[coordinate[0] + 1][coordinate[1] + 1].getColor().equals(color)) {
+                        fillersLocation = new int[]{coordinate[0] + 1, coordinate[1] + 1};
+                        return true;
+                    }
+                }
+            }
+        }
         return false;
 
 
